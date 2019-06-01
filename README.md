@@ -2,4 +2,6 @@
 
 A collection of example applications using [React Relay Offline](https://github.com/morrys/react-relay-offline).
 
+beta version 0.3.0-rc.2
+
 

@@ -23,7 +23,6 @@ import {
   type RequestNode,
   type Variables,
 } from 'relay-runtime';
-//import { OfflineStore, Store, Environment, RecordSource} from 'react-relay-offline';
 
 import EnvironmentIDB from 'react-relay-offline/lib/runtime/EnvironmentIDB';
 
@@ -47,9 +46,6 @@ async function fetchQuery(
 
   return response.json();
 }
-
-
-
 
 const network = Network.create(fetchQuery);
 function callbackOffline(type, payload, error) {
