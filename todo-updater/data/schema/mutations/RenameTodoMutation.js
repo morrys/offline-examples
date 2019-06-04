@@ -36,14 +36,13 @@ const RenameTodoMutation = mutationWithClientMutationId({
   outputFields: {
     todo: {
       type: new GraphQLNonNull(GraphQLTodo),
-      resolve: ({localTodoId}: Payload): Todo => getTodoOrThrow(localTodoId),
+      resolve: ({id}: Payload): Todo => getTodoOrThrow(id),
     },
   },
   mutateAndGetPayload: ({id, text}: Input): Payload => {
-    const localTodoId = fromGlobalId(id).id;
-    renameTodo(localTodoId, text);
+    renameTodo(id, text);
 
-    return {localTodoId};
+    return {id};
   },
 });
 

@@ -16,11 +16,12 @@
     "prop-types": "^15.7.2",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
-    "react-relay-offline": "file:../react-relay-offline-0.3.0-rc.2.tgz",
+    "react-relay-offline": "0.3.0-rc.2",
     "react-relay": "^3.0.0",
     "todomvc-app-css": "^2.2.0",
     "todomvc-common": "^1.0.3",
-    "whatwg-fetch": "3.0.0"
+    "whatwg-fetch": "3.0.0",
+    "uuid": "3.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",

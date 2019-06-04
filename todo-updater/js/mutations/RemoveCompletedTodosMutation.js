@@ -63,7 +63,21 @@ function commit(
     userId: user.userId,
   };
 
-  const completedNodeIds: $ReadOnlyArray<string> = todos.edges
+  return commitMutation(environment, {
+    mutation,
+    variables: {
+      input,
+    },
+    updater: (store: RecordSourceSelectorProxy) => {
+      const payload = store.getRootField('removeCompletedTodos');
+      const deletedIds = payload.getValue('deletedTodoIds');
+
+      // $FlowFixMe `payload.getValue` returns mixed, not sure how to check refinement to $ReadOnlyArray<string>
+      sharedUpdater(store, user, deletedIds);
+    },
+    optimisticUpdater: (store: RecordSourceSelectorProxy) => {
+      // Relay returns Maybe types a lot of times in a connection that we need to cater for
+      const completedNodeIds: $ReadOnlyArray<string> = todos.edges
         ? todos.edges
             .filter(Boolean)
             .map((edge: Edge): ?Node => edge.node)
@@ -72,26 +86,10 @@ function commit(
             .map((node: Node): string => node.id)
         : [];
 
-  return commitMutation(environment, {
-    mutation,
-    variables: {
-      input,
-    },
-    configs: [{
-      type: 'NODE_DELETE',
-      deletedIDFieldName: 'deletedTodoIds',
-    },
-     ],
-    optimisticResponse: {
-      removeCompletedTodos: {
-        deletedTodoIds: completedNodeIds,
-        user: {
-          id: user.id,
-          completedCount: 0,
-          totalCount: user.totalCount - completedNodeIds.length
-        },
-      },
-      
+      const userRecord = store.get(user.id);
+      userRecord.setValue(userRecord.getValue('totalCount')-completedNodeIds.length, 'totalCount');
+      userRecord.setValue(0, 'completedCount');
+      sharedUpdater(store, user, completedNodeIds);
     },
   });
 }

@@ -72,7 +72,6 @@ function commit(
     userId: user.userId,
     id: todo.id,
   };
-
   return commitMutation(environment, {
     mutation,
     variables: {
