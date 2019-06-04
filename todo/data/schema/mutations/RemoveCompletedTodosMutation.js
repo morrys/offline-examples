@@ -44,11 +44,11 @@ const RemoveCompletedTodosMutation = mutationWithClientMutationId({
     },
   },
   mutateAndGetPayload: ({userId}: Input): Payload => {
-    const deletedTodoLocalIds = removeCompletedTodos();
+    const deletedTodoIds = removeCompletedTodos();
 
-    const deletedTodoIds = deletedTodoLocalIds.map(
+    /*const deletedTodoIds = deletedTodoLocalIds.map(
       toGlobalId.bind(null, 'Todo'),
-    );
+    );*/
 
     return {deletedTodoIds, userId};
   },

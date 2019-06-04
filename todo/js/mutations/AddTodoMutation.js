@@ -24,6 +24,8 @@ import {ConnectionHandler} from 'relay-runtime';
 import type {TodoApp_user} from 'relay/TodoApp_user.graphql';
 import type {AddTodoInput} from 'relay/AddTodoMutation.graphql';
 
+import { v4 as uuid } from "uuid";
+
 const mutation = graphql`
   mutation AddTodoMutation($input: AddTodoInput!) {
     addTodo(input: $input) {
@@ -51,10 +53,12 @@ function commit(
   text: string,
   user: TodoApp_user,
 ): Disposable {
+  const idTodo = uuid();
   const input: AddTodoInput = {
+    id: idTodo,
     text,
     userId: user.userId,
-    clientMutationId: `${tempID++}`,
+    clientMutationId: idTodo,
   };
 
   const totalCount = user.totalCount + 1;
@@ -68,7 +72,7 @@ function commit(
       addTodo: {
         todoEdge: {
           node: {
-            id: Buffer.from('Todo:' + idTot, 'utf8').toString('base64'), 
+            id: idTodo, 
             text: text,
             complete: false
           },

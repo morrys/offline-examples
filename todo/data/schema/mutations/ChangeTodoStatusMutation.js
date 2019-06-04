@@ -45,7 +45,7 @@ const ChangeTodoStatusMutation = mutationWithClientMutationId({
   outputFields: {
     todo: {
       type: new GraphQLNonNull(GraphQLTodo),
-      resolve: ({todoId}: Payload): Todo => getTodoOrThrow(todoId),
+      resolve: ({id}: Payload): Todo => getTodoOrThrow(id),
     },
     user: {
       type: new GraphQLNonNull(GraphQLUser),
@@ -53,10 +53,8 @@ const ChangeTodoStatusMutation = mutationWithClientMutationId({
     },
   },
   mutateAndGetPayload: ({id, complete, userId}: Input): Payload => {
-    const todoId = fromGlobalId(id).id;
-    changeTodoStatus(todoId, complete);
-
-    return {todoId, userId};
+    changeTodoStatus(id, complete);
+    return {id, userId};
   },
 });
 

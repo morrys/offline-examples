@@ -29,7 +29,9 @@ import {
   User,
 } from '../../database';
 
+
 type Input = {|
+  +id: string,
   +text: string,
   +userId: string,
 |};
@@ -42,6 +44,7 @@ type Payload = {|
 const AddTodoMutation = mutationWithClientMutationId({
   name: 'AddTodo',
   inputFields: {
+    id: {type: new GraphQLNonNull(GraphQLString)},
     text: {type: new GraphQLNonNull(GraphQLString)},
     userId: {type: new GraphQLNonNull(GraphQLID)},
   },
@@ -62,8 +65,8 @@ const AddTodoMutation = mutationWithClientMutationId({
       resolve: ({userId}: Payload): User => getUserOrThrow(userId),
     },
   },
-  mutateAndGetPayload: ({text, userId}: Input): Payload => {
-    const todoId = addTodo(text, false);
+  mutateAndGetPayload: ({id, text, userId}: Input): Payload => {
+    const todoId = addTodo(id, text, false);
 
     return {todoId, userId};
   },

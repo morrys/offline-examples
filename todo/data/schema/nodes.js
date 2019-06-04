@@ -43,9 +43,7 @@ const {nodeInterface, nodeField} = nodeDefinitions(
   (globalId: string): ?{} => {
     const {type, id}: {id: string, type: string} = fromGlobalId(globalId);
 
-    if (type === 'Todo') {
-      return getTodoOrThrow(id);
-    } else if (type === 'User') {
+    if (type === 'User') {
       return getUserOrThrow(id);
     }
     return null;
@@ -63,7 +61,10 @@ const {nodeInterface, nodeField} = nodeDefinitions(
 const GraphQLTodo = new GraphQLObjectType({
   name: 'Todo',
   fields: {
-    id: globalIdField('Todo'),
+    id: {
+      type: new GraphQLNonNull(GraphQLString),
+      resolve: (todo: Todo): string => todo.id,
+    },
     text: {
       type: new GraphQLNonNull(GraphQLString),
       resolve: (todo: Todo): string => todo.text,
@@ -73,7 +74,6 @@ const GraphQLTodo = new GraphQLObjectType({
       resolve: (todo: Todo): boolean => todo.complete,
     },
   },
-  interfaces: [nodeInterface],
 });
 
 const {

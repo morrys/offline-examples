@@ -5074,9 +5074,10 @@ react-is@^16.8.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.4.tgz#90f336a68c3a29a096a3d648ab80e87ec61482a2"
   integrity sha512-PVadd+WaUDOAciICm/J1waJaSvgq+4rHE/K70j0PFqKhkTBsPv/82UGQJNXAngz1fOQLLxI6z1sEDmJDQhCTAA==
 
-"react-relay-offline@file:../react-relay-offline-0.3.0-rc.2.tgz":
-  version "0.3.0-a15"
-  resolved "file:../react-relay-offline-0.3.0-rc.2.tgz#eadecbbc99a107fd8276741920a4b10275f14a44"
+react-relay-offline@0.3.0-rc.2:
+  version "0.3.0-rc.2"
+  resolved "https://registry.yarnpkg.com/react-relay-offline/-/react-relay-offline-0.3.0-rc.2.tgz#d54cd4ef47fa73c468f656c8f5012cc5027518e9"
+  integrity sha512-XI2vm/iHL8TN3gCmJQIQfZrm0EQHJIaYLgOmqRXQAbZ492hiW0wWQrkW06Uqh2LGpLmLd0VQgy2IEsW2nbdhMA==
   dependencies:
     "@babel/runtime" "^7.0.0"
     "@redux-offline/redux-offline" "2.5.1"

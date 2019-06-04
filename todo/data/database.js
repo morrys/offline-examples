@@ -44,16 +44,15 @@ const todoIdsByUser: Map<string, $ReadOnlyArray<string>> = new Map([
 ]);
 
 // Seed initial data
-let nextTodoId: number = 0;
-addTodo('Taste JavaScript', true);
-addTodo('Buy a unicorn', false);
+addTodo('0', 'Taste JavaScript', true);
+addTodo('1', 'Buy a unicorn', false);
 
 function getTodoIdsForUser(id: string): $ReadOnlyArray<string> {
   return todoIdsByUser.get(id) || [];
 }
 
-export function addTodo(text: string, complete: boolean): string {
-  const todo = new Todo(`${nextTodoId++}`, text, complete);
+export function addTodo(id:string, text: string, complete: boolean): string {
+  const todo = new Todo(id, text, complete);
   todosById.set(todo.id, todo);
 
   const todoIdsForUser = getTodoIdsForUser(USER_ID);
@@ -76,11 +75,9 @@ function getTodo(id: string): ?Todo {
 
 export function getTodoOrThrow(id: string): Todo {
   const todo = getTodo(id);
-
   if (!todo) {
     throw new Error(`Invariant exception, Todo ${id} not found`);
   }
-
   return todo;
 }
 
