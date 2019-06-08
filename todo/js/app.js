@@ -50,12 +50,12 @@ async function fetchQuery(
 
 
 
-
-const network = Network.create(fetchQuery);
+import RelayNetworkLogger from 'relay-runtime/lib/RelayNetworkLogger'
+const network = Network.create(RelayNetworkLogger.wrapFetch(fetchQuery, () => ''));
 function callbackOffline(type, payload, error) {
-  console.log("callbackoffline", type)
-  console.log("callbackoffline", payload)
-  console.log("callbackoffline", error)
+  //console.log("callbackoffline", type)
+  //console.log("callbackoffline", payload)
+  //console.log("callbackoffline", error)
 }
 const modernEnvironment = EnvironmentIDB.create({ network }, callbackOffline);
 const rootElement = document.getElementById('root');
@@ -77,8 +77,8 @@ if (rootElement) {
         userId: 'me',
       }}
       render={({error, props, cached, retry}) => {
-        console.log('QueryRenderer.render:', { cached, error, retry, state: modernEnvironment.getStoreOffline().getState(), 
-          });
+        //console.log('QueryRenderer.render:', { cached, error, retry, state: modernEnvironment.getStoreOffline().getState(), 
+        //  });
         if (props && props.user) {
           return <TodoApp user={props.user} />;
         } else if (error) {
