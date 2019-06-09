@@ -8,19 +8,11 @@
     "lint": "eslint ./ --cache"
   },
   "dependencies": {
-    "classnames": "2.2.6",
+    
     "express": "^4.16.4",
     "express-graphql": "^0.7.1",
     "graphql": "^14.1.1",
     "graphql-relay": "^0.6.0",
-    "prop-types": "^15.7.2",
-    "react": "^16.8.4",
-    "react-dom": "^16.8.4",
-    "react-relay-offline": "file:../react-relay-offline-0.4.0-a8.tgz",
-    "react-relay": "^3.0.0",
-    "todomvc-app-css": "^2.2.0",
-    "todomvc-common": "^1.0.3",
-    "whatwg-fetch": "3.0.0",
     "uuid": "3.3.2"
   },
   "devDependencies": {

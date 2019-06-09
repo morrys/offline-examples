@@ -11,67 +11,62 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import AddTodoMutation from '../mutations/AddTodoMutation';
+//import AddTodoMutation from '../mutations/AddTodoMutation';
 import TodoList from './TodoList';
-import TodoListFooter from './TodoListFooter';
-import TodoTextInput from './TodoTextInput';
+//import TodoListFooter from './TodoListFooter';
+//import TodoTextInput from './TodoTextInput';
 
 import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 import {createFragmentContainer, graphql, useIsConnected, useNetInfo } from 'react-relay-offline';
-import type {RelayProp} from 'react-relay';
-import type {TodoApp_user} from 'relay/TodoApp_user.graphql';
+import TodoListFooter from './TodoListFooter';
 
-type Props = {|
-  +relay: RelayProp,
-  +user: TodoApp_user,
-|};
 
-const TodoApp = ({relay, user}: Props) => {
-  const handleTextInputSave = (text: string) => {
+const TodoApp = ({relay, user}: any) => {
+  /*const handleTextInputSave = (text: string) => {
     AddTodoMutation.commit(relay.environment, text, user);
     return;
-  };
+  };*/
 
   const isConnected = useIsConnected();
   const netInfo = useNetInfo();
 
-  console.log('isConnected', isConnected)
-  console.log('netInfo', netInfo)
-
   const hasTodos = user.totalCount > 0;
 
   return (
-    <div>
-      <section className="todoapp">
-        <header className="header">
-          <h1>todos</h1>
+    <View style={styles.container}>
+        <Text style={styles.welcome}>Todos {isConnected}</Text>
 
-          <TodoTextInput
+        <TodoList user={user} />
+        {hasTodos && <TodoListFooter user={user} />}
+         {/*} <TodoTextInput
             className="new-todo"
             onSave={handleTextInputSave}
             placeholder="What needs to be done?"
           />
-        </header>
 
-        <TodoList user={user} />
-        {hasTodos && <TodoListFooter user={user} />}
-      </section>
-
-      <footer className="info">
-        <p>Double-click to edit a todo</p>
-
-        <p>
-          Created by the{' '}
-          <a href="https://facebook.github.io/relay/">Relay team</a>
-        </p>
-
-        <p>
-          Part of <a href="http://todomvc.com">TodoMVC</a>
-        </p>
-      </footer>
-    </div>
+        
+  {hasTodos && <TodoListFooter user={user} />}*/}
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#F5FCFF',
+    },
+    welcome: {
+      fontSize: 20,
+      textAlign: 'center',
+      margin: 10,
+    },
+    instructions: {
+      textAlign: 'center',
+      color: '#333333',
+      marginBottom: 5,
+    },
+  });
 
 export default createFragmentContainer(TodoApp, {
   user: graphql`
@@ -85,3 +80,8 @@ export default createFragmentContainer(TodoApp, {
     }
   `,
 });
+/*
+
+      ...TodoListFooter_user
+      
+*/
