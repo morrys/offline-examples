@@ -4,6 +4,7 @@ import { graphql } from 'react-relay-offline';
 import { environment, QueryRenderer } from './relay';
 import { default as Loading } from './components/Loading';
 import TodoApp from './components/TodoApp';
+import styled from "styled-components";
 
 /**
  * Query Definitions
@@ -16,6 +17,15 @@ query AppQuery($userId: String) {
 }
 `;
 
+const StyledBody = styled.View`
+  font-size: 14px;
+  font-family: 'Helvetica';
+  line-height: 1.8;
+  background: #f5f5f5;
+  color: #4d4d4d;
+  margin: 15px;
+  font-weight: 300;
+  `;
 /**
  * Interface Definitions
  */
@@ -27,7 +37,7 @@ interface Props {}
 export default class extends Component<Props> {
   render() {
     return (
-      <View style={styles.container}>
+      <StyledBody>
       <QueryRenderer
         environment={environment}
         query={query}
@@ -61,7 +71,7 @@ export default class extends Component<Props> {
           )*/
         }}
       />
-      </View>
+      </StyledBody>
     )
   }
 }

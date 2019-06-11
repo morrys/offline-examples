@@ -17,7 +17,12 @@ import TodoListFooter from './TodoListFooter';
 import TodoTextInput from './TodoTextInput';
 
 import React from 'react';
+/*
+  version 0.4.0
 import {createFragmentContainer, graphql, useIsConnected, useNetInfo } from 'react-relay-offline';
+*/
+import {createFragmentContainer, graphql } from 'react-relay-offline';
+
 import type {RelayProp} from 'react-relay';
 import type {TodoApp_user} from 'relay/TodoApp_user.graphql';
 
@@ -31,13 +36,14 @@ const TodoApp = ({relay, user}: Props) => {
     AddTodoMutation.commit(relay.environment, text, user);
     return;
   };
-
+/*
+  version 0.4.0
   const isConnected = useIsConnected();
   const netInfo = useNetInfo();
 
   console.log('isConnected', isConnected)
   console.log('netInfo', netInfo)
-
+*/
   const hasTodos = user.totalCount > 0;
 
   return (

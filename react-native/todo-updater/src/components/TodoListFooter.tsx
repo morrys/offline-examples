@@ -11,12 +11,30 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-//import RemoveCompletedTodosMutation from '../mutations/RemoveCompletedTodosMutation';
+import RemoveCompletedTodosMutation from '../mutations/RemoveCompletedTodosMutation';
 
 import React from 'react';
 import {graphql, createFragmentContainer} from 'react-relay';
-import { View, StyleSheet, Text, Button } from 'react-native';
 
+import { Text, Button } from 'react-native-elements';
+import { View } from 'react-native';
+
+import styled, {css} from "styled-components";
+
+const StyledContainer = styled.View`
+  flexDirection: row;
+  backgroundColor: #fff;
+  justifyContent: center;
+  alignItems: center;
+`;
+
+const StyleButtonContainer = styled.View`
+  flex: 1;
+`;
+
+const StyledLabel = styled(Text)`
+  text-align: center;
+`;
 
 const TodoListFooter = ({
   relay,
@@ -30,7 +48,7 @@ const TodoListFooter = ({
         )
       : [];
 
-  /*const handleRemoveCompletedTodosClick = () => {
+  const handleRemoveCompletedTodosClick = () => {
     RemoveCompletedTodosMutation.commit(
       relay.environment,
       {
@@ -38,45 +56,29 @@ const TodoListFooter = ({
       },
       user,
     );
-  };*/
+  };
 
   const numRemainingTodos = totalCount - completedCount;
 
   return (
-    <View style={styles.container}>
-      <View style={styles.buttonContainer}>
-      <Text>
-      {numRemainingTodos + "item" + (numRemainingTodos === 1 ? '' : 's') +"left"}
-        </Text>
-        </View>
+    <StyledContainer>
+      <StyleButtonContainer>
+      <StyledLabel h4>
+      {numRemainingTodos + " Item" + (numRemainingTodos === 1 ? '' : 's') +" left"}
+        </StyledLabel>
+        </StyleButtonContainer>
 
-      {completedCount > 0 && (
-        <View style={styles.buttonContainer}>
+        <StyleButtonContainer>
         <Button
-        onPress={() => console.log("click")/*handleRemoveCompletedTodosClick*/}
+        onPress={handleRemoveCompletedTodosClick}
         title="Clear completed"
-        color="#841584"
+        disabled={completedCount == 0}
         accessibilityLabel="Clear completed"
       />
-      </View>
-          
-          
-      )}
-    </View>
+      </StyleButtonContainer>
+    </StyledContainer>
   );
 };
-
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    backgroundColor: '#F5FCFF', 
-    justifyContent: 'center'
-  },
-  buttonContainer: {
-    flex: 1,
-  }
-});
 
 export default createFragmentContainer(TodoListFooter, {
   user: graphql`

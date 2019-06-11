@@ -18,6 +18,13 @@ import React, {useState} from 'react';
 import {createFragmentContainer, graphql} from 'react-relay-offline';
 import { Text, ScrollView, RefreshControl, FlatList } from "react-native";
 
+import styled from "styled-components";
+
+const StyledMain = styled.View`
+  position: relative;
+  z-index: 2;
+  border: 1px solid #e6e6e6;
+`;
 
 const TodoList = ({
   relay,
@@ -46,11 +53,13 @@ const TodoList = ({
           .filter(Boolean)
       : [];
 
-  return <ScrollView refreshControl={<RefreshControl onRefresh={onRefresh} refreshing={refreshing} />}>
+  return <StyledMain>
+  <ScrollView refreshControl={<RefreshControl onRefresh={onRefresh} refreshing={refreshing} />}>
   {nodes.map((node: any) => (
           <Todo key={node.id} todo={node} user={user} />
         ))}
 </ScrollView>
+</StyledMain>
   
  /* (
    

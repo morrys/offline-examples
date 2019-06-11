@@ -11,42 +11,49 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-//import AddTodoMutation from '../mutations/AddTodoMutation';
+import AddTodoMutation from '../mutations/AddTodoMutation';
 import TodoList from './TodoList';
-//import TodoListFooter from './TodoListFooter';
-//import TodoTextInput from './TodoTextInput';
 
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import {createFragmentContainer, graphql, useIsConnected, useNetInfo } from 'react-relay-offline';
+import { StyleSheet, View } from 'react-native';
+//version 0.4.0
+//import {createFragmentContainer, graphql, useIsConnected, useNetInfo } from 'react-relay-offline';
+import {createFragmentContainer, graphql } from 'react-relay-offline';
 import TodoListFooter from './TodoListFooter';
+import styled from "styled-components";
+import { Text, Input } from 'react-native-elements';
+
+const StyledTodoApp = styled.View`
+  backgroundColor: #fff;
+  margin: 4px 0 4px 0;
+  position: relative;
+`;
 
 
 const TodoApp = ({relay, user}: any) => {
-  /*const handleTextInputSave = (text: string) => {
+  const handleTextInputSave = (text: string) => {
     AddTodoMutation.commit(relay.environment, text, user);
     return;
-  };*/
+  };
 
-  const isConnected = useIsConnected();
-  const netInfo = useNetInfo();
+  // version 0.4.0
+  //const isConnected = useIsConnected();
+  //const netInfo = useNetInfo();
 
   const hasTodos = user.totalCount > 0;
 
   return (
-    <View style={styles.container}>
-        <Text style={styles.welcome}>Todos {isConnected}</Text>
-
+    <View>
+      <StyledTodoApp>
+        <View>
+          <Text h3 style={styles.welcome}>Todos</Text>
+          <Input placeholder='What needs to be done?'
+          onSubmitEditing={(event) => handleTextInputSave(event.nativeEvent.text)} />
+        </View>
+        
         <TodoList user={user} />
         {hasTodos && <TodoListFooter user={user} />}
-         {/*} <TodoTextInput
-            className="new-todo"
-            onSave={handleTextInputSave}
-            placeholder="What needs to be done?"
-          />
-
-        
-  {hasTodos && <TodoListFooter user={user} />}*/}
+        </StyledTodoApp>
     </View>
   );
 };
@@ -56,8 +63,10 @@ const styles = StyleSheet.create({
       flex: 1,
       backgroundColor: '#F5FCFF',
     },
+    header: {
+
+    },
     welcome: {
-      fontSize: 20,
       textAlign: 'center',
       margin: 10,
     },

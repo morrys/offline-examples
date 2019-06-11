@@ -18,22 +18,71 @@ import TodoTextInput from './TodoTextInput';
 */
 import React, { useState } from 'react';
 import { createFragmentContainer, graphql } from 'react-relay-offline';
-import { Text } from 'react-native';
+import { View } from 'react-native';
+import styled, {css} from "styled-components";
+import RemoveTodoMutation from '../mutations/RemoveTodoMutation';
+import ChangeTodoStatusMutation from '../mutations/ChangeTodoStatusMutation';
+import { CheckBox, Button, Text } from 'react-native-elements';
 
+const StyledLabel = styled(Text)`
+  text-align: center;
+  flex: 1;  
+`;
+const StyledRemove = styled.TouchableOpacity`
+  color: #af5b5e;
+  background-color: white;
+  text-align: center;
+  height: 100%;
+`;
+/*
+const StyledCheckBox = styled(CheckBox)`
+  text-align: center;
+  width: 40px;
+  height: auto;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+`;*/
 
 const Todo = ({ relay, todo, user }: any) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   console.log("text", todo)
   console.log("text", todo.text)
+  const removeTodo = () =>
+    RemoveTodoMutation.commit(relay.environment, todo, user);
+  const handleDestroyClick = () => removeTodo();
 
-  return <Text key={"todo"+ todo.id}>{todo.text}</Text>;
+  const handleCompleteChange = (complete:boolean) => {
+    ChangeTodoStatusMutation.commit(relay.environment, complete, todo, user);
+  };
+
+  return <View style={{flex: 1, flexDirection: 'row',
+  justifyContent: 'center', alignItems: 'center'}}>
+    <CheckBox
+    containerStyle={css`border: 1px solid #e6e6e6;`}
+    checkedIcon='dot-circle-o'
+    uncheckedIcon='circle-o'
+          checked={todo.complete}
+          onPress={() => handleCompleteChange(!todo.complete)}
+        />
+    <StyledLabel h4 fontFamily='Helvetica' key={"todo"+ todo.id}>{todo.text}</StyledLabel>
+    <Button
+         onPress={handleDestroyClick}
+         icon={{name: 'delete'}}
+         buttonStyle={{
+          backgroundColor:'white'
+        }}
+       >
+       </Button>
+  </View>;
   //return <Text key={todo.id}></Text>;
   /*const handleCompleteChange = (e: any) => {
     const complete = e.currentTarget.checked;
     ChangeTodoStatusMutation.commit(relay.environment, complete, todo, user);
   };
 
-  const handleDestroyClick = () => removeTodo();
+  
   const handleLabelDoubleClick = () => setIsEditing(true);
   const handleTextInputCancel = () => setIsEditing(false);
 
@@ -47,8 +96,7 @@ const Todo = ({ relay, todo, user }: any) => {
     RenameTodoMutation.commit(relay.environment, text, todo);
   };
 
-  const removeTodo = () =>
-    RemoveTodoMutation.commit(relay.environment, todo, user);
+  
 
   return (
     <li

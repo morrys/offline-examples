@@ -8,8 +8,10 @@ import RelayNetworkLogger from 'relay-runtime/lib/RelayNetworkLogger'
  * Define fetch query
  */
 const fetchQuery: FetchFunction = (operation, variables) => {
-  console.log('fetching', operation, variables);
-  return fetch('http://localhost:3000/graphql', {
+  
+  const localIP = "SETLOCALIP";
+  console.log("fetch", localIP, operation)
+  return fetch('http://'+localIP+':3000/graphql', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

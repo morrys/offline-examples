@@ -961,6 +961,13 @@
     "@webassemblyjs/wast-parser" "1.8.5"
     "@xtuc/long" "4.2.2"
 
+"@wora/detect-network@0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@wora/detect-network/-/detect-network-0.1.0.tgz#e26d7f4a0abd12035296e35932cb37d2679e0020"
+  integrity sha512-CeqZrhgQOlRkvYgH/KVHvTb+0TpIiWjenmgwFMhUa/6qpiIvKBHiMEY9fFHOGbfOY0WlQcQfGMSZmGVKCcA80Q==
+  dependencies:
+    array-find-index "1.0.2"
+
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@xtuc/ieee754/-/ieee754-1.2.0.tgz#eef014a3145ae477a1cbc00cd1e552336dceb790"
@@ -5079,12 +5086,13 @@ react-is@^16.8.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.4.tgz#90f336a68c3a29a096a3d648ab80e87ec61482a2"
   integrity sha512-PVadd+WaUDOAciICm/J1waJaSvgq+4rHE/K70j0PFqKhkTBsPv/82UGQJNXAngz1fOQLLxI6z1sEDmJDQhCTAA==
 
-"react-relay-offline@file:../react-relay-offline-0.4.0-a8.tgz":
-  version "0.4.0-a8"
-  resolved "file:../react-relay-offline-0.4.0-a8.tgz#e8fc6382c6e5c13b30fe14ca5924f7a84f675008"
+"react-relay-offline@file:../react-relay-offline-0.4.0-a10.tgz":
+  version "0.4.0-a10"
+  resolved "file:../react-relay-offline-0.4.0-a10.tgz#a28d77a7455a4e230695e9ffc9d9024dad348676"
   dependencies:
     "@babel/runtime" "^7.0.0"
     "@redux-offline/redux-offline" "2.5.1"
+    "@wora/detect-network" "0.1.0"
     array-find-index "1.0.2"
     cache-persist "0.3.0"
     fbjs "^1.0.0"
