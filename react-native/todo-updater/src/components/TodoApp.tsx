@@ -13,71 +13,69 @@
 
 import AddTodoMutation from '../mutations/AddTodoMutation';
 import TodoList from './TodoList';
-import TodoListFooter from './TodoListFooter';
-import TodoTextInput from './TodoTextInput';
 
 import React from 'react';
-/*
-  version 0.4.0
-import {createFragmentContainer, graphql, useIsConnected, useNetInfo } from 'react-relay-offline';
-*/
+import { StyleSheet, View } from 'react-native';
+//version 0.4.0
+//import {createFragmentContainer, graphql, useIsConnected, useNetInfo } from 'react-relay-offline';
 import {createFragmentContainer, graphql } from 'react-relay-offline';
+import TodoListFooter from './TodoListFooter';
+import styled from "styled-components";
+import { Text, Input } from 'react-native-elements';
 
-import type {RelayProp} from 'react-relay';
-import type {TodoApp_user} from 'relay/TodoApp_user.graphql';
+const StyledTodoApp = styled.View`
+  backgroundColor: #fff;
+  margin: 4px 0 4px 0;
+  position: relative;
+`;
 
-type Props = {|
-  +relay: RelayProp,
-  +user: TodoApp_user,
-|};
 
-const TodoApp = ({relay, user}: Props) => {
+const TodoApp = ({relay, user}: any) => {
   const handleTextInputSave = (text: string) => {
     AddTodoMutation.commit(relay.environment, text, user);
     return;
   };
-/*
-  version 0.4.0
-  const isConnected = useIsConnected();
-  const netInfo = useNetInfo();
 
-  console.log('isConnected', isConnected)
-  console.log('netInfo', netInfo)
-*/
+  // version 0.4.0
+  //const isConnected = useIsConnected();
+  //const netInfo = useNetInfo();
+
   const hasTodos = user.totalCount > 0;
 
   return (
-    <div>
-      <section className="todoapp">
-        <header className="header">
-          <h1>todos</h1>
-
-          <TodoTextInput
-            className="new-todo"
-            onSave={handleTextInputSave}
-            placeholder="What needs to be done?"
-          />
-        </header>
-
+    <View>
+      <StyledTodoApp>
+        <View>
+          <Text h3 style={styles.welcome}>Todos</Text>
+          <Input placeholder='What needs to be done?'
+          onSubmitEditing={(event) => handleTextInputSave(event.nativeEvent.text)} />
+        </View>
+        
         <TodoList user={user} />
         {hasTodos && <TodoListFooter user={user} />}
-      </section>
-
-      <footer className="info">
-        <p>Double-click to edit a todo</p>
-
-        <p>
-          Created by the{' '}
-          <a href="https://facebook.github.io/relay/">Relay team</a>
-        </p>
-
-        <p>
-          Part of <a href="http://todomvc.com">TodoMVC</a>
-        </p>
-      </footer>
-    </div>
+        </StyledTodoApp>
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#F5FCFF',
+    },
+    header: {
+
+    },
+    welcome: {
+      textAlign: 'center',
+      margin: 10,
+    },
+    instructions: {
+      textAlign: 'center',
+      color: '#333333',
+      marginBottom: 5,
+    },
+  });
 
 export default createFragmentContainer(TodoApp, {
   user: graphql`
@@ -91,3 +89,8 @@ export default createFragmentContainer(TodoApp, {
     }
   `,
 });
+/*
+
+      ...TodoListFooter_user
+      
+*/

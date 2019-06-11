@@ -3,5 +3,6 @@
 .nvmrc
 /dist/
 /lib/
+*.tgz
 node_modules
 npm-debug.log
