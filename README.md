@@ -24,11 +24,17 @@ yarn start
 
 ## React Native
 
-modify src/relay/index.ts
+* change local ip address
 
-`const localIP = "SETLOCALIP"`
 
-with local ip
+```
+cd react-native/todo-updater/src/relay
+modify file: index.ts
+
+const localIP = "SETLOCALIP"
+
+with your local ip
+```
 
 * start server relay
 
