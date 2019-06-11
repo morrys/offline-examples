@@ -42,6 +42,7 @@ with your local ip
 cd react-native/todo-updater/server
 npm install
 npm run start
+```
 
 * Starts the server that communicates with connected devices
 
