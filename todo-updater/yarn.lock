@@ -961,6 +961,13 @@
     "@webassemblyjs/wast-parser" "1.8.5"
     "@xtuc/long" "4.2.2"
 
+"@wora/cache-persist@0.4.1":
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/@wora/cache-persist/-/cache-persist-0.4.1.tgz#30138e2f24891e7a3e8f4fb6059c4a8df9751cdd"
+  integrity sha512-gVMW/8Z7D1N/v9X9y53r3flf/yykmvTw8B5Kur6gc+xrolQQhXoLkcmq7GGb5ipH7CJMF3MuMsscF2eX9foF7A==
+  dependencies:
+    idb "^4.0.0"
+
 "@wora/detect-network@0.1.0":
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/@wora/detect-network/-/detect-network-0.1.0.tgz#e26d7f4a0abd12035296e35932cb37d2679e0020"
@@ -1606,13 +1613,6 @@ cache-base@^1.0.1:
     to-object-path "^0.3.0"
     union-value "^1.0.0"
     unset-value "^1.0.0"
-
-cache-persist@0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/cache-persist/-/cache-persist-0.3.0.tgz#dea7ffb2a21382f767aea5cc8416b1a7a8749f67"
-  integrity sha512-YE3ikW4mu1JwNNkOG8eo6NEaK5fQM+2GVgULy4t9eM/dngXYhc46MmliGk45QDt00uDbHn+8ZdVxUefoW9uCfw==
-  dependencies:
-    idb "^4.0.0"
 
 call-me-maybe@^1.0.1:
   version "1.0.1"
@@ -5086,15 +5086,16 @@ react-is@^16.8.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.4.tgz#90f336a68c3a29a096a3d648ab80e87ec61482a2"
   integrity sha512-PVadd+WaUDOAciICm/J1waJaSvgq+4rHE/K70j0PFqKhkTBsPv/82UGQJNXAngz1fOQLLxI6z1sEDmJDQhCTAA==
 
-"react-relay-offline@file:../react-relay-offline-0.4.0-a10.tgz":
-  version "0.4.0-a10"
-  resolved "file:../react-relay-offline-0.4.0-a10.tgz#a28d77a7455a4e230695e9ffc9d9024dad348676"
+react-relay-offline@0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/react-relay-offline/-/react-relay-offline-0.4.0.tgz#f1f9b53b0d50eef96dcba0b99ead1bf4b6cbcaae"
+  integrity sha512-OLWcVUIM6ojp+S1MaSTUXF+KNLBpdh8dYJT1uEl7C6V+zBImKreD+PCeTWEYHSBW2fEI3BgoUaYbwscrdO0whQ==
   dependencies:
     "@babel/runtime" "^7.0.0"
     "@redux-offline/redux-offline" "2.5.1"
+    "@wora/cache-persist" "0.4.1"
     "@wora/detect-network" "0.1.0"
     array-find-index "1.0.2"
-    cache-persist "0.3.0"
     fbjs "^1.0.0"
     nullthrows "^1.1.0"
     redux "^3.7.2"

@@ -24,6 +24,7 @@ import {
   type Variables,
 } from 'relay-runtime';
 
+//import { Store, Environment } from 'react-relay-offline';
 import EnvironmentIDB from 'react-relay-offline/lib/runtime/EnvironmentIDB';
 
 import TodoApp from './components/TodoApp';
@@ -54,6 +55,10 @@ function callbackOffline(type, payload, error) {
   console.log("callbackoffline", error)
 }
 const modernEnvironment = EnvironmentIDB.create({ network }, callbackOffline);
+/*
+const store = new Store();
+const modernEnvironment = new Environment({ network, store }, callbackOffline);
+*/
 const rootElement = document.getElementById('root');
 
 if (rootElement) {
