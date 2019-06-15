@@ -26,12 +26,7 @@ import {createFragmentContainer, graphql } from 'react-relay-offline';
 import type {RelayProp} from 'react-relay';
 import type {TodoApp_user} from 'relay/TodoApp_user.graphql';
 
-type Props = {|
-  +relay: RelayProp,
-  +user: TodoApp_user,
-|};
-
-const TodoApp = ({relay, user}: Props) => {
+const TodoApp = ({relay, user, retry}) => {
   const handleTextInputSave = (text: string) => {
     AddTodoMutation.commit(relay.environment, text, user);
     return;
@@ -62,6 +57,10 @@ const TodoApp = ({relay, user}: Props) => {
         <TodoList user={user} />
         {hasTodos && <TodoListFooter user={user} />}
       </section>
+
+      <button onClick={retry} className="refetch" >
+              Retry
+    </button>
 
       <footer className="info">
         <p>Double-click to edit a todo</p>

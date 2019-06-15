@@ -49,15 +49,24 @@ async function fetchQuery(
 }
 
 const network = Network.create(fetchQuery);
-function callbackOffline(type, payload, error) {
-  console.log("callbackoffline", type)
-  console.log("callbackoffline", payload)
-  console.log("callbackoffline", error)
-}
-const modernEnvironment = EnvironmentIDB.create({ network }, callbackOffline);
+const offlineOptions = {
+  manualExecution: false, //optional
+  network: network, //optional
+  onComplete: (options ) => { //optional
+    const { id, offlinePayload, snapshot } = options;
+    console.log("onComplete", options);
+    return true;
+  },
+  onDiscard: ( options ) => { //optional
+    const { id, offlinePayload , error } = options;
+    console.log("onDiscard", options);
+    return true;
+  }
+};
+const modernEnvironment = EnvironmentIDB.create({ network }, offlineOptions); //, {ttl: 60 * 1000}
 /*
 const store = new Store();
-const modernEnvironment = new Environment({ network, store }, callbackOffline);
+const modernEnvironment = new Environment({ network, store }, offlineOptions);
 */
 const rootElement = document.getElementById('root');
 
@@ -78,10 +87,10 @@ if (rootElement) {
         userId: 'me',
       }}
       render={({error, props, cached, retry}) => {
-        console.log('QueryRenderer.render:', { cached, error, retry, state: modernEnvironment.getStoreOffline().getState(), 
+        console.log('QueryRenderer.render:', { cached, error, retry, 
           });
         if (props && props.user) {
-          return <TodoApp user={props.user} />;
+          return <TodoApp user={props.user}  retry={retry}/>;
         } else if (error) {
           return <div>{error.message}</div>;
         }
