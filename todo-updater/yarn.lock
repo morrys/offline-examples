@@ -5061,10 +5061,10 @@ react-is@^16.8.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.4.tgz#90f336a68c3a29a096a3d648ab80e87ec61482a2"
   integrity sha512-PVadd+WaUDOAciICm/J1waJaSvgq+4rHE/K70j0PFqKhkTBsPv/82UGQJNXAngz1fOQLLxI6z1sEDmJDQhCTAA==
 
-react-relay-offline@0.5.0-rc.1:
-  version "0.5.0-rc.1"
-  resolved "https://registry.yarnpkg.com/react-relay-offline/-/react-relay-offline-0.5.0-rc.1.tgz#a9396f4b0bfccf4bc0d8d4e17c4f5ea7db9c32e8"
-  integrity sha512-1VvP/ppTdgwpnoj1nVKqxMukGV7IEoM44TG12UjCDbrYoX2jxdVcG8E0jlNNKPEPGmDbZWvIuTq1Z9Pn/YEGKQ==
+react-relay-offline@0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/react-relay-offline/-/react-relay-offline-0.5.0.tgz#05755a943265c3ec55df9219ecc1027142d4ffc4"
+  integrity sha512-SDn0bkS2AMoZL2WHk99KSFGgyqCgEpjXCIIns6/AZ3Y6RhF/a9mt95P10T21CZ/0GEOfDZIGWNdqeO8nX7/zsw==
   dependencies:
     "@babel/runtime" "^7.0.0"
     "@wora/cache-persist" "0.4.1"

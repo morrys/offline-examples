@@ -24,11 +24,7 @@ const fetchQuery: FetchFunction = (operation, variables) => {
     return response.json();
   });
 }
-function callbackOffline(type: string, payload: any, error: any) {
-  console.log("callbackoffline", type)
-  console.log("callbackoffline", payload)
-  console.log("callbackoffline", error)
-}
+
 
 
 /**
@@ -36,6 +32,21 @@ function callbackOffline(type: string, payload: any, error: any) {
  */
 const network = Network.create(RelayNetworkLogger.wrapFetch(fetchQuery, () => ''));
 export default network;
+
+const offlineOptions = {
+  manualExecution: false, //optional
+  network: network, //optional
+  onComplete: (options:any ) => { //optional
+    const { id, offlinePayload, snapshot } = options;
+    console.log("onComplete", options);
+    return true;
+  },
+  onDiscard: ( options:any ) => { //optional
+    const { id, offlinePayload , error } = options;
+    console.log("onDiscard", options);
+    return true;
+  }
+};
 
 /**
  * Store
@@ -45,4 +56,4 @@ export const store = new Store();
 /**
  * Environment 
  */
-export const environment = new Environment({ network, store }, callbackOffline);
+export const environment = new Environment({ network, store }, offlineOptions);
