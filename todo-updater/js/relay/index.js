@@ -26,9 +26,12 @@ async function fetchQuery(
     return response.json();
   }
   
-  const network = Network.create(fetchQuery);
+  import RelayNetworkLogger from 'relay-runtime/lib/RelayNetworkLogger'
+  const network = Network.create(RelayNetworkLogger.wrapFetch(fetchQuery, () => ''));
+  export const manualExecution = false;
+
   const offlineOptions = {
-    manualExecution: false, //optional
+    manualExecution, //optional
     network: network, //optional
     onComplete: (options ) => { //optional
       const { id, offlinePayload, snapshot } = options;

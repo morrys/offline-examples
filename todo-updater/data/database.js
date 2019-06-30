@@ -44,8 +44,10 @@ const todoIdsByUser: Map<string, $ReadOnlyArray<string>> = new Map([
 ]);
 
 // Seed initial data
-addTodo('0', 'Taste JavaScript', true);
-addTodo('1', 'Buy a unicorn', false);
+addTodo('0', 'React', true);
+addTodo('1', 'Relay', false);
+addTodo('2', 'Offline', false);
+addTodo('3', 'try', false);
 
 function getTodoIdsForUser(id: string): $ReadOnlyArray<string> {
   return todoIdsByUser.get(id) || [];

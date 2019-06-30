@@ -9,6 +9,8 @@ import {createFragmentContainer, graphql, useIsConnected, useNetInfo } from 'rea
 */
 import { useOffline } from 'react-relay-offline';
 
+import { manualExecution } from '../relay';
+
 const RequestOffline = ({ payload, user }) => {
 
     const { id, request: { operation, backup, sinkPublish } } = payload;
@@ -73,11 +75,11 @@ const TodoOffline = ({ relay, user, retry }) => {
                 <RequestOffline key={payload.id} payload={payload} user={user} />
             ))}
         </ul>
-        <button
+        {manualExecution && <button
           className="buttonmutation"
           onClick={execute}>
           Execute Offline Mutation
-        </button>
+        </button>}
     </section>
 
 }
