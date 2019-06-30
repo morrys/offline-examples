@@ -28,7 +28,7 @@ type Props = {|
   +user: Todo_user,
 |};
 
-const Todo = ({relay, todo, user}: Props) => {
+export const Todo = ({relay, todo, user, disabled}: Props) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
   const handleCompleteChange = (e: SyntheticEvent<HTMLInputElement>) => {
@@ -37,7 +37,10 @@ const Todo = ({relay, todo, user}: Props) => {
   };
 
   const handleDestroyClick = () => removeTodo();
-  const handleLabelDoubleClick = () => setIsEditing(true);
+  const handleLabelDoubleClick = () => {
+    if(!disabled)
+      setIsEditing(true);
+  }
   const handleTextInputCancel = () => setIsEditing(false);
 
   const handleTextInputDelete = () => {
@@ -65,10 +68,11 @@ const Todo = ({relay, todo, user}: Props) => {
           className="toggle"
           onChange={handleCompleteChange}
           type="checkbox"
+          disabled={disabled}
         />
 
         <label onDoubleClick={handleLabelDoubleClick}>{todo.text}</label>
-        <button className="destroy" onClick={handleDestroyClick} />
+        {!disabled && <button className="destroy" onClick={handleDestroyClick} />}
       </div>
 
       {isEditing && (

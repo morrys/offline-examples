@@ -26,8 +26,7 @@ body {
   background: #f5f5f5;
   color: #4d4d4d;
   min-width: 230px;
-  max-width: 550px;
-  margin: 0 auto;
+  margin: 20px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-weight: 300;
@@ -41,7 +40,67 @@ body {
   display: none;
 }
 
+.divider {
+  display: flex;
+}
+
+.view {
+  display: flex;
+}
+
+.storeapp {
+  flex: 1;
+  margin: 130px 0 40px 0;
+  position: relative;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.buttonmutation {
+  background: #fff;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    margin: 20px;
+}
+
+.mainrequest {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
+}
+
+.headerrequest {
+  text-align: center;
+  background: #fff;
+}
+
+.pmutation {
+  margin: 0;
+  padding: 10px;
+}
+
+.mainbefore {
+  display: flex;
+}
+
+.emptymutation {
+  flex: 1;
+  min-height: 10px;
+}
+
+.mutationbefore {
+  flex: 1;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
+  margin: 0;
+}
+
+.listmutation {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+}
+
 .todoapp {
+  flex: 1;
   background: #fff;
   margin: 130px 0 40px 0;
   position: relative;
@@ -66,7 +125,7 @@ body {
   color: #e6e6e6;
 }
 
-.todoapp h1 {
+.todoapp h1, .storeapp h1 {
   position: absolute;
   top: -155px;
   width: 100%;
@@ -146,6 +205,7 @@ label[for='toggle-all'] {
   position: relative;
   font-size: 24px;
   border-bottom: 1px solid #ededed;
+  flex: 1;
 }
 
 .todo-list li:last-child {
@@ -173,9 +233,10 @@ label[for='toggle-all'] {
   width: 40px;
   /* auto, since non-WebKit browsers doesn't support input styling */
   height: auto;
-  position: absolute;
+
+  /*position: absolute;
   top: 0;
-  bottom: 0;
+  bottom: 0; */
   margin: auto 0;
   border: none; /* Mobile Safari */
   -webkit-appearance: none;
@@ -190,7 +251,7 @@ label[for='toggle-all'] {
 }
 
 .todo-list li .toggle:after {
-  content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="-10 -18 100 135"><circle cx="50" cy="50" r="50" fill="none" stroke="%23ededed" stroke-width="3"/></svg>');
+  content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="-10 -18 100 135"><circle cx="50" cy="50" r="50" fill="none" stroke="%23bddad5" stroke-width="3"/></svg>')
 }
 
 .todo-list li .toggle:checked:after {
@@ -199,8 +260,8 @@ label[for='toggle-all'] {
 
 .todo-list li label {
   word-break: break-all;
-  padding: 15px 60px 15px 15px;
-  margin-left: 45px;
+  padding: 15px 0px 15px 15px;
+  /* margin-left: 45px; */
   display: block;
   line-height: 1.2;
   transition: color 0.4s;
@@ -222,7 +283,7 @@ label[for='toggle-all'] {
   margin: auto 0;
   font-size: 30px;
   color: #cc9a9a;
-  margin-bottom: 11px;
+  /* margin-bottom: 11px; */
   transition: color 0.2s ease-out;
 }
 

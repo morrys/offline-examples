@@ -15,66 +15,65 @@ import AddTodoMutation from '../mutations/AddTodoMutation';
 import TodoList from './TodoList';
 import TodoListFooter from './TodoListFooter';
 import TodoTextInput from './TodoTextInput';
+import TodoOffline from './TodoOffline';
 
 import React from 'react';
 /*
   version 0.4.0
 import {createFragmentContainer, graphql, useIsConnected, useNetInfo } from 'react-relay-offline';
 */
-import {createFragmentContainer, graphql } from 'react-relay-offline';
+import { createFragmentContainer, graphql } from 'react-relay-offline';
 
-import type {RelayProp} from 'react-relay';
-import type {TodoApp_user} from 'relay/TodoApp_user.graphql';
+import type { RelayProp } from 'react-relay';
+import type { TodoApp_user } from 'relay/TodoApp_user.graphql';
 
-const TodoApp = ({relay, user, retry}) => {
+const TodoApp = ({ relay, user, retry }) => {
+
+
   const handleTextInputSave = (text: string) => {
     AddTodoMutation.commit(relay.environment, text, user);
     return;
   };
-/*
-  version 0.4.0
-  const isConnected = useIsConnected();
-  const netInfo = useNetInfo();
 
-  console.log('isConnected', isConnected)
-  console.log('netInfo', netInfo)
-*/
+
+  const purge = () => {
+    relay.environment.clearCache().then(result => console.log("clearCache", result));
+  };
+  
   const hasTodos = user.totalCount > 0;
 
   return (
-    <div>
-      <section className="todoapp">
-        <header className="header">
-          <h1>todos</h1>
+      <div className="divider">
+        
+        <section className="todoapp">
 
-          <TodoTextInput
-            className="new-todo"
-            onSave={handleTextInputSave}
-            placeholder="What needs to be done?"
-          />
-        </header>
+          <header className="header">
+            <h1>todos</h1>
 
-        <TodoList user={user} />
-        {hasTodos && <TodoListFooter user={user} />}
-      </section>
+            <TodoTextInput
+              className="new-todo"
+              onSave={handleTextInputSave}
+              placeholder="What needs to be done?"
+            />
+          </header>
 
-      <button onClick={retry} className="refetch" >
-              Retry
-    </button>
+          <TodoList user={user} />
+          {hasTodos && <TodoListFooter user={user} />}
+          <button onClick={retry} className="refetch" >
+          Retry
+        </button>
+        <button onClick={purge} className="refetch" >
+          Purge
+        </button>
 
-      <footer className="info">
-        <p>Double-click to edit a todo</p>
+        <footer className="info">
+          <p>Double-click to edit a todo</p>
+        </footer>
+        </section>
+        <TodoOffline relay={relay} user={user} />
 
-        <p>
-          Created by the{' '}
-          <a href="https://facebook.github.io/relay/">Relay team</a>
-        </p>
-
-        <p>
-          Part of <a href="http://todomvc.com">TodoMVC</a>
-        </p>
-      </footer>
-    </div>
+        
+      </div>
   );
 };
 

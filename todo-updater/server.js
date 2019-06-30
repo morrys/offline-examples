@@ -25,7 +25,7 @@ const APP_PORT: number = 3000;
 // The libdefs don't like it, but it's fine.  $FlowFixMe https://webpack.js.org/api/node/
 const compiler: webpack.Compiler = webpack({
   mode: 'development',
-  entry: ['whatwg-fetch', path.resolve(__dirname, 'js', 'app.js')],
+  entry: ['whatwg-fetch', path.resolve(__dirname, 'js', 'index.js')],
   module: {
     rules: [
       {
@@ -38,7 +38,7 @@ const compiler: webpack.Compiler = webpack({
     ],
   },
   output: {
-    filename: 'app.js',
+    filename: 'index.js',
     path: '/',
   },
 });

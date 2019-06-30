@@ -75,10 +75,10 @@ function commit(
   //const idTot = totalCount + user.completedCount;
   const idTodo = uuid();
   const input: AddTodoInput = {
+    clientMutationId: idTodo,
     id: idTodo,
     text,
     userId: user.userId,
-    clientMutationId: idTodo,
   };
   const totalCount = user.totalCount + 1;
   const idTot = totalCount+user.completedCount;
@@ -120,6 +120,9 @@ function commit(
     mutation,
     variables: {
       input,
+    },
+    onCompleted: (data) => {
+      
     },
     updater: store => {
       // Get the payload returned from the server
