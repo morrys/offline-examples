@@ -946,19 +946,27 @@
     "@webassemblyjs/wast-parser" "1.8.5"
     "@xtuc/long" "4.2.2"
 
-"@wora/cache-persist@0.4.3":
-  version "0.4.3"
-  resolved "https://registry.yarnpkg.com/@wora/cache-persist/-/cache-persist-0.4.3.tgz#a785aa7bce7a7e20f01752f4828d044ce06d2576"
-  integrity sha512-80rDTXUeR3b0y8pD0wTL29/I/E5QoDWBkxPYsaF+9vXPOzi8sDNKCV20MnMVvlPP0GTYakio4XNKjJgJKpyAGg==
+"@wora/cache-persist@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@wora/cache-persist/-/cache-persist-1.0.0.tgz#37db606bc7998732d24a1679a8dfb427ad1313df"
+  integrity sha512-YG1ZZj9DTxv1zU7+Pdm3gEex0xLtx3/8/2jqBUmm5kA0qFFCBDWjBVdoibfyOJZeU/WY/8r5ABMteFkRnxVWdw==
   dependencies:
     idb "^4.0.0"
 
-"@wora/detect-network@0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@wora/detect-network/-/detect-network-0.1.0.tgz#e26d7f4a0abd12035296e35932cb37d2679e0020"
-  integrity sha512-CeqZrhgQOlRkvYgH/KVHvTb+0TpIiWjenmgwFMhUa/6qpiIvKBHiMEY9fFHOGbfOY0WlQcQfGMSZmGVKCcA80Q==
+"@wora/detect-network@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@wora/detect-network/-/detect-network-1.0.0.tgz#bef7fd6974d5dd6d9d77225af19a0b51f945d1ec"
+  integrity sha512-LV87oo6IRTDqc7YMiWP3IyVy/RdkIS8jhHkQd2NkYLwfRVrzNC36EJg8SuOdkTZ4l0q8KhG8XjbcOggYF31hLw==
   dependencies:
     array-find-index "1.0.2"
+
+"@wora/offline-first@0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@wora/offline-first/-/offline-first-0.0.2.tgz#ba53d09575426e664dc38139106229a74ac8ac78"
+  integrity sha512-DAZMe3vHDF4PhkxVet73UZM5z36Wk1aC9Ot/ryKLYZP1HkAZ3FoVb9xGqN1JEf/6aKTgX91ET90L5BtD4pXU3w==
+  dependencies:
+    "@wora/cache-persist" "1.0.0"
+    "@wora/detect-network" "1.0.0"
 
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
@@ -5061,13 +5069,14 @@ react-is@^16.8.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.4.tgz#90f336a68c3a29a096a3d648ab80e87ec61482a2"
   integrity sha512-PVadd+WaUDOAciICm/J1waJaSvgq+4rHE/K70j0PFqKhkTBsPv/82UGQJNXAngz1fOQLLxI6z1sEDmJDQhCTAA==
 
-"react-relay-offline@file:../react-relay-offline-0.6.0-a14.tgz":
-  version "0.6.0-a14"
-  resolved "file:../react-relay-offline-0.6.0-a14.tgz#90d715cabc8066196ea8de10d4eee227eba3d282"
+"react-relay-offline@file:../react-relay-offline-0.6.0-a25.tgz":
+  version "0.6.0-a25"
+  resolved "file:../react-relay-offline-0.6.0-a25.tgz#8894752b45add487a03410ab828086bd964dc456"
   dependencies:
     "@babel/runtime" "^7.0.0"
-    "@wora/cache-persist" "0.4.3"
-    "@wora/detect-network" "0.1.0"
+    "@wora/cache-persist" "1.0.0"
+    "@wora/detect-network" "1.0.0"
+    "@wora/offline-first" "0.0.2"
     fbjs "^1.0.0"
     nullthrows "^1.1.0"
     uuid "3.3.2"
