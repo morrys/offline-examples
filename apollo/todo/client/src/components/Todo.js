@@ -11,21 +11,23 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-// import ChangeTodoStatusMutation from '../mutations/ChangeTodoStatusMutation';
-// import RemoveTodoMutation from '../mutations/RemoveTodoMutation';
-// import RenameTodoMutation from '../mutations/RenameTodoMutation';
+import ChangeTodoStatusMutation from '../mutations/ChangeTodoStatusMutation';
+import RemoveTodoMutation from '../mutations/RemoveTodoMutation';
+import RenameTodoMutation from '../mutations/RenameTodoMutation';
 import TodoTextInput from './TodoTextInput';
+
+import { withApollo } from "react-apollo";
 
 import React, {useState} from 'react';
 import classnames from 'classnames';
 
-export const Todo = ({ todo, user, disabled}) => {
+export const Todo = ({ todo, user, disabled, client}) => {
   const [isEditing, setIsEditing] = useState(false);
-
+  console.log("client", client)
   const handleCompleteChange = (e) => {
     console.log("user", user);
-    //const complete = e.currentTarget.checked;
-    //ChangeTodoStatusMutation.commit(relay.environment, complete, todo, user);
+    const complete = e.currentTarget.checked;
+    ChangeTodoStatusMutation.commit(client, complete, todo, user);
   };
 
   const handleDestroyClick = () => removeTodo();
@@ -42,12 +44,11 @@ export const Todo = ({ todo, user, disabled}) => {
 
   const handleTextInputSave = (text) => {
     setIsEditing(false);
-    console.log("text", text);
-    //RenameTodoMutation.commit(relay.environment, text, todo);
+    RenameTodoMutation.commit(client, text, todo);
   };
 
-  const removeTodo = () => {};
-    //RemoveTodoMutation.commit(relay.environment, todo, user);
+  const removeTodo = () => RemoveTodoMutation.commit(client, todo, user);
+    
 
   return (
     <li
@@ -82,4 +83,4 @@ export const Todo = ({ todo, user, disabled}) => {
   );
 };
 
-export default Todo;
+export default withApollo(Todo);

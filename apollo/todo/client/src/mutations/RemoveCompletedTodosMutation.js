@@ -11,24 +11,11 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import {
-  commitMutation,
-  graphql,
-  type Disposable,
-  type Environment,
-  type RecordSourceSelectorProxy,
-} from 'react-relay-offline';
 
-import {ConnectionHandler} from 'relay-runtime';
-import type {RemoveCompletedTodosInput} from 'relay/RemoveCompletedTodosMutation.graphql';
+import gql from "graphql-tag";
+import { USER_TODOS } from "../app";
 
-import type {TodoListFooter_user} from 'relay/TodoListFooter_user.graphql';
-type Todos = $NonMaybeType<$ElementType<TodoListFooter_user, 'todos'>>;
-type Edges = $NonMaybeType<$ElementType<Todos, 'edges'>>;
-type Edge = $NonMaybeType<$ElementType<Edges, number>>;
-type Node = $NonMaybeType<$ElementType<Edge, 'node'>>;
-
-const mutation = graphql`
+const mutation = gql`
   mutation RemoveCompletedTodosMutation($input: RemoveCompletedTodosInput!) {
     removeCompletedTodos(input: $input) {
       deletedTodoIds
@@ -40,56 +27,56 @@ const mutation = graphql`
   }
 `;
 
-function sharedUpdater(
-  store: RecordSourceSelectorProxy,
-  user: TodoListFooter_user,
-  deletedIDs: $ReadOnlyArray<string>,
-) {
-  const userProxy = store.get(user.id);
-  const conn = ConnectionHandler.getConnection(userProxy, 'TodoList_todos');
-
-  // Purposefully type forEach as void, to toss the result of deleteNode
-  deletedIDs.forEach(
-    (deletedID: string): void => ConnectionHandler.deleteNode(conn, deletedID),
-  );
-}
 
 function commit(
-  environment: Environment,
-  todos: Todos,
-  user: TodoListFooter_user,
-): Disposable {
-  const input: RemoveCompletedTodosInput = {
+  client,
+  todos,
+  user,
+) {
+  const input = {
     userId: user.userId,
   };
 
-  return commitMutation(environment, {
+  const deletedTodoIds = todos.edges
+        ? todos.edges
+            .filter(Boolean)
+            .map((edge) => edge.node)
+            .filter(Boolean)
+            .filter((node) => node.complete)
+            .map((node) => node.id)
+        : [];
+
+  return client.mutate({
     mutation,
     variables: {
       input,
     },
-    updater: (store: RecordSourceSelectorProxy) => {
-      const payload = store.getRootField('removeCompletedTodos');
-      const deletedIds = payload.getValue('deletedTodoIds');
-
-      // $FlowFixMe `payload.getValue` returns mixed, not sure how to check refinement to $ReadOnlyArray<string>
-      sharedUpdater(store, user, deletedIds);
+    optimisticResponse: {
+      removeCompletedTodos: {
+        deletedTodoIds,
+        user: {
+          id: user.id,
+          totalCount: user.totalCount - deletedTodoIds.length,
+          completedCount: 0,
+          __typename: "User"
+        },
+        __typename: "MarkAllTodosPayload"
+      },
     },
-    optimisticUpdater: (store: RecordSourceSelectorProxy) => {
-      // Relay returns Maybe types a lot of times in a connection that we need to cater for
-      const completedNodeIds: $ReadOnlyArray<string> = todos.edges
-        ? todos.edges
-            .filter(Boolean)
-            .map((edge: Edge): ?Node => edge.node)
-            .filter(Boolean)
-            .filter((node: Node): boolean => node.complete)
-            .map((node: Node): string => node.id)
-        : [];
+    update: (cache, data) => {
+      const { userId } = user;
+      const { user: userCache } = cache.readQuery({ query: USER_TODOS, variables: { userId } });
+      console.log("queryResult", userCache)
+      const { todos: { edges } } = userCache;
+      const newEdges = edges.filter(e => !deletedTodoIds.includes(e.node.id))
+      userCache.todos.edges = newEdges;
+      console.log("queryResult", userCache)
 
-      const userRecord = store.get(user.id);
-      userRecord.setValue(userRecord.getValue('totalCount')-completedNodeIds.length, 'totalCount');
-      userRecord.setValue(0, 'completedCount');
-      sharedUpdater(store, user, completedNodeIds);
+      cache.writeQuery({
+        query: USER_TODOS,
+        variables: { userId },
+        data: { user: userCache },
+      });
     },
   });
 }

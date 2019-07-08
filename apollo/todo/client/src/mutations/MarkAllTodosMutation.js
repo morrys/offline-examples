@@ -11,31 +11,10 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import {
-  commitMutation,
-  graphql,
-  type Disposable,
-  type Environment,
-} from 'react-relay-offline';
 
-import type {
-  MarkAllTodosInput,
-  MarkAllTodosMutationResponse,
-} from 'relay/MarkAllTodosMutation.graphql';
+import gql from "graphql-tag";
 
-type MarkAllTodos = $NonMaybeType<
-  $ElementType<MarkAllTodosMutationResponse, 'markAllTodos'>,
->;
-type ChangedTodos = $NonMaybeType<$ElementType<MarkAllTodos, 'changedTodos'>>;
-type ChangedTodo = $ElementType<ChangedTodos, number>;
-
-import type {TodoList_user} from 'relay/TodoList_user.graphql';
-type Todos = $NonMaybeType<$ElementType<TodoList_user, 'todos'>>;
-type Edges = $NonMaybeType<$ElementType<Todos, 'edges'>>;
-type Edge = $NonMaybeType<$ElementType<Edges, number>>;
-type Node = $NonMaybeType<$ElementType<Edge, 'node'>>;
-
-const mutation = graphql`
+const mutation = gql`
   mutation MarkAllTodosMutation($input: MarkAllTodosInput!) {
     markAllTodos(input: $input) {
       changedTodos {
@@ -51,24 +30,25 @@ const mutation = graphql`
 `;
 
 function getOptimisticResponse(
-  complete: boolean,
-  todos: Todos,
-  user: TodoList_user,
-): MarkAllTodosMutationResponse {
+  complete,
+  todos,
+  user,
+) {
   // Relay returns Maybe types a lot of times in a connection that we need to cater for
-  const validNodes: $ReadOnlyArray<Node> = todos.edges
+  const validNodes = todos.edges
     ? todos.edges
         .filter(Boolean)
-        .map((edge: Edge): ?Node => edge.node)
+        .map((edge) => edge.node)
         .filter(Boolean)
     : [];
 
-  const changedTodos: ChangedTodos = validNodes
-    .filter((node: Node): boolean => node.complete !== complete)
+  const changedTodos = validNodes
+    .filter((node) => node.complete !== complete)
     .map(
-      (node: Node): ChangedTodo => ({
+      (node) => ({
         complete: complete,
         id: node.id,
+        __typename: "Todo"
       }),
     );
 
@@ -78,23 +58,25 @@ function getOptimisticResponse(
       user: {
         id: user.id,
         completedCount: complete ? user.totalCount : 0,
+        __typename: "User"
       },
+      __typename: "MarkAllTodosPayload"
     },
   };
 }
 
 function commit(
-  environment: Environment,
-  complete: boolean,
-  todos: Todos,
-  user: TodoList_user,
-): Disposable {
-  const input: MarkAllTodosInput = {
+  client,
+  complete,
+  todos,
+  user,
+) {
+  const input = {
     complete,
     userId: user.userId,
   };
 
-  return commitMutation(environment, {
+  return client.mutate({
     mutation,
     variables: {
       input,

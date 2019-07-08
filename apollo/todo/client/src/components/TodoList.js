@@ -11,20 +11,22 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-// import MarkAllTodosMutation from '../mutations/MarkAllTodosMutation';
+import MarkAllTodosMutation from '../mutations/MarkAllTodosMutation';
 import Todo from './Todo';
 
 import React from 'react';
+import { withApollo } from "react-apollo";
 
 const TodoList = ({
   user,
   user: {todos, totalCount, completedCount},
+  client,
 }) => {
   const handleMarkAllChange = (e) => {
     const complete = e.currentTarget.checked;
 
     if (todos) {
-      //MarkAllTodosMutation.commit(relay.environment, complete, todos, user);
+      MarkAllTodosMutation.commit(client, complete, todos, user);
     }
   };
 
@@ -56,4 +58,4 @@ const TodoList = ({
   );
 };
 
-export default TodoList;
+export default withApollo(TodoList);

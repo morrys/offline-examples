@@ -11,23 +11,15 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-// import AddTodoMutation from '../mutations/AddTodoMutation';
+import AddTodoMutation from '../mutations/AddTodoMutation';
 import TodoList from './TodoList';
 import TodoListFooter from './TodoListFooter';
-import TodoTextInput from './TodoTextInput';
+
 
 import React from 'react';
 
 
 const TodoApp = ({ user = {}, retry }) => {
-
-
-  const handleTextInputSave = (text) => {
-    console.log("text", text)
-    //AddTodoMutation.commit(relay.environment, text, user);
-    return;
-  };
-
 
   const purge = () => {
     //relay.environment.clearCache().then(result => console.log("clearCache", result));
@@ -45,11 +37,7 @@ const TodoApp = ({ user = {}, retry }) => {
           <header className="header">
             <h1>todos</h1>
 
-            <TodoTextInput
-              className="new-todo"
-              onSave={handleTextInputSave}
-              placeholder="What needs to be done?"
-            />
+            <AddTodoMutation user={user} />
           </header>
 
           <TodoList user={user} />

@@ -11,20 +11,10 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import {
-  commitMutation,
-  graphql,
-  type Disposable,
-  type Environment,
-  type RecordSourceSelectorProxy,
-} from 'react-relay-offline';
+import gql from "graphql-tag";
+import { USER_TODOS } from "../app";
 
-import {ConnectionHandler} from 'relay-runtime';
-import type {Todo_user} from 'relay/Todo_user.graphql';
-import type {Todo_todo} from 'relay/Todo_todo.graphql';
-import type {RemoveTodoInput} from 'relay/RemoveTodoMutation.graphql';
-
-const mutation = graphql`
+const mutation = gql`
   mutation RemoveTodoMutation($input: RemoveTodoInput!) {
     removeTodo(input: $input) {
       deletedTodoId
@@ -37,36 +27,47 @@ const mutation = graphql`
 `;
 
 function commit(
-  environment: Environment,
-  todo: Todo_todo,
-  user: Todo_user,
-): Disposable {
-  const input: RemoveTodoInput = {
+  client,
+  todo,
+  user,
+) {
+  const input = {
     id: todo.id,
     userId: user.userId,
   };
-  return commitMutation(environment, {
+  return client.mutate({
     mutation,
     variables: {
       input,
     },
-    configs: [{
-      type: 'NODE_DELETE',
-      deletedIDFieldName: 'deletedTodoId',
+    update: (cache, data) => {
+      const { userId } = user;
+      const { user: userCache } = cache.readQuery({ query: USER_TODOS, variables: { userId } });
+      console.log("queryResult", userCache)
+      const { todos: { edges } } = userCache;
+      const newEdges = edges.filter(e => e.node.id !== todo.id)
+      userCache.todos.edges = newEdges;
+      console.log("queryResult", userCache)
+
+      cache.writeQuery({
+        query: USER_TODOS,
+        variables: { userId },
+        data: { user: userCache },
+      });
     },
-     ],
     optimisticResponse: {
       removeTodo: {
         deletedTodoId: todo.id,
         user: {
           id: user.id,
           completedCount: user.completedCount - (todo.complete ? 1 : 0),
-          totalCount: (user.totalCount-1)
+          totalCount: (user.totalCount - 1)
         },
+        __typename: "RemoveTodoPayload"
       },
-      
+
     },
   });
 }
 
-export default {commit};
+export default { commit };

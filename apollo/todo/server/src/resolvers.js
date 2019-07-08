@@ -9,6 +9,7 @@ import {
   fromGlobalId,
   globalIdField,
   nodeDefinitions,
+  cursorForObjectInConnection
 } from 'graphql-relay';
 
 import {
@@ -18,7 +19,14 @@ import {
   getTodoOrThrow,
   getTodos,
   getUserOrThrow,
+  addTodo,
+  changeTodoStatus,
+  renameTodo,
+  removeTodo,
+  markAllTodos,
+  removeCompletedTodos
 } from './database';
+
 
 export const resolvers = {
   Query: {
@@ -30,10 +38,72 @@ export const resolvers = {
       return getUserOrThrow(id);
     },
   },
+  Mutation: {
+    addTodo: (root, { input: { id, userId, text } }) => {
+      const todoId = addTodo(id, userId, text, false);
+      const todo = getTodoOrThrow(todoId);
+      const outputFields = {
+        todoEdge: {
+          cursor: cursorForObjectInConnection([...getTodos(userId)], todo),
+          node: todo,
+        },
+        user: {
+          ...getUserOrThrow(userId),
+        },
+      }
+      return outputFields;
+    },
+    changeTodoStatus: (root, { input: { id, complete, userId } }) => {
+      changeTodoStatus(id, complete);
+      const todo = getTodoOrThrow(id);
+      const user = getUserOrThrow(userId);
+      const outputFields = {
+        todo,
+        user,
+      }
+
+      return outputFields;
+    },
+    renameTodo: (root, { input: { id, text } }) => {
+      renameTodo(id, text);
+      const todo = getTodoOrThrow(id);
+      const outputFields = {
+        todo,
+      }
+      return outputFields;
+    },
+    removeTodo: (root, { input: { id, userId } }) => {
+      removeTodo(id, userId);
+      const user = getUserOrThrow(userId);
+      const outputFields = {
+        deletedTodoId: id,
+        user,
+      };
+      return outputFields;
+    },
+    markAllTodos: (root, { input: { complete, userId } }) => {
+      const changedTodoIds = markAllTodos(userId, complete);
+      const user = getUserOrThrow(userId);
+      const outputFields = {
+        changedTodos: changedTodoIds.map((todoId) => getTodoOrThrow(todoId)),
+        user,
+      };
+      return outputFields;
+    },
+    removeCompletedTodos: (root, { input: { userId } }) => {
+      const deletedTodoIds = removeCompletedTodos(userId);
+      const user = getUserOrThrow(userId);
+      const outputFields = {
+        deletedTodoIds,
+        user,
+      }
+      return outputFields;
+    }
+  },
   User: {
     id: user => user.id,
     userId: user => user.id,
-    todos: ({id}, {status, after, before, first, last}) => {
+    todos: ({ id }, { status, after, before, first, last }) => {
       return connectionFromArray([...getTodos(id, status)], {
         after,
         before,
@@ -82,31 +152,5 @@ export const resolvers = {
       return messageFeed;
     },
   },*/
-  Mutation: {
-    /*addChannel: (root, args) => {
-      const name = args.name;
-      const id = addChannel(name);
-      return getChannel(id);
-    },
-    addMessage: (root, { message }) => {
-      const channel = channels.find(
-        channel => channel.id === message.channelId
-      );
-      if (!channel) throw new Error('Channel does not exist');
 
-      const newMessage = {
-        id: String(lastMessageId++),
-        text: message.text,
-        createdAt: +new Date(),
-      };
-      channel.messages.push(newMessage);
-
-      pubsub.publish('messageAdded', {
-        messageAdded: newMessage,
-        channelId: message.channelId,
-      });
-
-      return newMessage;
-    },*/
-  },
 };

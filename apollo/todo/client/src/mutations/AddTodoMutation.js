@@ -1,33 +1,12 @@
-// @flow
-/**
- * This file provided by Facebook is for non-commercial testing and evaluation
- * purposes only.  Facebook reserves all rights not expressly granted.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
- * FACEBOOK BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
- * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
- * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- */
-
-import {
-  commitMutation,
-  graphql,
-  type Disposable,
-  type Environment,
-  type RecordProxy,
-  type RecordSourceSelectorProxy,
-} from 'react-relay-offline';
-
-import {ConnectionHandler} from 'relay-runtime';
-import type {TodoApp_user} from 'relay/TodoApp_user.graphql';
-import type {AddTodoInput} from 'relay/AddTodoMutation.graphql';
-
-
+import React from 'react';
 import { v4 as uuid } from "uuid";
+import gql from "graphql-tag";
+import { Mutation } from "react-apollo";
+import { USER_TODOS } from "../app";
 
-const mutation = graphql`
+import TodoTextInput from '../components/TodoTextInput';
+
+export const ADD_TODO = gql`
   mutation AddTodoMutation($input: AddTodoInput!) {
     addTodo(input: $input) {
       todoEdge {
@@ -47,112 +26,67 @@ const mutation = graphql`
   }
 `;
 
-let tempID = 0;
+const AddTodoMutation = ({ user }) => {
+  return <Mutation
+    mutation={ADD_TODO}
+  >
+    {addTodo => (
+      <TodoTextInput
+        className="new-todo"
+        placeholder="What needs to be done?"
+        onSave={(text) => {
+          const idTodo = uuid();
+          const input = {
+            clientMutationId: idTodo,
+            id: idTodo,
+            text,
+            userId: user.userId,
+          };
+          const totalCount = user.totalCount + 1;
+          addTodo({
+            variables: { input },
+            optimisticResponse: {
+              addTodo: {
+                todoEdge: {
+                  node: {
+                    id: idTodo,
+                    text: text,
+                    complete: false,
+                    __typename: "Todo"
+                  },
+                  cursor: null,
+                  __typename: "TodoEdge"
+                },
+                user: {
+                  id: user.id,
+                  totalCount: totalCount
+                }
+              }
+            },
+            update: (cache, { data: { addTodo } }) => {
+              const { todoEdge: { node, __typename } } = addTodo;
+              const { userId } = user;
+              const { user: userCache } = cache.readQuery({ query: USER_TODOS, variables: { userId } });
+              console.log("queryResult", userCache)
+              const { todos: { edges } } = userCache;
+              const newEdges = edges.concat([{ node, __typename }])
+              userCache.todos.edges = newEdges;
+              console.log("queryResult", userCache)
 
-function sharedUpdater(store, user, newEdge) {
-  // Get the current user record from the store
-  const userProxy = store.get(user.id);
-
-  // Get the user's Todo List using ConnectionHandler helper
-  const conn = ConnectionHandler.getConnection(
-    userProxy,
-    'TodoList_todos', // This is the connection identifier, defined here
-    // https://github.com/relayjs/relay-examples/blob/master/todo/js/components/TodoList.js#L76
-  );
-
-  // Insert the new todo into the Todo List connection
-  ConnectionHandler.insertEdgeAfter(conn, newEdge);
-}
-
-
-
-function commit(
-  environment: Environment,
-  text: string,
-  user: TodoApp_user,
-): Disposable {
-  //const totalCount = user.totalCount + 1;
-  //const idTot = totalCount + user.completedCount;
-  const idTodo = uuid();
-  const input: AddTodoInput = {
-    clientMutationId: idTodo,
-    id: idTodo,
-    text,
-    userId: user.userId,
-  };
-  const totalCount = user.totalCount + 1;
-  const idTot = totalCount+user.completedCount;
-/*
-  return commitMutation(environment, {
-    mutation,
-    variables: {
-      input,
-    },
-    optimisticResponse: {
-      addTodo: {
-        todoEdge: {
-          node: {
-            id: idTodo, 
-            text: text,
-            complete: false
-          },
-          cursor: null,
-          __typename: "TodoEdge"
-        },
-        user: {
-          id: user.id,
-          totalCount: totalCount
+              cache.writeQuery({
+                query: USER_TODOS,
+                variables: { userId },
+                data: { user: userCache },
+              });
+            }
+          })
         }
-      }
-    },
-    configs: [{
-      type: 'RANGE_ADD',
-      parentID: user.id,
-      connectionInfo: [{
-        key: 'TodoList_todos',
-        rangeBehavior: 'append',
-      }],
-      edgeName: 'todoEdge',
-    }],
-  });*/
-  
-  return commitMutation(environment, {
-    mutation,
-    variables: {
-      input,
-    },
-    onCompleted: (data) => {
-      
-    },
-    updater: store => {
-      // Get the payload returned from the server
-      const payload = store.getRootField('addTodo');
-
-      // Get the edge of the newly created Todo record
-      const newEdge = payload.getLinkedRecord('todoEdge');
-
-      // Add it to the user's todo list
-      sharedUpdater(store, user, newEdge);
-    },
-    optimisticUpdater: store => {
-
-      
-      const id = idTodo;
-      const node = store.create(id, 'Todo');
-      node.setValue(false, "complete");
-      node.setValue(text, 'text');
-      node.setValue(idTodo, 'id');
-      const newEdge = store.create('client:newEdge:' + idTodo, 'TodoEdge');
-      newEdge.setLinkedRecord(node, 'node');
-      // Add it to the user's todo list
-      sharedUpdater(store, user, newEdge);
-
-      // Given that we don't have a server response here,
-      // we also need to update the todo item count on the user
-      const userRecord = store.get(user.id);
-      userRecord.setValue(userRecord.getValue('totalCount') + 1, 'totalCount');
-    },
-  });
+        }
+        
+      />
+    )}
+  </Mutation>
 }
 
-export default {commit};
+export default AddTodoMutation;
+

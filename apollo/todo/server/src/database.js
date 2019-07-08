@@ -47,17 +47,15 @@ const todoIdsByUser: Map<string, $ReadOnlyArray<string>> = new Map([
   [USER_YOU_ID, []]
 ]);
 
-// Seed initial data
-let nextTodoId: number = 0;
-addTodo(USER_ID, 'Taste JavaScript', true);
-addTodo(USER_ID, 'Buy a unicorn', false);
+addTodo('1', USER_ID, 'Taste JavaScript', true);
+addTodo('2', USER_ID, 'Buy a unicorn', false);
 
 function getTodoIdsForUser(id: string): $ReadOnlyArray<string> {
   return todoIdsByUser.get(id) || [];
 }
 
-export function addTodo(idUser: string, text: string, complete: boolean): string {
-  const todo = new Todo(`${nextTodoId++}`, text, complete);
+export function addTodo(id: string, idUser: string, text: string, complete: boolean): string {
+  const todo = new Todo(id, text, complete);
   todosById.set(todo.id, todo);
 
   const todoIdsForUser = getTodoIdsForUser(idUser);

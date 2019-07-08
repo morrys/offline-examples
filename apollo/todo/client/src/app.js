@@ -4,7 +4,7 @@ import TodoApp from './components/TodoApp';
 import client from './apollo';
 import gql from "graphql-tag";
 import { Query, ApolloProvider } from "react-apollo";
-const USER_TODOS = gql`query appQuery($userId: String!) {
+export const USER_TODOS = gql`query appQuery($userId: String!) {
     user(id: $userId) {
       id
       userId
@@ -64,6 +64,7 @@ return  <Query query={USER_TODOS} variables={{ userId }} fetchPolicy={"network-o
       if (error) return `Error! ${error.message}`;
 
       console.log("others", others);
+      console.log("data", data);
 
       return <TodoApp user={data.user} retry={refetch}/>
     }}

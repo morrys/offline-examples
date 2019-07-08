@@ -11,13 +11,15 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-// import RemoveCompletedTodosMutation from '../mutations/RemoveCompletedTodosMutation';
+import RemoveCompletedTodosMutation from '../mutations/RemoveCompletedTodosMutation';
 
 import React from 'react';
+import { withApollo } from 'react-apollo';
 
 const TodoListFooter = ({
   user,
   user: {todos, completedCount, totalCount},
+  client
 }) => {
   const completedEdges =
     todos && todos.edges
@@ -27,14 +29,13 @@ const TodoListFooter = ({
       : [];
 
   const handleRemoveCompletedTodosClick = () => {
-    console.log("user", user);
-    /*RemoveCompletedTodosMutation.commit(
-      relay.environment,
+    RemoveCompletedTodosMutation.commit(
+      client,
       {
         edges: completedEdges,
       },
       user,
-    );*/
+    );
   };
 
   const numRemainingTodos = totalCount - completedCount;
@@ -57,4 +58,4 @@ const TodoListFooter = ({
   );
 };
 
-export default TodoListFooter;
+export default withApollo(TodoListFooter);

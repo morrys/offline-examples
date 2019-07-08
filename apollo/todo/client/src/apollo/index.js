@@ -53,7 +53,9 @@ class OfflineApolloClient extends ApolloClient {
 
 const client = new OfflineApolloClient({
   link: httpLink,
-  cache: new InMemoryCache()
+  cache: new InMemoryCache({
+    dataIdFromObject: o => o.id
+  })
 });
 
 

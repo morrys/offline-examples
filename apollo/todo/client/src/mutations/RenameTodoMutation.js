@@ -11,21 +11,9 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import {
-  commitMutation,
-  graphql,
-  type Disposable,
-  type Environment,
-} from 'react-relay-offline';
+import gql from "graphql-tag";
 
-import type {Todo_todo} from 'relay/Todo_todo.graphql';
-
-import type {
-  RenameTodoInput,
-  RenameTodoMutationResponse,
-} from 'relay/RenameTodoMutation.graphql';
-
-const mutation = graphql`
+const mutation = gql`
   mutation RenameTodoMutation($input: RenameTodoInput!) {
     renameTodo(input: $input) {
       todo {
@@ -37,30 +25,31 @@ const mutation = graphql`
 `;
 
 function getOptimisticResponse(
-  text: string,
-  todo: Todo_todo,
-): RenameTodoMutationResponse {
+  text,
+  todo,
+) {
   return {
     renameTodo: {
       todo: {
         id: todo.id,
         text: text,
       },
+      __typename: "RenameTodoPayload"
     },
   };
 }
 
 function commit(
-  environment: Environment,
-  text: string,
-  todo: Todo_todo,
-): Disposable {
-  const input: RenameTodoInput = {
+  client,
+  text,
+  todo,
+) {
+  const input = {
     text,
     id: todo.id,
   };
 
-  return commitMutation(environment, {
+  return client.mutate({
     mutation,
     variables: {
       input,
