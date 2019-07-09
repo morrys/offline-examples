@@ -23,9 +23,7 @@ import classnames from 'classnames';
 
 export const Todo = ({ todo, user, disabled, client}) => {
   const [isEditing, setIsEditing] = useState(false);
-  console.log("client", client)
   const handleCompleteChange = (e) => {
-    console.log("user", user);
     const complete = e.currentTarget.checked;
     ChangeTodoStatusMutation.commit(client, complete, todo, user);
   };

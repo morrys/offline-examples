@@ -58,7 +58,17 @@ const AppTodo = function (appProps) {
 
 const LayoutTodo = ({ userId }) => {
 
-return  <Query query={USER_TODOS} variables={{ userId }} fetchPolicy={"network-only"}>
+  const [rehydrated, setRehydrated] = useState(false);
+
+  console.log("client", rehydrated)
+
+  React.useEffect( () => { client.restore().then(setRehydrated(true))} ,[]);
+  if(!rehydrated) {
+    return <div />
+  }
+  console.log("rehydrated", rehydrated)
+// fetchPolicy={"network-only"}
+return  <Query query={USER_TODOS} variables={{ userId }} >
     {({ loading, error, data, refetch, ...others }) => {
       if (loading) return <div />;
       if (error) return `Error! ${error.message}`;
