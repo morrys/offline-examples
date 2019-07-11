@@ -17,6 +17,7 @@
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.1",
     "subscriptions-transport-ws": "^0.9.16",
+    "@wora/apollo-cache": "0.0.1",
     "@wora/cache-persist": "1.0.0",
     "@wora/detect-network": "1.0.0",
     "@wora/offline-first": "0.0.2",

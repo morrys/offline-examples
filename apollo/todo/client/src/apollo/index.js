@@ -3,7 +3,7 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import { HttpLink } from "apollo-link-http";
 import { NetInfo } from '@wora/detect-network';
 import StoreOffline, { publish } from './OfflineFirstApollo'
-import OfflineStore from './OfflineStore'
+import ApolloCache from '@wora/apollo-cache'
 import { ApolloLink, Observable, Operation, execute, GraphQLRequest, NextLink, FetchResult } from "apollo-link";
 
 
@@ -47,7 +47,7 @@ class OfflineApolloClient extends ApolloClient {
     if (this._isRestored) {
       return Promise.resolve(true);
     }
-    return Promise.all([this._storeOffline.restore(), this.store.cache.restore()]).then(result => {
+    return Promise.all([this._storeOffline.restore(), this.store.cache.hydrated()]).then(result => {
       this._isRestored = true;
       return true;
     }).catch(error => {
@@ -97,7 +97,7 @@ class OfflineApolloClient extends ApolloClient {
 
 const client = new OfflineApolloClient({
   link: httpLink,
-  cache: new OfflineStore({
+  cache: new ApolloCache({
     dataIdFromObject: o => o.id
   })
 });
