@@ -62,7 +62,7 @@ const LayoutTodo = ({ userId }) => {
 
   console.log("client", rehydrated)
 
-  React.useEffect( () => { client.restore().then(setRehydrated(true))} ,[]);
+  React.useEffect( () => { client.hydrated().then(setRehydrated(true))} ,[]);
   if(!rehydrated) {
     return <div />
   }

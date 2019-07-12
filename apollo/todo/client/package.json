@@ -18,18 +18,32 @@
     "react-router-dom": "^5.0.1",
     "subscriptions-transport-ws": "^0.9.16",
     "@wora/apollo-cache": "0.0.1",
-    "@wora/cache-persist": "1.0.0",
+    "@wora/cache-persist": "1.0.1",
     "@wora/detect-network": "1.0.0",
     "@wora/offline-first": "0.0.2",
-    "uuid": "3.3.2"
+    "@wora/apollo-offline": "file:../../../wora-apollo-offline-0.0.1-a5.tgz",
+    "uuid": "3.3.2",
+    "idb": "4.0.4"
   },
   "devDependencies": {
-    "react-scripts": "0.9.3"
+    "react-scripts": "3.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

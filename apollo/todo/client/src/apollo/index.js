@@ -1,10 +1,7 @@
-import { ApolloClient } from "apollo-client";
-import { InMemoryCache } from "apollo-cache-inmemory";
+//import { ApolloClient } from "@wora/apollo-offline";
 import { HttpLink } from "apollo-link-http";
-import { NetInfo } from '@wora/detect-network';
-import StoreOffline, { publish } from './OfflineFirstApollo'
-import ApolloCache from '@wora/apollo-cache'
-import { ApolloLink, Observable, Operation, execute, GraphQLRequest, NextLink, FetchResult } from "apollo-link";
+
+import ApolloClientIDB from '@wora/apollo-offline/lib/ApolloClientIDB';
 
 
 
@@ -13,95 +10,31 @@ const httpLink = new HttpLink({
   uri: "http://localhost:4000/graphql"
 });
 
-class OfflineApolloClient extends ApolloClient {
-
-  _storeOffline;
-  _isRestored = false;
-
-  constructor(options) {
-    super(options);
-    this.queryManager.isOnline = true;
-    this._storeOffline = StoreOffline.create(this);
-    NetInfo.isConnected.addEventListener('connectionChange', isConnected => {
-      console.log(isConnected)
-      this.queryManager.isOnline = isConnected;
-
-    });
-
-    const originalFetchQuery = this.queryManager.fetchQuery;
-    this.queryManager.fetchQuery = function (queryId, options, fetchType, fetchMoreForQueryId) {
-      console.log(this.isOnline);
-      const oldFetchPolicy = options.fetchPolicy;
-      if (!this.isOnline) {
-        options.fetchPolicy = 'cache-only'
-      }
-      const result = originalFetchQuery.apply(this, [queryId, options, fetchType, fetchMoreForQueryId]);
-      options.fetchPolicy = oldFetchPolicy;
-      return result;
-      // Run stuff after, here.
-    }
-    //this.queryManager.fetchQuery = loggerQueryFunction;
+const offlineOptions = { 
+  manualExecution: false, //optional
+  link: httpLink, //optional
+  onComplete: (options ) => { //optional
+    const { id, offlinePayload, request } = options;
+    console.log("onComplete", options);
+    return true;
+  },
+  onDiscard: ( options ) => { //optional
+    const { id, offlinePayload , error } = options;
+    console.log("onDiscard", options);
+    return true;
   }
+};
 
-  restore() {
-    if (this._isRestored) {
-      return Promise.resolve(true);
-    }
-    return Promise.all([this._storeOffline.restore(), this.store.cache.hydrated()]).then(result => {
-      this._isRestored = true;
-      return true;
-    }).catch(error => {
-      this._isRestored = false;
-      throw error;
-    })
-  }
+const cacheOptions = {
+  dataIdFromObject: o => o.id
+};
 
-  getStoreOffline() {
-    return this._storeOffline;
-  }
-
-  isRestored() {
-    return this._isRestored;
-  }
-
-  isRehydrated() {
-    return this._isRestored;
-  }
-
-  isOnline() {
-    return this._storeOffline.isOnline();
-  }
-
-  watchQuery(options) {
-    const oldFetchPolicy = options.fetchPolicy;
-    if (!this.isOnline()) {
-      options.fetchPolicy = 'cache-only'
-    }
-    const result = super.watchQuery(options);
-    result.options.fetchPolicy = oldFetchPolicy;
-    return result;
-  }
-
-  mutate(
-    options,
-  ) {
-    if (!this.isOnline()) {
-      return publish(this, options);
-
-    }
-    return super.mutate(options);
-  }
-
-
-}
-
-const client = new OfflineApolloClient({
+/*const client = new ApolloClient({
   link: httpLink,
-  cache: new ApolloCache({
-    dataIdFromObject: o => o.id
-  })
-});
+  cache: new ApolloCache(cacheOptions)
+}, offlineOptions);*/
 
+const client = ApolloClientIDB.create({ link: httpLink }, cacheOptions, offlineOptions);
 
 
 console.log("client", client)
