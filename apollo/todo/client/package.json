@@ -21,7 +21,7 @@
     "@wora/cache-persist": "1.0.1",
     "@wora/detect-network": "1.0.0",
     "@wora/offline-first": "0.0.2",
-    "@wora/apollo-offline": "file:../../../wora-apollo-offline-0.0.1-a5.tgz",
+    "@wora/apollo-offline": "0.0.1",
     "uuid": "3.3.2",
     "idb": "4.0.4"
   },
