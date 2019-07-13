@@ -1,0 +1,44 @@
+{
+  "name": "client",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "apollo-client": "^2.6.3",
+    "apollo-cache-inmemory": "1.6.2",
+    "apollo-test-utils": "^0.1.1",
+    "apollo-link-http": "1.5.15",
+    "classnames": "2.2.6",
+    "false": "0.0.4",
+    "graphql": "^14.4.2",
+    "graphql-tag": "2.10.1",
+    "graphql-tools": "^0.10.0",
+    "react": "^16.8.6",
+    "react-apollo": "^2.5.8",
+    "react-dom": "^16.8.6",
+    "react-router-dom": "^5.0.1",
+    "subscriptions-transport-ws": "^0.9.16",
+    "@wora/apollo-offline": "0.0.3",
+    "uuid": "3.3.2"
+  },
+  "devDependencies": {
+    "react-scripts": "3.0.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
