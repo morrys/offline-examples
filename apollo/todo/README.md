@@ -1,3 +1,3 @@
-# apollo @wora/offline-first example
+# apollo @wora/apollo-offline example
 
 

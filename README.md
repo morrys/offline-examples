@@ -1,22 +1,19 @@
-# React Relay Offline Example
+# Offline Examples
 
-A collection of example applications using [React Relay Offline](https://github.com/morrys/react-relay-offline).
+A collection of example applications using [react-relay-offline](https://github.com/morrys/react-relay-offline).
 
-* react-relay-version version 0.3.0
+and 
 
+A collection of example applications using [@wora/apollo-offline](https://github.com/morrys/wora/tree/master/packages/apollo-offline).
+
+
+### Relay
 
 ## React
 
-```
-cd todo
-yarn
-yarn build
-yarn start
-```
-
 
 ```
-cd todo-updater
+cd relay/todo-updater
 yarn
 yarn build
 yarn start
@@ -28,7 +25,7 @@ yarn start
 
 
 ```
-cd react-native/todo-updater/src/relay
+cd relay/react-native/todo-updater/src/relay
 modify file: index.ts
 
 const localIP = "SETLOCALIP"
@@ -39,7 +36,7 @@ with your local ip
 * start server relay
 
 ```
-cd react-native/todo-updater/server
+cd relay/react-native/todo-updater/server
 npm install
 npm run start
 ```
@@ -47,7 +44,7 @@ npm run start
 * Starts the server that communicates with connected devices
 
 ```
-cd react-native/todo-updater
+cd relay/react-native/todo-updater
 npm install
 npm run start
 ```
@@ -55,10 +52,26 @@ npm run start
 * Run android
 
 ```
-cd react-native/todo-updater
+cd relay/react-native/todo-updater
 npm run run-android
 ```
 
-## TODO
+### Apollo
 
-* improve the IP configuration
+## React
+
+```
+cd apollo/todo/client
+npm install
+npm run start
+```
+
+```
+cd apollo/todo/server
+npm install
+npm run start
+```
+
+## React Native
+
+todo

@@ -10,18 +10,26 @@ const httpLink = new HttpLink({
   uri: "http://localhost:4000/graphql"
 });
 
-const offlineOptions = { 
+const offlineOptions = {
   manualExecution: false, //optional
   link: httpLink, //optional
+  finish: (isSuccess, mutations) => { //optional
+    console.log("finish offline", isSuccess, mutations)
+  },
   onComplete: (options ) => { //optional
-    const { id, offlinePayload, request } = options;
-    console.log("onComplete", options);
+    const { id, offlinePayload, response } = options;
     return true;
   },
   onDiscard: ( options ) => { //optional
     const { id, offlinePayload , error } = options;
-    console.log("onDiscard", options);
     return true;
+  },
+  onPublish: (offlinePayload) => { //optional
+    const rand = Math.floor(Math.random() * 4) + 1  
+    offlinePayload.serial = rand===1;
+    console.log("offlinePayload", offlinePayload.serial)
+    console.log("offlinePayload", offlinePayload)
+    return offlinePayload
   }
 };
 
