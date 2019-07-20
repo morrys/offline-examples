@@ -122,7 +122,7 @@ function commit(
       input,
     },
     onCompleted: (data) => {
-      
+      console.log("onCompleted", data)
     },
     updater: store => {
       // Get the payload returned from the server

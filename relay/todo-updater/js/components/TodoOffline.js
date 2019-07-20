@@ -19,10 +19,10 @@ const RequestOffline = ({ offlineRecord, user }) => {
 
     const todoBackup = backup._records[input.id]
 
-    const todoPublish = sink._records[input.id]
+    let todoPublish = sink._records[input.id]
 
     if(name==='ChangeTodoStatusMutation') {
-        todoPublish.text = todoBackup.text;
+        todoPublish = Object.assign({}, todoPublish, {text:todoBackup.text});
     }
 
     const isMultiple = name ==='RemoveCompletedTodosMutation' || name ==='MarkAllTodosMutation'

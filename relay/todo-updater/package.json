@@ -16,7 +16,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
-    "react-relay-offline": "0.6.0",
+    "react-relay-offline": "0.7.0",
     "react-relay": "^5.0.0",
     "todomvc-app-css": "^2.2.0",
     "todomvc-common": "^1.0.3",
@@ -48,6 +48,7 @@
     "flow-typed": "^2.5.1",
     "prettier": "^1.16.4",
     "relay-compiler": "^5.0.0",
+    "relay-runtime": "^5.0.0",
     "webpack": "^4.29.6",
     "webpack-dev-server": "^3.2.1"
   },

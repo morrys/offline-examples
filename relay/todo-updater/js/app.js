@@ -26,7 +26,7 @@ import environment from './relay';
 
 const AppTodo = <QueryRenderer
       environment={environment}
-      dataFrom="CACHE_FIRST"
+      dataFrom="STORE_THEN_NETWORK"
       query={graphql`
         query appQuery($userId: String) {
           user(id: $userId) {
@@ -34,6 +34,7 @@ const AppTodo = <QueryRenderer
           }
         }
       `}
+      ttl={100000}
       variables={{
         // Mock authenticated ID that matches database
         userId: 'me',

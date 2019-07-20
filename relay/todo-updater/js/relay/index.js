@@ -38,6 +38,7 @@ async function fetchQuery(
     },
     onComplete: (options ) => { //optional
       const { id, offlinePayload, snapshot } = options;
+      console.log("onComplete", options)
       return true;
     },
     onDiscard: ( options ) => { //optional
