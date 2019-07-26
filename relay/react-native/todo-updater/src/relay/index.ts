@@ -9,7 +9,7 @@ import RelayNetworkLogger from 'relay-runtime/lib/RelayNetworkLogger'
  */
 const fetchQuery: FetchFunction = (operation, variables) => {
   
-  const localIP = "SETLOCALIP";
+  const localIP = "192.168.1.105";
   console.log("fetch", localIP, operation)
   return fetch('http://'+localIP+':3000/graphql', {
     method: 'POST',

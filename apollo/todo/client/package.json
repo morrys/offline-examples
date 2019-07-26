@@ -17,7 +17,7 @@
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.1",
     "subscriptions-transport-ws": "^0.9.16",
-    "@wora/apollo-offline": "0.0.4",
+    "@wora/apollo-offline": "0.1.1",
     "uuid": "3.3.2"
   },
   "devDependencies": {
