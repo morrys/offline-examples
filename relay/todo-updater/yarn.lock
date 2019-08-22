@@ -1005,35 +1005,36 @@
   dependencies:
     idb "^4.0.0"
 
-"@wora/detect-network@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@wora/detect-network/-/detect-network-1.1.0.tgz#1ec358f1661d25d46916ddb568046cd91334aaeb"
-  integrity sha512-THIrrqusrvha6iFVP1Pc4uWt/zZnJnDtbFBzzjTl8YynTmpMEpFKjWI8S0w/ENagM0w5YwnLRKXZRFQQaUJzCg==
+"@wora/detect-network@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@wora/detect-network/-/detect-network-1.2.1.tgz#260c64724008e0826fdf2e9f749f70606bf5cced"
+  integrity sha512-vONP2GWhiENR07YJK18psM6mZVuWhHiOwAYffJ5JQxeSRHE3ZZvezsTHg2g90k3M4dabsZuJQIJye374EkXP+w==
   dependencies:
-    "@wora/netinfo" "^1.0.0"
+    "@wora/netinfo" "^1.0.1"
 
-"@wora/netinfo@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@wora/netinfo/-/netinfo-1.0.0.tgz#9de41f57a9f91b9cd72a9971b6a3cfb79c13d980"
-  integrity sha512-j6lhpibKbZejR9O4td386EXpAdHznznLdsQM7eaCBSA7aaDt4eSJvPChfGz7kKna0tAVxANDo9mJwPE4YAmpsA==
+"@wora/netinfo@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@wora/netinfo/-/netinfo-1.0.1.tgz#4b1517bf12b2bbd31b7e9f2dce4b3aea7fa167fd"
+  integrity sha512-+cx4cA4c6QK11u975lKrGbRNg7AO47iz0BQikUFMfT4gB8Y6qFJeQgMTJkBXius5IyIyB2U39q/+5KP46xwW8g==
   dependencies:
     array-find-index "1.0.2"
+    fbjs "^1.0.0"
 
-"@wora/offline-first@^0.0.5":
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/@wora/offline-first/-/offline-first-0.0.5.tgz#e52006c49f3cdc98e7fcaffb7e63ae607b15d9ac"
-  integrity sha512-bZHLfMi37Sxg/bOeN/Skid9ijykUajz3ETu8invf4XGGBygeAuhKXA5nqEN3BSA5LVGeKfN/iBSj1BnY5WYkuQ==
-  dependencies:
-    "@wora/cache-persist" "^1.0.2"
-    "@wora/netinfo" "^1.0.0"
-
-"@wora/relay-offline@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@wora/relay-offline/-/relay-offline-0.1.0.tgz#3c9eccd9920b205c5cf1b487d214525bad0a5928"
-  integrity sha512-8QS8zU5vMQpoG4x32k/UDChztKb45Rm+g53MmgWA+qD1so3+VY9yoS+pf3MV6NAtaVbq2fUib/Sy2sTEs6uVoA==
+"@wora/offline-first@^0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@wora/offline-first/-/offline-first-0.0.6.tgz#9a5a2a7f8a2ad2c977ea0271b37e81c9b34ef03b"
+  integrity sha512-DlaaXH04pIS7zQKPNQ64XfiML21c5SGGqXfRonDeZWOxkmLKmItEk/XNqJ5cFiJR91FX8oeKS6KBqbvu4WbqUA==
   dependencies:
     "@wora/cache-persist" "^1.1.0"
-    "@wora/offline-first" "^0.0.5"
+    "@wora/netinfo" "^1.0.1"
+
+"@wora/relay-offline@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@wora/relay-offline/-/relay-offline-0.1.2.tgz#ae71737d9384992506c637b8f573f36f7112bb38"
+  integrity sha512-ip7CRw1TSmk87+19MVNrWfba7SZXxnJ1mdnyEDRb6LIJVAvM+xfGc3psbbe3jB5FZuX+M7sLKnEbBk0X9TtQdA==
+  dependencies:
+    "@wora/cache-persist" "^1.1.0"
+    "@wora/offline-first" "^0.0.6"
     "@wora/relay-store" "^0.0.6"
     fbjs "^1.0.0"
     uuid "3.3.2"
@@ -5236,14 +5237,14 @@ react-is@^16.8.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.6.tgz#5bbc1e2d29141c9fbdfed456343fe2bc430a6a16"
   integrity sha512-aUk3bHfZ2bRSVFFbbeVS4i+lNPZr3/WM5jT2J5omUVV1zzcs1nAaf3l51ctA5FFvCRbhrH0bdAsRRQddFJZPtA==
 
-react-relay-offline@0.8.0:
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/react-relay-offline/-/react-relay-offline-0.8.0.tgz#311f068ea461437a94ef14adfd31e2cff4a74c0e"
-  integrity sha512-0aDRh1w4K3BOgUnSeBbd3PhgzoqEMLJGHD72pJ62p5VjRVe4OuVc422olHoUnmsDpZVsw6PpGXbgO8FsL3iDVg==
+react-relay-offline@0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/react-relay-offline/-/react-relay-offline-0.9.0.tgz#1fcffe7955cee7d524d026e537ca56ddfbb119a6"
+  integrity sha512-ROincakGaBToY+GCH0LwRdBcZfsxxXN+fnj3v9IGlZrin41yN3UL+fla0kgbt3MjW4B3ckWT1HZb90Y9JNq9pA==
   dependencies:
     "@babel/runtime" "^7.0.0"
-    "@wora/detect-network" "^1.1.0"
-    "@wora/relay-offline" "^0.1.0"
+    "@wora/detect-network" "^1.2.1"
+    "@wora/relay-offline" "^0.1.2"
     fbjs "^1.0.0"
     nullthrows "^1.1.0"
     uuid "3.3.2"

@@ -13,42 +13,71 @@
 
 import * as React from 'react';
 
-import {graphql} from 'react-relay';
-import {QueryRenderer} from 'react-relay-offline';
+import { graphql, fetchQuery } from 'react-relay';
+import { QueryRenderer, useRestore } from 'react-relay-offline';
 
 
 import TodoApp from './components/TodoApp';
-import type {appQueryResponse} from 'relay/appQuery.graphql';
+import type { appQueryResponse } from 'relay/appQuery.graphql';
 
 import environment from './relay';
 
 
 
-const AppTodo = <QueryRenderer
-      environment={environment}
-      dataFrom="STORE_THEN_NETWORK"
-      query={graphql`
+const AppTodo = (props) => {
+  
+
+  // ***** added to verify useRestore and fetchQuery ***
+  const [load, setLoad] = React.useState(false);
+
+  const rehydratate = useRestore(environment);
+
+  if (rehydratate && !load) {
+    fetchQuery(environment, graphql`
+    query appQuery($userId: String) {
+      user(id: $userId) {
+        ...TodoApp_user
+      }
+    }
+  `, { userId: 'me', })
+      .then(data => {
+        setLoad(data);
+      });
+  }
+
+  if (!load) {
+    return <div>Loading</div>;
+  }
+
+  // ****************************************************
+  return <QueryRenderer
+    environment={environment}
+    query={graphql`
         query appQuery($userId: String) {
           user(id: $userId) {
             ...TodoApp_user
           }
         }
       `}
-      ttl={100000}
-      variables={{
-        // Mock authenticated ID that matches database
-        userId: 'me',
-      }}
-      render={({error, props, cached, retry}) => {
-        //console.log('QueryRenderer.render:', { cached, error, retry, });
-        if (props && props.user) {
-          return <TodoApp user={props.user}  retry={retry}/>;
-        } else if (error) {
-          return <div>{error.message}</div>;
-        }
+    dataFrom="CACHE_FIRST"
+    ttl={10000}
+    variables={{
+      // Mock authenticated ID that matches database
+      userId: 'me',
+    }}
+    render={({ error, props, cached, retry }) => {
+      //console.log('QueryRenderer.render:', { cached, error, retry, });
+      if (props && props.user) {
+        return <TodoApp user={props.user} retry={retry} />;
+      } else if (error) {
+        return <div>{error.message}</div>;
+      }
 
-        return <div>Loading</div>;
-      }}
-    />;
+      return <div>Loading</div>;
+    }}
+  />;
+}
 
-export default AppTodo;
+const App = <AppTodo />
+
+export default App;
