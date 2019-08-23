@@ -5237,10 +5237,10 @@ react-is@^16.8.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.6.tgz#5bbc1e2d29141c9fbdfed456343fe2bc430a6a16"
   integrity sha512-aUk3bHfZ2bRSVFFbbeVS4i+lNPZr3/WM5jT2J5omUVV1zzcs1nAaf3l51ctA5FFvCRbhrH0bdAsRRQddFJZPtA==
 
-react-relay-offline@0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/react-relay-offline/-/react-relay-offline-0.9.0.tgz#1fcffe7955cee7d524d026e537ca56ddfbb119a6"
-  integrity sha512-ROincakGaBToY+GCH0LwRdBcZfsxxXN+fnj3v9IGlZrin41yN3UL+fla0kgbt3MjW4B3ckWT1HZb90Y9JNq9pA==
+react-relay-offline@0.10.0:
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/react-relay-offline/-/react-relay-offline-0.10.0.tgz#e87c7ede21d723ae2c631fcae1dd5adf579825ca"
+  integrity sha512-TD3eU0BHuHvDPhVPEe5ytma986cQfUA2eZx31XkfpHIVQYMuwn2BrwDtXD1wKB8sTPavIM/YqamtsWotunVKTw==
   dependencies:
     "@babel/runtime" "^7.0.0"
     "@wora/detect-network" "^1.2.1"

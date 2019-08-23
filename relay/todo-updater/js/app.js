@@ -13,8 +13,8 @@
 
 import * as React from 'react';
 
-import { graphql, fetchQuery } from 'react-relay';
-import { QueryRenderer, useRestore } from 'react-relay-offline';
+import { graphql  } from 'react-relay';
+import { QueryRenderer, fetchQuery } from 'react-relay-offline';
 
 
 import TodoApp from './components/TodoApp';
@@ -30,9 +30,7 @@ const AppTodo = (props) => {
   // ***** added to verify useRestore and fetchQuery ***
   const [load, setLoad] = React.useState(false);
 
-  const rehydratate = useRestore(environment);
-
-  if (rehydratate && !load) {
+  React.useEffect(() => {
     fetchQuery(environment, graphql`
     query appQuery($userId: String) {
       user(id: $userId) {
@@ -43,8 +41,8 @@ const AppTodo = (props) => {
       .then(data => {
         setLoad(data);
       });
-  }
-
+  }, []);
+  
   if (!load) {
     return <div>Loading</div>;
   }
