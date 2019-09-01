@@ -11,21 +11,27 @@
     "relay:compile": "relay-compiler --src ./src --schema ./server/data/schema.graphql --language typescript",
     "test": "jest",
     "netinfo": "react-native --verbose link @react-native-community/netinfo",
+    "async": "react-native link @react-native-community/async-storage",
     "getIP": "node getIP.js",
     "server": "cd ./server && npm run start"
   },
   "dependencies": {
-    "@react-native-community/netinfo": "3.2.1",
+    "@react-native-community/netinfo": "4.1.5",
     "react": "16.8.3",
     "react-native": "0.59.5",
     "react-native-elements": "^1.1.0",
     "react-native-vector-icons": "^6.5.0",
-    "react-relay": "^4.0.0",
-    "react-relay-offline": "0.7.0",
+    "react-relay": "^5.0.0",
+    "react-relay-offline": "0.10.0",
     "relay-runtime": "^4.0.0",
     "styled-components": "4.3.1",
     "uuid": "3.3.2",
-    "tslib": "1.10.0"
+    "tslib": "1.10.0",
+    "@react-native-community/async-storage": "1.6.1",
+    "@wora/cache-persist": "2.0.0-rc.1"
+  },
+  "resolutions": {
+    "@wora/cache-persist": "2.0.0-rc.1"
   },
   "devDependencies": {
     "@babel/core": "^7.4.4",
@@ -37,13 +43,13 @@
     "@types/react-test-renderer": "^16.8.1",
     "@types/relay-runtime": "^1.3.12",
     "babel-jest": "^24.7.1",
-    "babel-plugin-relay": "^4.0.0",
+    "babel-plugin-relay": "^5.0.0",
     "graphql": "^14.2.1",
     "ip": "1.1.5",
     "jest": "^24.7.1",
     "metro-react-native-babel-preset": "^0.53.1",
     "react-test-renderer": "16.8.3",
-    "relay-compiler": "^4.0.0",
+    "relay-compiler": "^5.0.0",
     "relay-compiler-language-typescript": "^4.3.0",
     "typescript": "^3.4.5"
   },

@@ -2,7 +2,7 @@ import { Store, Environment } from 'react-relay-offline';
 
 import { Network, FetchFunction } from 'relay-runtime';
 export { QueryRenderer, graphql } from 'react-relay-offline';
-import RelayNetworkLogger from 'relay-runtime/lib/RelayNetworkLogger'
+import RelayNetworkLogger from 'relay-runtime/lib/RelayNetworkLogger';
 
 /**
  * Define fetch query
@@ -41,7 +41,7 @@ const offlineOptions = {
     console.log("onComplete", options);
     return true;
   },
-  onDiscard: ( options:any ) => { //optional
+  onDiscard: ( options:any ) => { //optio
     const { id, offlinePayload , error } = options;
     console.log("onDiscard", options);
     return true;
@@ -51,7 +51,8 @@ const offlineOptions = {
 /**
  * Store
  */
-export const store = new Store();
+const options:any = { errorHandling: (cache: any, error: any) => console.log("error storage", error)};
+export const store = new Store(60000, options, options);
 
 /**
  * Environment 
