@@ -17,7 +17,7 @@
     "server": "cd ./server && npm run start"
   },
   "dependencies": {
-    "@react-native-community/netinfo": "4.1.5",
+    "@react-native-community/netinfo": "4.2.1",
     "react": "16.8.3",
     "react-native": "0.59.5",
     "react-native-elements": "^1.1.0",

@@ -2,8 +2,6 @@ import { ApolloClient } from "@wora/apollo-offline";
 import ApolloCache from "@wora/apollo-cache";
 import { HttpLink } from "apollo-link-http";
 
-// import ApolloClientIDB from '@wora/apollo-offline/lib/ApolloClientIDB';
-
 
 
 const localIP = "192.168.1.105";
@@ -16,20 +14,28 @@ const offlineOptions = {
   link: httpLink, //optional
   finish: (isSuccess, mutations) => { //optional
     console.log("finish offline", isSuccess, mutations)
+    /*if(mutations){
+      mutations.forEach(mut => {
+        const { request, ...others } = mut;
+        console.log("mutation", others);
+      })
+    }*/
   },
   onComplete: (options ) => { //optional
     const { id, offlinePayload, response } = options;
+    console.log("onComplete offline", options)
     return true;
   },
   onDiscard: ( options ) => { //optional
     const { id, offlinePayload , error } = options;
+    console.log("onDiscard offline", options)
     return true;
   },
   onPublish: (offlinePayload) => { //optional
-    const rand = Math.floor(Math.random() * 4) + 1  
-    offlinePayload.serial = rand===1;
-    console.log("offlinePayload", offlinePayload.serial)
-    console.log("offlinePayload", offlinePayload)
+    //const rand = Math.floor(Math.random() * 4) + 1  
+    //offlinePayload.serial = rand===1;
+    //console.log("offlinePayload", offlinePayload.serial)
+    console.log("onPublish offline", offlinePayload)
     return offlinePayload
   }
 };
@@ -42,13 +48,6 @@ const client = new ApolloClient({
   link: httpLink,
   cache: new ApolloCache(cacheOptions)
 }, offlineOptions);
-
-// const client = ApolloClientIDB.create({ link: httpLink }, cacheOptions, offlineOptions);
-
-
-console.log("client", client)
-
-console.log("client querymanager", client.queryManager)
 
 
 export default client;
