@@ -31,13 +31,21 @@ const AppTodo = (props) => {
   const [load, setLoad] = React.useState(false);
 
   React.useEffect(() => {
+    Array.from({length: 10},(_,x) =>
     fetchQuery(environment, graphql`
     query appQuery($userId: String) {
       user(id: $userId) {
         ...TodoApp_user
       }
     }
-  `, { userId: 'me', })
+  `, { userId: 'me', }, { force: true }));
+    fetchQuery(environment, graphql`
+    query appQuery($userId: String) {
+      user(id: $userId) {
+        ...TodoApp_user
+      }
+    }
+  `, { userId: 'you', })
       .then(data => {
         setLoad(data);
       });

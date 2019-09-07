@@ -12,6 +12,7 @@
     "test": "jest",
     "netinfo": "react-native --verbose link @react-native-community/netinfo",
     "async": "react-native link @react-native-community/async-storage",
+    "icons": "react-native link react-native-vector-icons",
     "getIP": "node getIP.js",
     "server": "cd ./server && npm run start"
   },

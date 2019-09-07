@@ -74,4 +74,37 @@ npm run start
 
 ## React Native
 
-todo
+* change local ip address
+
+
+```
+cd apollo/react-native/todo/src/apollo
+modify file: index.ts
+
+const localIP = "SETLOCALIP"
+
+with your local ip
+```
+
+* start server relay
+
+```
+cd apollo/react-native/todo/server
+yarn
+yarn start
+```
+
+* Starts the server that communicates with connected devices
+
+```
+cd apollo/react-native/todo
+yarn
+yarn start
+```
+
+* Run android
+
+```
+cd apollo/react-native/todo
+yarn run-android
+```
