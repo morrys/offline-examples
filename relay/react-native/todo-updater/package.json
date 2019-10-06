@@ -23,16 +23,12 @@
     "react-native-elements": "^1.1.0",
     "react-native-vector-icons": "^6.5.0",
     "react-relay": "^5.0.0",
-    "react-relay-offline": "0.10.0",
+    "react-relay-offline": "file:../../../react-relay-offline-0.11.0-a1.tgz",
     "relay-runtime": "^4.0.0",
     "styled-components": "4.3.1",
     "uuid": "3.3.2",
     "tslib": "1.10.0",
-    "@react-native-community/async-storage": "1.6.1",
-    "@wora/cache-persist": "2.0.0-rc.1"
-  },
-  "resolutions": {
-    "@wora/cache-persist": "2.0.0-rc.1"
+    "@react-native-community/async-storage": "1.6.1"
   },
   "devDependencies": {
     "@babel/core": "^7.4.4",
