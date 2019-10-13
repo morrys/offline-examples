@@ -1,5 +1,5 @@
-import Document, {Head, Main, NextScript} from 'next/document';
-import styled, {createGlobalStyle, ServerStyleSheet} from 'styled-components';
+import Document, {Head, Main, NextScript, DocumentContext} from 'next/document';
+import {createGlobalStyle, ServerStyleSheet} from 'styled-components';
 import * as React from 'react';
 
 const GlobalStyle = createGlobalStyle`
@@ -10,7 +10,11 @@ const GlobalStyle = createGlobalStyle`
   background: #f5f5f5;
   color: #4d4d4d;
   min-width: 230px;
-  margin: 20px;
+  max-width: 550px;
+  flex-grow: 1;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-weight: 300;
@@ -21,6 +25,7 @@ const GlobalStyle = createGlobalStyle`
 
   #__next {
     display: flex;
+    flex-direction: column;
   }
 
 
@@ -46,24 +51,17 @@ const GlobalStyle = createGlobalStyle`
 
 `;
 
-const StyledMain = styled(Main)`
-  height: 100%;
-  width: 100%;
-`;
-
 type Props = {
   styleTags: string;
 };
 
 export default class MyDocument extends Document<Props> {
-  static getInitialProps({renderPage}) {
+  static async getInitialProps(ctx) {
     const sheet = new ServerStyleSheet();
-    const page = renderPage(App => props => {
-      console.log('App', App);
+    const page = ctx.renderPage(App => props => {
       return sheet.collectStyles(<App {...props} />);
     });
     const styleTags = sheet.getStyleElement();
-    console.log('page', page);
     return {...page, styleTags};
   }
 
@@ -72,26 +70,6 @@ export default class MyDocument extends Document<Props> {
       <html lang="it">
         <Head>
           <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <script
-            type="text/javascript"
-            src="https://sdk.amazonaws.com/js/aws-sdk-2.418.0.min.js"
-          />
-          <script
-            type="text/javascript"
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6JcAKww8t3kOThajdd5zzqHV8Z5oza2s&libraries=places"
-          />
-          <link
-            href="https://fonts.googleapis.com/css?family=Pacifico"
-            rel="stylesheet"
-          />
-          <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"
-          />
-          <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/icon?family=Material+Icons"
-          />
           {this.props.styleTags}
         </Head>
         <body>

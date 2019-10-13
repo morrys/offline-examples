@@ -1,10 +1,5 @@
-// import { Environment, Network, RecordSource, Store } from 'relay-runtime'
-
 import {Network} from 'relay-runtime';
 import {Store, Environment, RecordSource} from 'react-relay-offline';
-
-// import { Network } from 'relay-runtime'
-// import { Store, Environment, RecordSource } from 'react-relay-offline'
 
 // import { Network, RecordSource } from 'relay-runtime'
 // import EnvironmentIDB from 'react-relay-offline/lib/runtime/EnvironmentIDB'
@@ -19,7 +14,6 @@ let relayEnvironment: Environment;
 // Define a function that fetches the results of an operation (query/mutation/etc)
 // and returns its results as a Promise:
 function fetchQuery(operation, variables, cacheConfig, uploadables) {
-  console.log('calling fetchQuery', typeof window === 'undefined');
   const endpoint = 'http://localhost:3000/graphql';
   return fetch(endpoint, {
     method: 'POST',
@@ -44,18 +38,8 @@ export const manualExecution = false;
 
 export default function initEnvironment(options: InitProps = {}) {
   const {records = {}} = options;
-  console.log(
-    'Init environment. Records provided?',
-    !(
-      !records ||
-      (Object.entries(records).length === 0 && records.constructor === Object)
-    ),
-    records,
-    options,
-  );
 
   const createEnvironment = () => {
-    // Create a network layer from the fetch function
     const network = Network.create(fetchQuery);
 
     const offlineOptions = {
@@ -75,18 +59,12 @@ export default function initEnvironment(options: InitProps = {}) {
       },
     };
 
-    // Persist the records when instantiating
-    // https://github.com/morrys/react-relay-offline/issues/23
-    // https://github.com/morrys/wora/issues/16#issuecomment-538788609
     const recordSource = new RecordSource({
       mergeState: () => {
-        console.log('This function is never called.', records);
         return records;
       },
     });
     const store = new Store(recordSource);
-    console.log('store records json', store.getSource().toJSON());
-    console.log('store records', records);
     return new Environment(
       {
         network,
@@ -111,15 +89,12 @@ export default function initEnvironment(options: InitProps = {}) {
     // return EnvironmentIDB.create({ network }, offlineOptions)
   };
 
-  // Make sure to create a new Relay environment for every server-side request so that data
-  // isn't shared between connections (which would be bad)
   if (typeof window === 'undefined') {
     return createEnvironment();
   }
 
   // reuse Relay environment on client-side
   if (!relayEnvironment) {
-    console.log('create');
     relayEnvironment = createEnvironment();
   }
 

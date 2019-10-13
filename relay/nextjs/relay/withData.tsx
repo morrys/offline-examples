@@ -27,13 +27,16 @@ export default <P extends Props>(
     static displayName = `WithData(${ComposedComponent.displayName})`;
 
     static async getInitialProps(ctx: DocumentContext) {
-      // Evaluate the composed component's getInitialProps()
+      const isServer = !!ctx.req;
       let composedInitialProps = {};
       if (ComposedComponent.getInitialProps) {
         composedInitialProps = await ComposedComponent.getInitialProps(ctx);
       }
-      if (!ctx.req) {
-        return composedInitialProps;
+      if (!isServer) {
+        return {
+          ...composedInitialProps,
+          environment: null,
+        };
       }
 
       let queryProps = {};
@@ -42,23 +45,17 @@ export default <P extends Props>(
 
       const {query, variables} = options;
       if (query) {
-        console.log('vaeia', variables);
-        // Provide the `url` prop data in case a graphql query uses it
-        // const url = { query: ctx.query, pathname: ctx.pathname }
-        // TODO: Consider RelayQueryResponseCache
-        // https://github.com/facebook/relay/issues/1687#issuecomment-302931855
         queryProps = await fetchQuery(environment, query, variables);
         queryRecords = environment
           .getStore()
           .getSource()
           .toJSON();
-        // console.log('Got data:', queryRecords)
       }
-
       return {
         ...composedInitialProps,
         ...queryProps,
         queryRecords,
+        environment,
       };
     }
 
@@ -66,27 +63,15 @@ export default <P extends Props>(
 
     constructor(props) {
       super(props);
-
-      // Note: data exists here when using react-relay-offline.
-      // console.log('Data in constructor:', props.queryRecords)
-
-      this.environment = initEnvironment({
-        records: props.queryRecords,
-      });
+      this.environment =
+        typeof window === 'undefined'
+          ? props.environment
+          : initEnvironment({
+              records: props.queryRecords,
+            });
     }
 
     render() {
-      // console.log('this.environment', this.environment)
-
-      // Note: data does not exist here when using the react-relay-offline
-      // environment, but it does when using relay-runtime.
-      console.log(
-        'this.environment store records',
-        this.environment
-          .getStore()
-          .getSource()
-          .toJSON(),
-      );
       return (
         <QueryRenderer
           environment={this.environment}
@@ -95,7 +80,6 @@ export default <P extends Props>(
           dataFrom={CACHE_FIRST}
           ttl={100000}
           render={({error, cached, props, ...others}: any) => {
-            console.log('ENTRO');
             if (props) {
               return <ComposedComponent {...props} {...others} />;
             } else if (error) {

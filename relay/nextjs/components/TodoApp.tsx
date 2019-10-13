@@ -6,6 +6,7 @@ import TodoListFooter from './TodoListFooter';
 import TodoTextInput from './TodoTextInput';
 import TodoOffline from './TodoOffline';
 import styled from 'styled-components';
+import Header from './Header';
 //import TodoApp, { fragmentSpec } from './components/TodoApp';
 export const QUERY_APP = graphql`
   query TodoAppQuery($userId: String) {
@@ -54,8 +55,9 @@ const StyledP = styled.p`
   line-height: 1;
 `;
 
-const StyledDivider = styled.div`
+const StyledDivButton = styled.div`
   display: flex;
+  background: #fff;
 `;
 
 const isServer = typeof window === 'undefined';
@@ -66,7 +68,6 @@ type Props = {
   user: any;
 };
 const AppTodo = ({relay, user, retry}: Props) => {
-  console.log('renderer');
   const handleTextInputSave = (text: string) => {
     AddTodoMutation.commit(relay.environment, text, user);
     return;
@@ -100,14 +101,15 @@ const AppTodo = ({relay, user, retry}: Props) => {
 
         <TodoList user={user} />
         {hasTodos && <TodoListFooter user={user} />}
-        <StyledButton onClick={retry}>Retry</StyledButton>
-        <StyledButton onClick={purge}>Purge</StyledButton>
-
+        <StyledDivButton>
+          <StyledButton onClick={retry}>Retry</StyledButton>
+          <StyledButton onClick={purge}>Purge</StyledButton>
+        </StyledDivButton>
         <StyledFooter>
           <StyledP>Double-click to edit a todo</StyledP>
         </StyledFooter>
       </StyledSection>
-      <TodoOffline relay={relay} user={user} />
+      {/*<TodoOffline relay={relay} user={user} /> TODO fix layout */}
     </React.Fragment>
   );
 };

@@ -86,7 +86,6 @@ export function getTodoOrThrow(id) {
 }
 
 export function getTodos(idUser, status = 'any') {
-  console.log('todos', idUser);
   const todoIdsForUser = getTodoIdsForUser(idUser);
   const todosForUser = todoIdsForUser.map(getTodoOrThrow);
 

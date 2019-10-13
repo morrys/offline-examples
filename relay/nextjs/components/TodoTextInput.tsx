@@ -94,7 +94,6 @@ const TodoTextInput = ({
   onSave,
   placeholder,
 }: Props) => {
-  console.log('TODO isEditing', isEditing);
   const [text, setText] = useState<string>(initialValue || '');
   const inputRef = useRef() as React.MutableRefObject<HTMLInputElement>;
 

@@ -46,7 +46,6 @@ app.prepare().then(() => {
   );
 
   server.get('*', (req, res) => {
-    console.log('Entro', req.path);
     return handle(req, res);
   });
 
