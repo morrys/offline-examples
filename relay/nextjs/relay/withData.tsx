@@ -1,7 +1,13 @@
 import React from 'react';
 import initEnvironment from './createRelayEnvironment';
 // import { fetchQuery } from 'react-relay'
-import {fetchQuery, QueryRenderer, Environment} from 'react-relay-offline';
+import {
+  fetchQuery,
+  QueryRenderer,
+  Environment,
+  useRestore,
+  ReactRelayContext,
+} from 'react-relay-offline';
 import {
   CACHE_FIRST,
   NETWORK_ONLY,
@@ -23,72 +29,62 @@ export default <P extends Props>(
   ComposedComponent: NextPage<P>,
   options: OptionsWithData,
 ) => {
-  return class WithData extends React.Component {
-    static displayName = `WithData(${ComposedComponent.displayName})`;
+  function WithData(props) {
+    const {query, variables} = options;
+    const environment = initEnvironment({
+      records: props.queryRecords,
+    });
+    return (
+      <QueryRenderer
+        environment={environment}
+        query={query}
+        variables={variables}
+        dataFrom={CACHE_FIRST}
+        ttl={100000}
+        render={({error, cached, props, ...others}: any) => {
+          if (props) {
+            return <ComposedComponent {...props} {...others} />;
+          } else if (error) {
+            return <div>{error.message}</div>;
+          }
+          return <div>loading</div>;
+        }}
+      />
+    );
+  }
 
-    static async getInitialProps(ctx: DocumentContext) {
-      const isServer = !!ctx.req;
-      let composedInitialProps = {};
-      if (ComposedComponent.getInitialProps) {
-        composedInitialProps = await ComposedComponent.getInitialProps(ctx);
-      }
-      if (!isServer) {
-        return {
-          ...composedInitialProps,
-          environment: null,
-        };
-      }
-
-      let queryProps = {};
-      let queryRecords = {};
-      const environment = initEnvironment();
-
-      const {query, variables} = options;
-      if (query) {
-        queryProps = await fetchQuery(environment, query, variables);
-        queryRecords = environment
-          .getStore()
-          .getSource()
-          .toJSON();
-      }
+  WithData.getInitialProps = async (ctx: DocumentContext) => {
+    const isServer = !!ctx.req;
+    let composedInitialProps = {};
+    if (ComposedComponent.getInitialProps) {
+      composedInitialProps = await ComposedComponent.getInitialProps(ctx);
+    }
+    if (!isServer) {
       return {
         ...composedInitialProps,
-        ...queryProps,
-        queryRecords,
-        environment,
+        ssr: false,
       };
     }
 
-    environment: Environment;
+    let queryProps = {};
+    let queryRecords = {};
+    const environment = initEnvironment();
 
-    constructor(props) {
-      super(props);
-      this.environment =
-        typeof window === 'undefined'
-          ? props.environment
-          : initEnvironment({
-              records: props.queryRecords,
-            });
+    const {query, variables} = options;
+    if (query) {
+      queryProps = await fetchQuery(environment, query, variables);
+      queryRecords = environment
+        .getStore()
+        .getSource()
+        .toJSON();
     }
-
-    render() {
-      return (
-        <QueryRenderer
-          environment={this.environment}
-          query={options.query}
-          variables={options.variables}
-          dataFrom={CACHE_FIRST}
-          ttl={100000}
-          render={({error, cached, props, ...others}: any) => {
-            if (props) {
-              return <ComposedComponent {...props} {...others} />;
-            } else if (error) {
-              return <div>{error.message}</div>;
-            }
-            return <div>loading</div>;
-          }}
-        />
-      );
-    }
+    return {
+      ...composedInitialProps,
+      ...queryProps,
+      queryRecords,
+      ssr: true,
+    };
   };
+
+  return WithData;
 };

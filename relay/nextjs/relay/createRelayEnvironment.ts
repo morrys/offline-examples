@@ -60,8 +60,20 @@ export default function initEnvironment(options: InitProps = {}) {
     };
 
     const recordSource = new RecordSource({
-      mergeState: () => {
-        return records;
+      initialState: records,
+      mergeState: (restoredState = {}, initialState) => {
+        // this is a test
+        if (!initialState || !initialState['0']) {
+          return restoredState;
+        }
+        const newStat = {
+          ...initialState,
+          '0': {
+            ...initialState['0'],
+            text: 'changed',
+          },
+        };
+        return newStat;
       },
     });
     const store = new Store(recordSource);
