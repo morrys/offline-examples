@@ -40,10 +40,19 @@ app.prepare().then(() => {
     }),
   );
 
-  server.use(
-    '/public',
-    express.static(path.resolve(__dirname, '.next', 'public')),
-  );
+  server.get('/service-worker.js', (req, res) => {
+    console.log('entro', req);
+    res.set(
+      'Cache-Control',
+      'no-store, no-cache, must-revalidate, proxy-revalidate',
+    );
+    res.set('Content-Type', 'application/javascript');
+    return app.serveStatic(
+      req,
+      res,
+      path.resolve(__dirname, '.next', 'public', 'service-worker.js'),
+    );
+  });
 
   server.get('*', (req, res) => {
     return handle(req, res);

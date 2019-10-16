@@ -6,7 +6,7 @@ const nextConfig = {
   // Whether to enable the SW in development. Note this may not work
   // if we don't have a custom _error.js file:
   // https://github.com/hanford/next-offline/issues/190#issuecomment-535278921
-  generateInDevMode: false,
+  generateInDevMode: true,
   workboxOpts: {
     swDest: 'public/service-worker.js',
     cleanupOutdatedCaches: true,

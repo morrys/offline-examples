@@ -66,14 +66,14 @@ export default function initEnvironment(options: InitProps = {}) {
         if (!initialState || !initialState['0']) {
           return restoredState;
         }
-        const newStat = {
+        /*const newStat = {
           ...initialState,
           '0': {
             ...initialState['0'],
             text: 'changed',
           },
-        };
-        return newStat;
+        };*/
+        return restoredState;
       },
     });
     const store = new Store(recordSource);
