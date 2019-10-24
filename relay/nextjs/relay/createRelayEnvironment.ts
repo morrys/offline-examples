@@ -62,6 +62,10 @@ export default function initEnvironment(options: InitProps = {}) {
     const recordSource = new RecordSource({
       initialState: records,
       mergeState: (restoredState = {}, initialState) => {
+        console.log('restore merge', restoredState);
+        /*if (initialState) {
+          return initialState;
+        }*/
         // this is a test
         if (!initialState || !initialState['0']) {
           return restoredState;

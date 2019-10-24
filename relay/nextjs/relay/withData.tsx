@@ -9,9 +9,9 @@ import {
   ReactRelayContext,
 } from 'react-relay-offline';
 import {
-  CACHE_FIRST,
+  STORE_OR_NETWORK,
   NETWORK_ONLY,
-} from 'react-relay-offline/lib/RelayOfflineTypes';
+} from 'react-relay-offline';
 import {Variables} from 'relay-runtime';
 import {DocumentContext} from 'next/document';
 import {NextPage} from 'next';
@@ -31,20 +31,24 @@ export default <P extends Props>(
 ) => {
   function WithData(props) {
     const {query, variables} = options;
-    const environment = initEnvironment({
-      records: props.queryRecords,
-    });
+    const environment =
+      typeof window === 'undefined'
+        ? props.environment
+        : initEnvironment({
+            records: props.queryRecords,
+          });
     return (
       <QueryRenderer
         environment={environment}
         query={query}
         variables={variables}
-        dataFrom={CACHE_FIRST}
+        fetchPolicy={STORE_OR_NETWORK}
         ttl={100000}
         render={({error, cached, props, ...others}: any) => {
           if (props) {
             return <ComposedComponent {...props} {...others} />;
           } else if (error) {
+            console.log('error', error);
             return <div>{error.message}</div>;
           }
           return <div>loading</div>;
@@ -55,6 +59,7 @@ export default <P extends Props>(
 
   WithData.getInitialProps = async (ctx: DocumentContext) => {
     const isServer = !!ctx.req;
+    console.log('isServer', isServer);
     let composedInitialProps = {};
     if (ComposedComponent.getInitialProps) {
       composedInitialProps = await ComposedComponent.getInitialProps(ctx);
@@ -62,6 +67,7 @@ export default <P extends Props>(
     if (!isServer) {
       return {
         ...composedInitialProps,
+        environment: null,
         ssr: false,
       };
     }
@@ -82,6 +88,7 @@ export default <P extends Props>(
       ...composedInitialProps,
       ...queryProps,
       queryRecords,
+      environment,
       ssr: true,
     };
   };
