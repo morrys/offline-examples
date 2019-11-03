@@ -22,50 +22,48 @@ async function fetchQuery(
   return response.json();
 }
 
-import RelayNetworkLogger from 'relay-runtime/lib/RelayNetworkLogger';
-const network = Network.create(
-  RelayNetworkLogger.wrapFetch(fetchQuery, () => ''),
-);
+const network = Network.create(fetchQuery);
 export const manualExecution = false;
-
-const offlineOptions = {
-  manualExecution, //optional
-  network: network, //optional
-  finish: (isSuccess, mutations) => {
-    //optional
-    console.log('finish offline', isSuccess, mutations);
-  },
-  onComplete: options => {
-    //optional
-    const {id, offlinePayload, snapshot} = options;
-    console.log('onComplete', options);
-    return true;
-  },
-  onDiscard: options => {
-    //optional
-    const {id, offlinePayload, error} = options;
-    return true;
-  },
-  onPublish: offlinePayload => {
-    //optional
-    const rand = Math.floor(Math.random() * 4) + 1;
-    offlinePayload.serial = rand === 1;
-    console.log('offlinePayload', offlinePayload.serial);
-    console.log('offlinePayload', offlinePayload);
-    return offlinePayload;
-  },
-};
-const storeOptions = {
-  persistOptions: {
-    disablePersist: true,
-  },
-};
 
 //const environment = EnvironmentIDB.create({network}, offlineOptions); //, {ttl: 60 * 1000}
 
 const recordSource = new RecordSource();
 const store = new Store(recordSource);
-const environment = new Environment({network, store}, offlineOptions);
+store._cache.set('provainit', 'prova');
+const environment = new Environment({network, store});
+environment.setOfflineOptions({
+  manualExecution, //optional
+  network: network, //optional
+  start: async mutations => {
+    //optional
+    console.log('start offline', mutations);
+    return mutations;
+  },
+  finish: async (mutations, error) => {
+    //optional
+    console.log('finish offline', error, mutations);
+  },
+  onExecute: async mutation => {
+    //optional
+    console.log('onExecute offline', mutation);
+    return mutation;
+  },
+  onComplete: async options => {
+    //optional
+    console.log('onComplete offline', options);
+    return true;
+  },
+  onDiscard: async options => {
+    //optional
+    console.log('onDiscard offline', options);
+    return true;
+  },
+  onPublish: async offlinePayload => {
+    //optional
+    console.log('offlinePayload', offlinePayload);
+    return offlinePayload;
+  },
+});
 /*
 const environment = new Environment({
   network,
