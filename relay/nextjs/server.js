@@ -40,7 +40,7 @@ app.prepare().then(() => {
     }),
   );
 
-  server.get('/service-workers.js', (req, res) => {
+  server.get('/service-worker.js', (req, res) => {
     res.set(
       'Cache-Control',
       'no-store, no-cache, must-revalidate, proxy-revalidate',

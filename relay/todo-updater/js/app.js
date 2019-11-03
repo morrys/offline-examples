@@ -62,13 +62,14 @@ const AppTodo = props => {
           }
         }
       `}
-      dataFrom="STORE_THEN_NETWORK"
+      fetchPolicy="store-and-network"
       ttl={10000}
       variables={{
         // Mock authenticated ID that matches database
         userId: 'me',
       }}
       render={({error, props, cached, retry}) => {
+        console.log('renderer');
         //console.log('QueryRenderer.render:', { cached, error, retry, });
         if (props && props.user) {
           console.log('props.user.totalCount', props.user.totalCount);

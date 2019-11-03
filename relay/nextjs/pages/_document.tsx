@@ -57,7 +57,6 @@ type Props = {
 
 export default class MyDocument extends Document<Props> {
   static async getInitialProps(ctx) {
-    console.log('MyDocument getInitialProps');
     const sheet = new ServerStyleSheet();
     const page = ctx.renderPage(App => props => {
       return sheet.collectStyles(<App {...props} />);
@@ -67,7 +66,6 @@ export default class MyDocument extends Document<Props> {
   }
 
   render() {
-    console.log('render');
     return (
       <html lang="it">
         <Head>

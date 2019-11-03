@@ -2,7 +2,7 @@ import {Network} from 'relay-runtime';
 import {Store, Environment, RecordSource} from 'react-relay-offline';
 
 // import { Network, RecordSource } from 'relay-runtime'
-// import EnvironmentIDB from 'react-relay-offline/lib/runtime/EnvironmentIDB'
+import EnvironmentIDB from 'react-relay-offline/lib/runtime/EnvironmentIDB';
 
 import fetch from 'isomorphic-unfetch';
 
@@ -15,6 +15,7 @@ let relayEnvironment: Environment;
 // and returns its results as a Promise:
 function fetchQuery(operation, variables, cacheConfig, uploadables) {
   const endpoint = 'http://localhost:3000/graphql';
+  console.log('fetch');
   return fetch(endpoint, {
     method: 'POST',
     headers: {
@@ -25,9 +26,7 @@ function fetchQuery(operation, variables, cacheConfig, uploadables) {
       query: operation.text, // GraphQL text from input
       variables,
     }),
-  })
-    .then(response => response.json())
-    .catch(error => console.log('errrrr', error));
+  }).then(response => response.json());
 }
 
 type InitProps = {
@@ -35,83 +34,100 @@ type InitProps = {
 };
 
 export const manualExecution = false;
+const network = Network.create(fetchQuery);
+
+function createLocalStorageEnvironment() {
+  const recordSource = new RecordSource();
+  const store = new Store(recordSource);
+  const environment = new Environment({
+    network,
+    store,
+  });
+  return environment;
+}
+
+function createIndexedDB(records) {
+  const recordSourceOptions = {
+    initialState: records,
+    mergeState: (restoredState, initialState = {}) => {
+      if (!restoredState) {
+        return initialState;
+      }
+      if (restoredState && restoredState['0']) {
+        // test
+        const newStat = {
+          ...restoredState,
+          '0': {
+            ...restoredState['0'],
+            text: 'changed',
+          },
+        };
+        return newStat;
+      }
+      return restoredState;
+    },
+  };
+  const idbOptions = undefined;
+  const environment = EnvironmentIDB.create(
+    {
+      network,
+    },
+    idbOptions,
+    recordSourceOptions,
+  );
+  return environment;
+}
 
 export default function initEnvironment(options: InitProps = {}) {
   const {records = {}} = options;
 
-  const createEnvironment = () => {
-    const network = Network.create(fetchQuery);
-
-    const offlineOptions = {
+  const createEnvironment = indexed => {
+    const environment = indexed
+      ? createIndexedDB(records)
+      : createLocalStorageEnvironment();
+    environment.setOfflineOptions({
       manualExecution, //optional
       network: network, //optional
-      onComplete: (options: any) => {
+      start: async mutations => {
         //optional
-        const {id, offlinePayload, snapshot} = options;
-        console.log('onComplete', options);
+        console.log('start offline', mutations);
+        return mutations;
+      },
+      finish: async (mutations, error) => {
+        //optional
+        console.log('finish offline', error, mutations);
+      },
+      onExecute: async mutation => {
+        //optional
+        console.log('onExecute offline', mutation);
+        return mutation;
+      },
+      onComplete: async options => {
+        //optional
+        console.log('onComplete offline', options);
         return true;
       },
-      onDiscard: (options: any) => {
-        //optio
-        const {id, offlinePayload, error} = options;
-        console.log('onDiscard', options);
+      onDiscard: async options => {
+        //optional
+        console.log('onDiscard offline', options);
         return true;
       },
-    };
-
-    const recordSource = new RecordSource({
-      initialState: records,
-      mergeState: (restoredState = {}, initialState) => {
-        console.log('restore merge', restoredState);
-        /*if (initialState) {
-          return initialState;
-        }*/
-        // this is a test
-        if (!initialState || !initialState['0']) {
-          return restoredState;
-        }
-        /*const newStat = {
-          ...initialState,
-          '0': {
-            ...initialState['0'],
-            text: 'changed',
-          },
-        };*/
-        return restoredState;
+      onPublish: async offlinePayload => {
+        //optional
+        console.log('offlinePayload', offlinePayload);
+        return offlinePayload;
       },
     });
-    const store = new Store(recordSource);
-    return new Environment(
-      {
-        network,
-        store,
-      },
-      offlineOptions,
-    );
-
-    // new
-    // const offlineOptions = {}
-    // const store = new Store(new RecordSource(records))
-    // return new Environment(
-    //   {
-    //     network,
-    //     store,
-    //   },
-    //   offlineOptions
-    // )
-
-    // new IDB
-    // const offlineOptions = {}
-    // return EnvironmentIDB.create({ network }, offlineOptions)
+    return environment;
   };
 
   if (typeof window === 'undefined') {
-    return createEnvironment();
+    return createEnvironment(false);
   }
 
   // reuse Relay environment on client-side
   if (!relayEnvironment) {
-    relayEnvironment = createEnvironment();
+    relayEnvironment = createEnvironment(true);
   }
 
   return relayEnvironment;

@@ -1,17 +1,7 @@
 import React from 'react';
 import initEnvironment from './createRelayEnvironment';
-// import { fetchQuery } from 'react-relay'
-import {
-  fetchQuery,
-  QueryRenderer,
-  Environment,
-  useRestore,
-  ReactRelayContext,
-} from 'react-relay-offline';
-import {
-  STORE_OR_NETWORK,
-  NETWORK_ONLY,
-} from 'react-relay-offline';
+import {fetchQuery, QueryRenderer} from 'react-relay-offline';
+import {STORE_OR_NETWORK} from 'react-relay-offline';
 import {Variables} from 'relay-runtime';
 import {DocumentContext} from 'next/document';
 import {NextPage} from 'next';
@@ -43,12 +33,11 @@ export default <P extends Props>(
         query={query}
         variables={variables}
         fetchPolicy={STORE_OR_NETWORK}
-        ttl={100000}
+        ttl={600000}
         render={({error, cached, props, ...others}: any) => {
           if (props) {
             return <ComposedComponent {...props} {...others} />;
           } else if (error) {
-            console.log('error', error);
             return <div>{error.message}</div>;
           }
           return <div>loading</div>;
@@ -59,7 +48,6 @@ export default <P extends Props>(
 
   WithData.getInitialProps = async (ctx: DocumentContext) => {
     const isServer = !!ctx.req;
-    console.log('isServer', isServer);
     let composedInitialProps = {};
     if (ComposedComponent.getInitialProps) {
       composedInitialProps = await ComposedComponent.getInitialProps(ctx);
@@ -68,7 +56,6 @@ export default <P extends Props>(
       return {
         ...composedInitialProps,
         environment: null,
-        ssr: false,
       };
     }
 
@@ -89,7 +76,6 @@ export default <P extends Props>(
       ...queryProps,
       queryRecords,
       environment,
-      ssr: true,
     };
   };
 
