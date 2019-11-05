@@ -8,53 +8,6 @@ import fetch from 'isomorphic-unfetch';
 
 let apolloClient: any = null;
 
-/*
-export const manualExecution = false;
-const network = Network.create(fetchQuery);
-
-function createLocalStorageEnvironment() {
-  const recordSource = new RecordSource();
-  const store = new Store(recordSource);
-  const environment = new Environment({
-    network,
-    store,
-  });
-  return environment;
-}
-
-function createIndexedDB(records) {
-  const recordSourceOptions = {
-    initialState: records,
-    mergeState: (restoredState, initialState = {}) => {
-      if (!restoredState) {
-        return initialState;
-      }
-      if (restoredState && restoredState['0']) {
-        // test
-        const newStat = {
-          ...restoredState,
-          '0': {
-            ...restoredState['0'],
-            text: 'changed',
-          },
-        };
-        return newStat;
-      }
-      return restoredState;
-    },
-  };
-  const idbOptions = undefined;
-  const environment = EnvironmentIDB.create(
-    {
-      network,
-    },
-    idbOptions,
-    recordSourceOptions,
-  );
-  return environment;
-}
-*/
-
 /**
  * Always creates a new apollo client on the server
  * Creates or reuses apollo client in the browser.
