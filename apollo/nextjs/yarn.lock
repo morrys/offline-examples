@@ -1327,20 +1327,20 @@
     "@webassemblyjs/wast-parser" "1.8.5"
     "@xtuc/long" "4.2.2"
 
-"@wora/apollo-cache@^2.0.2":
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/@wora/apollo-cache/-/apollo-cache-2.0.2.tgz#6fdd65730f259279c90466b70da77e22680a3228"
-  integrity sha512-uIgzqVkOKkWDudbto6PMJg9xywcTG0zeYsqpALbb/ndTD1Jnfha9o857Dd8Ol25JXZNhn9XzWJ8WXDM4SuMzHQ==
+"@wora/apollo-cache@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@wora/apollo-cache/-/apollo-cache-2.1.0.tgz#4bcd36eb1d33219eafa105b45b61fd9dbef307cb"
+  integrity sha512-alT/VMz5Jlm/Ua309RwgFTKzcEcSwzwmlNWVpEUoEnb8yFRTobwSmk+xUcg9WiJPW4bfNfKahB1znTjdYsdSBw==
   dependencies:
-    "@wora/cache-persist" "^2.0.3"
+    "@wora/cache-persist" "^2.0.4"
 
-"@wora/apollo-offline@2.0.2":
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/@wora/apollo-offline/-/apollo-offline-2.0.2.tgz#fcef8658a6ec675a5fb5bcd722cb50373f82d1da"
-  integrity sha512-ufZHetjONZ+MZBn5GhtEumS383LoYVksVhh1Fk9A5RmkvKO8nCUHyuS18FerqtTsk8sXBZHmYt80UdOD8HGx9g==
+"@wora/apollo-offline@2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@wora/apollo-offline/-/apollo-offline-2.1.0.tgz#9d6a1d205544f7b14c5e92e17f0a6deab92088ab"
+  integrity sha512-wqXlv0hM1/4m6Ecnnpp4GA4SjMkQNZevBv9+SBsbgoXw9srhQXe+SCujuBnmc26kAEqufGmKyddr3jI0ed088w==
   dependencies:
-    "@wora/apollo-cache" "^2.0.2"
-    "@wora/cache-persist" "^2.0.3"
+    "@wora/apollo-cache" "^2.1.0"
+    "@wora/cache-persist" "^2.0.4"
     "@wora/offline-first" "^2.0.2"
     apollo-cache-inmemory "^1.6.2"
     uuid "3.3.2"
@@ -1349,6 +1349,13 @@
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/@wora/cache-persist/-/cache-persist-2.0.3.tgz#b24d484e2fd62791eb9b6bf69ce650d1fc552421"
   integrity sha512-XRk9+mAQn0YUjtZuUDTKEN45dmlfhNTvMj7BEBsAYIkTGK/yB1Ysuc3hy+QcDaRG9f2J4lg2yaGAhWX/tXTVdg==
+  dependencies:
+    idb "^4.0.0"
+
+"@wora/cache-persist@^2.0.4":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@wora/cache-persist/-/cache-persist-2.0.4.tgz#01c1f237dcb289632e9d9e48f3c90a62de910b2b"
+  integrity sha512-EdpoGFMdAQ1AseO7XBaIJ2IipRSLFy4bmMk6B6VysDIOth3VaIlQuXyxxV5CTnOyyZfZ2drPvnw/XsVfDDUMvg==
   dependencies:
     idb "^4.0.0"
 

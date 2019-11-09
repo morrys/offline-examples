@@ -1,10 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
 import {ApolloProvider} from '@apollo/react-hooks';
-import {ApolloClient} from 'apollo-client';
-import {InMemoryCache} from 'apollo-cache-inmemory';
-import {HttpLink} from 'apollo-link-http';
-import fetch from 'isomorphic-unfetch';
 import {initApolloClient} from './createApolloClient';
 
 export default (PageComponent, ssr = true) => {

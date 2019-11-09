@@ -66,7 +66,6 @@ export default class MyDocument extends Document<Props> {
   }
 
   render() {
-    console.log('document');
     return (
       <html lang="it">
         <Head>

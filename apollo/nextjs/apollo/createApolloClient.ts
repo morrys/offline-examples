@@ -1,10 +1,6 @@
-import React from 'react';
-import Head from 'next/head';
-import {ApolloProvider} from '@apollo/react-hooks';
-import {ApolloClient} from '@wora/apollo-offline';
-import ApolloCache from '@wora/apollo-cache';
 import {HttpLink} from 'apollo-link-http';
 import fetch from 'isomorphic-unfetch';
+import ApolloClientIDB from '@wora/apollo-offline/lib/ApolloClientIDB';
 
 let apolloClient: any = null;
 
@@ -16,13 +12,9 @@ let apolloClient: any = null;
 export function initApolloClient(initialState?: any) {
   // Make sure to create a new client for every server-side request so that data
   // isn't shared between connections (which would be bad)
-  if (typeof window === 'undefined') {
-    return createApolloClient(initialState, false);
-  }
-
   // Reuse client on the client-side
-  if (!apolloClient) {
-    apolloClient = createApolloClient(initialState, true);
+  if (!apolloClient || typeof window === 'undefined') {
+    apolloClient = createApolloClient(initialState);
   }
 
   return apolloClient;
@@ -32,7 +24,7 @@ export function initApolloClient(initialState?: any) {
  * Creates and configures the ApolloClient
  * @param  {Object} [initialState={}]
  */
-export function createApolloClient(initialState = {}, indexed) {
+export function createApolloClient(initialState = {}) {
   const httpLink = new HttpLink({
     uri: 'http://localhost:3000/graphql',
   });
@@ -41,14 +33,24 @@ export function createApolloClient(initialState = {}, indexed) {
     dataIdFromObject: o => o.id,
   };
 
-  const cachePersistOption = {
+  const persistOptions = {
     initialState,
   };
 
+  const client = ApolloClientIDB.create(
+    {
+      link: httpLink,
+    },
+    {
+      cacheOptions,
+      persistOptions,
+    },
+  );
+  /*
   const client = new ApolloClient({
     link: httpLink,
     cache: new ApolloCache(cacheOptions, cachePersistOption),
-  });
+  });*/
 
   client.setOfflineOptions({
     manualExecution: false, //optional
