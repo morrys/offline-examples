@@ -11,30 +11,28 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import RemoveCompletedTodosMutation from '../mutations/RemoveCompletedTodosMutation';
+import RemoveCompletedTodosMutation from "../mutations/RemoveCompletedTodosMutation";
 
-import React from 'react';
-import { withApollo } from 'react-apollo';
+import React from "react";
+import { useApolloClient } from "@apollo/react-hooks";
 
 const TodoListFooter = ({
   user,
-  user: {todos, completedCount, totalCount},
-  client
+  user: { todos, completedCount, totalCount }
 }) => {
+  const client = useApolloClient();
   const completedEdges =
     todos && todos.edges
-      ? todos.edges.filter(
-          (edge) => edge && edge.node && edge.node.complete,
-        )
+      ? todos.edges.filter(edge => edge && edge.node && edge.node.complete)
       : [];
 
   const handleRemoveCompletedTodosClick = () => {
     RemoveCompletedTodosMutation.commit(
       client,
       {
-        edges: completedEdges,
+        edges: completedEdges
       },
-      user,
+      user
     );
   };
 
@@ -44,13 +42,14 @@ const TodoListFooter = ({
     <footer className="footer">
       <span className="todo-count">
         <strong>{numRemainingTodos}</strong> item
-        {numRemainingTodos === 1 ? '' : 's'} left
+        {numRemainingTodos === 1 ? "" : "s"} left
       </span>
 
       {completedCount > 0 && (
         <button
           className="clear-completed"
-          onClick={handleRemoveCompletedTodosClick}>
+          onClick={handleRemoveCompletedTodosClick}
+        >
           Clear completed
         </button>
       )}
@@ -58,4 +57,4 @@ const TodoListFooter = ({
   );
 };
 
-export default withApollo(TodoListFooter);
+export default TodoListFooter;

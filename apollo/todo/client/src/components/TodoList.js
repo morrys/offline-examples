@@ -11,18 +11,15 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import MarkAllTodosMutation from '../mutations/MarkAllTodosMutation';
-import Todo from './Todo';
+import MarkAllTodosMutation from "../mutations/MarkAllTodosMutation";
+import Todo from "./Todo";
 
-import React from 'react';
-import { withApollo } from "react-apollo";
+import React from "react";
+import { useApolloClient } from "@apollo/react-hooks";
 
-const TodoList = ({
-  user,
-  user: {todos, totalCount, completedCount},
-  client,
-}) => {
-  const handleMarkAllChange = (e) => {
+const TodoList = ({ user, user: { todos, totalCount, completedCount } }) => {
+  const client = useApolloClient();
+  const handleMarkAllChange = e => {
     const complete = e.currentTarget.checked;
 
     if (todos) {
@@ -34,7 +31,7 @@ const TodoList = ({
     todos && todos.edges
       ? todos.edges
           .filter(Boolean)
-          .map((edge) => edge.node)
+          .map(edge => edge.node)
           .filter(Boolean)
       : [];
 
@@ -50,7 +47,7 @@ const TodoList = ({
       <label htmlFor="toggle-all">Mark all as complete</label>
 
       <ul className="todo-list">
-        {nodes.map((node) => (
+        {nodes.map(node => (
           <Todo key={node.id} todo={node} user={user} />
         ))}
       </ul>
@@ -58,4 +55,4 @@ const TodoList = ({
   );
 };
 
-export default withApollo(TodoList);
+export default TodoList;

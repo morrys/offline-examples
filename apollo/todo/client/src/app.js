@@ -3,7 +3,8 @@ import { useState } from "react";
 import TodoApp from "./components/TodoApp";
 import client from "./apollo";
 import gql from "graphql-tag";
-import { Query, ApolloProvider } from "react-apollo";
+import { ApolloProvider, useQuery } from "@apollo/react-hooks";
+
 export const USER_TODOS = gql`
   query appQuery($userId: String!) {
     user(id: $userId) {
@@ -35,6 +36,12 @@ const AppTodo = function(appProps) {
     return;
   };
 
+  const [rehydrated, setRehydrated] = useState(false);
+
+  React.useEffect(() => {
+    client.hydrate().then(() => setRehydrated(true));
+  }, []);
+
   return (
     <div>
       <div className="apptodo">
@@ -65,31 +72,21 @@ const AppTodo = function(appProps) {
           </div>
         </div>
       </div>
-      <LayoutTodo userId={userId} />
+      {rehydrated && <LayoutTodo userId={userId} />}
     </div>
   );
 };
 
 const LayoutTodo = ({ userId }) => {
-  const [rehydrated, setRehydrated] = useState(false);
+  const { loading, error, data, refetch, ...others } = useQuery(USER_TODOS, {
+    variables: { userId }
+  });
 
-  React.useEffect(() => {
-    client.hydrate().then(() => setRehydrated(true));
-  }, []);
-  if (!rehydrated) {
-    return <div />;
-  }
+  if (loading || !data) return <div />;
+  if (error) return `Error! ${error.message}`;
+
+  return <TodoApp user={data.user} retry={refetch} />;
   //
-  return (
-    <Query query={USER_TODOS} variables={{ userId }}>
-      {({ loading, error, data, refetch, ...others }) => {
-        if (loading) return <div />;
-        if (error) return `Error! ${error.message}`;
-
-        return <TodoApp user={data.user} retry={refetch} />;
-      }}
-    </Query>
-  );
 };
 
 const App = (

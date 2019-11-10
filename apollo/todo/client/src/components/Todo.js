@@ -11,28 +11,29 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import ChangeTodoStatusMutation from '../mutations/ChangeTodoStatusMutation';
-import RemoveTodoMutation from '../mutations/RemoveTodoMutation';
-import RenameTodoMutation from '../mutations/RenameTodoMutation';
-import TodoTextInput from './TodoTextInput';
+import ChangeTodoStatusMutation from "../mutations/ChangeTodoStatusMutation";
+import RemoveTodoMutation from "../mutations/RemoveTodoMutation";
+import RenameTodoMutation from "../mutations/RenameTodoMutation";
+import TodoTextInput from "./TodoTextInput";
 
-import { withApollo } from "react-apollo";
+import { useApolloClient } from "@apollo/react-hooks";
 
-import React, {useState} from 'react';
-import classnames from 'classnames';
+import React, { useState } from "react";
+import classnames from "classnames";
 
-export const Todo = ({ todo, user, disabled, client}) => {
+export const Todo = ({ todo, user, disabled }) => {
+  const client = useApolloClient();
+
   const [isEditing, setIsEditing] = useState(false);
-  const handleCompleteChange = (e) => {
+  const handleCompleteChange = e => {
     const complete = e.currentTarget.checked;
     ChangeTodoStatusMutation.commit(client, complete, todo, user);
   };
 
   const handleDestroyClick = () => removeTodo();
   const handleLabelDoubleClick = () => {
-    if(!disabled)
-      setIsEditing(true);
-  }
+    if (!disabled) setIsEditing(true);
+  };
   const handleTextInputCancel = () => setIsEditing(false);
 
   const handleTextInputDelete = () => {
@@ -40,20 +41,20 @@ export const Todo = ({ todo, user, disabled, client}) => {
     removeTodo();
   };
 
-  const handleTextInputSave = (text) => {
+  const handleTextInputSave = text => {
     setIsEditing(false);
     RenameTodoMutation.commit(client, text, todo);
   };
 
   const removeTodo = () => RemoveTodoMutation.commit(client, todo, user);
-    
 
   return (
     <li
       className={classnames({
         completed: todo.complete,
-        editing: isEditing,
-      })}>
+        editing: isEditing
+      })}
+    >
       <div className="view">
         <input
           checked={todo.complete}
@@ -64,7 +65,9 @@ export const Todo = ({ todo, user, disabled, client}) => {
         />
 
         <label onDoubleClick={handleLabelDoubleClick}>{todo.text}</label>
-        {!disabled && <button className="destroy" onClick={handleDestroyClick} />}
+        {!disabled && (
+          <button className="destroy" onClick={handleDestroyClick} />
+        )}
       </div>
 
       {isEditing && (
@@ -81,4 +84,4 @@ export const Todo = ({ todo, user, disabled, client}) => {
   );
 };
 
-export default withApollo(Todo);
+export default Todo;

@@ -1,4 +1,4 @@
-import {HttpLink} from 'apollo-link-http';
+import {HttpLink} from '@apollo/client';
 import fetch from 'isomorphic-unfetch';
 import ApolloClientIDB from '@wora/apollo-offline/lib/ApolloClientIDB';
 

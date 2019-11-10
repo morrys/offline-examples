@@ -1,6 +1,6 @@
 import { ApolloClient } from "@wora/apollo-offline";
 import ApolloCache from "@wora/apollo-cache";
-import { HttpLink } from "apollo-link-http";
+import { HttpLink } from "@apollo/client";
 
 // import ApolloClientIDB from '@wora/apollo-offline/lib/ApolloClientIDB';
 

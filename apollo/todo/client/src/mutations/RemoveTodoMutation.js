@@ -26,33 +26,40 @@ const mutation = gql`
   }
 `;
 
-function commit(
-  client,
-  todo,
-  user,
-) {
+function commit(client, todo, user) {
   const input = {
     id: todo.id,
-    userId: user.userId,
+    userId: user.userId
   };
   return client.mutate({
     mutation,
     variables: {
-      input,
+      input
     },
     update: (cache, data) => {
       const { userId } = user;
-      const { user: userCache } = cache.readQuery({ query: USER_TODOS, variables: { userId } });
-      console.log("queryResult", userCache)
-      const { todos: { edges } } = userCache;
-      const newEdges = edges.filter(e => e.node.id !== todo.id)
-      userCache.todos.edges = newEdges;
-      console.log("queryResult", userCache)
+      const { user: userCache } = cache.readQuery({
+        query: USER_TODOS,
+        variables: { userId }
+      });
+      console.log("queryResult", userCache);
+      const {
+        todos: { edges },
+        ...others
+      } = userCache;
+      const newEdges = edges.filter(e => e.node.id !== todo.id);
+
+      let newUser = {
+        ...others,
+        todos: {
+          edges: newEdges
+        }
+      };
 
       cache.writeQuery({
         query: USER_TODOS,
         variables: { userId },
-        data: { user: userCache },
+        data: { user: newUser }
       });
     },
     optimisticResponse: {
@@ -61,12 +68,11 @@ function commit(
         user: {
           id: user.id,
           completedCount: user.completedCount - (todo.complete ? 1 : 0),
-          totalCount: (user.totalCount - 1)
+          totalCount: user.totalCount - 1
         },
         __typename: "RemoveTodoPayload"
-      },
-
-    },
+      }
+    }
   });
 }
 

@@ -1,4 +1,6 @@
 const withOffline = require('next-offline');
+const withTM = require('next-transpile-modules');
+const withPlugins = require('next-compose-plugins');
 
 const nextConfig = {
   target: 'serverless',
@@ -36,4 +38,6 @@ const nextConfig = {
   },
 };
 
-module.exports = withOffline(nextConfig);
+module.exports = withTM({
+  transpileModules: ['@apollo/client'],
+});

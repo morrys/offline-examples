@@ -11,7 +11,6 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-
 import gql from "graphql-tag";
 import { USER_TODOS } from "../app";
 
@@ -27,29 +26,24 @@ const mutation = gql`
   }
 `;
 
-
-function commit(
-  client,
-  todos,
-  user,
-) {
+function commit(client, todos, user) {
   const input = {
-    userId: user.userId,
+    userId: user.userId
   };
 
   const deletedTodoIds = todos.edges
-        ? todos.edges
-            .filter(Boolean)
-            .map((edge) => edge.node)
-            .filter(Boolean)
-            .filter((node) => node.complete)
-            .map((node) => node.id)
-        : [];
+    ? todos.edges
+        .filter(Boolean)
+        .map(edge => edge.node)
+        .filter(Boolean)
+        .filter(node => node.complete)
+        .map(node => node.id)
+    : [];
 
   return client.mutate({
     mutation,
     variables: {
-      input,
+      input
     },
     optimisticResponse: {
       removeCompletedTodos: {
@@ -61,24 +55,36 @@ function commit(
           __typename: "User"
         },
         __typename: "MarkAllTodosPayload"
-      },
+      }
     },
     update: (cache, data) => {
       const { userId } = user;
-      const { user: userCache } = cache.readQuery({ query: USER_TODOS, variables: { userId } });
-      console.log("queryResult", userCache)
-      const { todos: { edges } } = userCache;
-      const newEdges = edges.filter(e => !deletedTodoIds.includes(e.node.id))
-      userCache.todos.edges = newEdges;
-      console.log("queryResult", userCache)
+      const { user: userCache } = cache.readQuery({
+        query: USER_TODOS,
+        variables: { userId }
+      });
+      console.log("queryResult", userCache);
+      const {
+        todos: { edges },
+        ...others
+      } = userCache;
+      const newEdges = edges.filter(e => !deletedTodoIds.includes(e.node.id));
+
+      let newUser = {
+        ...others,
+        todos: {
+          edges: newEdges
+        }
+      };
+      console.log("queryResult", newUser);
 
       cache.writeQuery({
         query: USER_TODOS,
         variables: { userId },
-        data: { user: userCache },
+        data: { user: newUser }
       });
-    },
+    }
   });
 }
 
-export default {commit};
+export default { commit };
