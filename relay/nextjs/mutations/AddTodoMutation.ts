@@ -58,6 +58,8 @@ function sharedUpdater(store: any, user: any, newEdge: any) {
     // https://github.com/relayjs/relay-examples/blob/master/todo/js/components/TodoList.js#L76
   );
 
+  console.log('HERE', conn)
+
   // Insert the new todo into the Todo List connection
   ConnectionHandler.insertEdgeAfter(conn, newEdge);
 }
