@@ -59,7 +59,7 @@
     "prettier": "^1.16.4",
     "relay-compiler": "^7.1.0",
     "relay-compiler-language-typescript": "10.1.0",
-    "typescript": "3.5.1"
+    "typescript": "3.0.1"
   },
   "prettier": {
     "singleQuote": true,
