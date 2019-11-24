@@ -11,19 +11,19 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import MarkAllTodosMutation from '../mutations/MarkAllTodosMutation';
-import Todo from './Todo';
+import MarkAllTodosMutation from "../mutations/MarkAllTodosMutation";
+import Todo from "./Todo";
 
-import React, {SyntheticEvent} from 'react';
-import {createFragmentContainer, graphql} from 'react-relay';
-import styled from 'styled-components';
+import React, { SyntheticEvent } from "react";
+import { createFragmentContainer, graphql } from "react-relay";
+import styled from "styled-components";
+import { useFragment, useRelayEnvironment } from "relay-hooks";
 /*type Todos = $NonMaybeType<$ElementType<TodoList_user, 'todos'>>;
 type Edges = $NonMaybeType<$ElementType<Todos, 'edges'>>;
 type Edge = $NonMaybeType<$ElementType<Edges, number>>;
 type Node = $NonMaybeType<$ElementType<Edge, 'node'>>;*/
 
 type Props = {
-  relay: any;
   user: any;
 };
 
@@ -56,7 +56,7 @@ const StyledInput = styled.input`
   }
 
   &:before {
-    content: '❯';
+    content: "❯";
     font-size: 22px;
     color: #e6e6e6;
     padding: 10px 27px 10px 27px;
@@ -66,19 +66,42 @@ const StyledInput = styled.input`
     color: #737373;
   }
 `;
+
+const TodoList_user = graphql`
+  fragment TodoList_user on User {
+    todos(
+      first: 2147483647 # max GraphQLInt
+    ) @connection(key: "TodoList_todos") {
+      edges {
+        node {
+          id
+          complete
+          ...Todo_todo
+        }
+      }
+    }
+    id
+    userId
+    totalCount
+    completedCount
+    ...Todo_user
+  }
+`;
+
 const StyledLabelMark = styled.label`
   display: none;
 `;
-const TodoList = ({
-  relay,
-  user,
-  user: {todos, totalCount, completedCount},
-}: Props) => {
+const TodoList = (props: Props) => {
+  console.log("props", props);
+
+  const environment = useRelayEnvironment();
+  const user = useFragment(TodoList_user, props.user);
+  const { todos, completedCount, totalCount, userId } = user;
   const handleMarkAllChange = (e: SyntheticEvent<HTMLInputElement>) => {
     const complete = e.currentTarget.checked;
 
     if (todos) {
-      MarkAllTodosMutation.commit(relay.environment, complete, todos, user);
+      MarkAllTodosMutation.commit(environment, complete, todos, user);
     }
   };
 
@@ -89,6 +112,8 @@ const TodoList = ({
           .map((edge: any) => edge.node)
           .filter(Boolean)
       : [];
+
+  console.log("user", user);
 
   return (
     <StyledSection>
@@ -111,25 +136,4 @@ const TodoList = ({
   );
 };
 
-export default createFragmentContainer(TodoList, {
-  user: graphql`
-    fragment TodoList_user on User {
-      todos(
-        first: 2147483647 # max GraphQLInt
-      ) @connection(key: "TodoList_todos") {
-        edges {
-          node {
-            id
-            complete
-            ...Todo_todo
-          }
-        }
-      }
-      id
-      userId
-      totalCount
-      completedCount
-      ...Todo_user
-    }
-  `,
-});
+export default TodoList;

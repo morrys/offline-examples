@@ -17,13 +17,12 @@ import RenameTodoMutation from '../mutations/RenameTodoMutation';
 import TodoTextInput from './TodoTextInput';
 
 import React, {useState, SyntheticEvent} from 'react';
-import {createFragmentContainer, graphql} from 'react-relay';
+import {useFragment, graphql, useRelayEnvironment} from 'relay-hooks';
 import styled, {css} from 'styled-components';
 //import type {Todo_todo} from 'relay/Todo_todo.graphql';
 //import type {Todo_user} from 'relay/Todo_user.graphql';
 
 type Props = {
-  relay: any;
   todo: any; // Todo_todo,
   user: any; // Todo_user,
   disabled?: boolean;
@@ -110,13 +109,36 @@ const StyledLabel = styled.label`
     `}
 `;
 
+const fragmentSpecTodo = graphql`
+  fragment Todo_todo on Todo {
+    complete
+    id
+    text
+  }
+`;
+const fragmentSpecUser = graphql`
+  fragment Todo_user on User {
+    id
+    userId
+    totalCount
+    completedCount
+  }
+`;
+
 // TODO MEDIA
-export const Todo = ({relay, todo, user, disabled}: Props) => {
+export const Todo = (props: Props) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
+
+  const {disabled} = props;
+  const environment = useRelayEnvironment();
+  const user = useFragment(fragmentSpecUser, props.user);
+  const todo = useFragment(fragmentSpecTodo, props.todo);
+
+  console.log('renderer');
 
   const handleCompleteChange = (e: SyntheticEvent<HTMLInputElement>) => {
     const complete = e.currentTarget.checked;
-    ChangeTodoStatusMutation.commit(relay.environment, complete, todo, user);
+    ChangeTodoStatusMutation.commit(environment, complete, todo, user);
   };
 
   const handleDestroyClick = () => removeTodo();
@@ -132,11 +154,10 @@ export const Todo = ({relay, todo, user, disabled}: Props) => {
 
   const handleTextInputSave = (text: string) => {
     setIsEditing(false);
-    RenameTodoMutation.commit(relay.environment, text, todo);
+    RenameTodoMutation.commit(environment, text, todo);
   };
 
-  const removeTodo = () =>
-    RemoveTodoMutation.commit(relay.environment, todo, user);
+  const removeTodo = () => RemoveTodoMutation.commit(environment, todo, user);
 
   return (
     <StyledLi isEditing={isEditing}>
@@ -171,20 +192,4 @@ export const Todo = ({relay, todo, user, disabled}: Props) => {
   );
 };
 
-export default createFragmentContainer(Todo, {
-  todo: graphql`
-    fragment Todo_todo on Todo {
-      complete
-      id
-      text
-    }
-  `,
-  user: graphql`
-    fragment Todo_user on User {
-      id
-      userId
-      totalCount
-      completedCount
-    }
-  `,
-});
+export default Todo;
