@@ -15,13 +15,12 @@ import {
   commitMutation,
   graphql,
   Disposable,
-  Environment,
+  Environment
   //RecordProxy,
   //RecordSourceSelectorProxy,
-} from 'react-relay-offline';
+} from "react-relay-offline";
 
-import {ConnectionHandler} from 'relay-runtime';
-
+import { ConnectionHandler } from "relay-runtime";
 
 import { v4 as uuid } from "uuid";
 
@@ -54,7 +53,7 @@ function sharedUpdater(store: any, user: any, newEdge: any) {
   // Get the user's Todo List using ConnectionHandler helper
   const conn = ConnectionHandler.getConnection(
     userProxy,
-    'TodoList_todos', // This is the connection identifier, defined here
+    "TodoList_todos" // This is the connection identifier, defined here
     // https://github.com/relayjs/relay-examples/blob/master/todo/js/components/TodoList.js#L76
   );
 
@@ -62,13 +61,7 @@ function sharedUpdater(store: any, user: any, newEdge: any) {
   ConnectionHandler.insertEdgeAfter(conn, newEdge);
 }
 
-
-
-function commit(
-  environment: Environment,
-  text: string,
-  user: any,
-) {
+function commit(environment: Environment, text: string, user: any) {
   //const totalCount = user.totalCount + 1;
   //const idTot = totalCount + user.completedCount;
   const idTodo = uuid();
@@ -76,11 +69,11 @@ function commit(
     id: idTodo,
     text,
     userId: user.userId,
-    clientMutationId: idTodo,
+    clientMutationId: idTodo
   };
   const totalCount = user.totalCount + 1;
-  const idTot = totalCount+user.completedCount;
-/*
+  const idTot = totalCount + user.completedCount;
+  /*
   return commitMutation(environment, {
     mutation,
     variables: {
@@ -113,41 +106,40 @@ function commit(
       edgeName: 'todoEdge',
     }],
   });*/
-  
+
   commitMutation(environment, {
     mutation,
     variables: {
-      input,
+      input
     },
     updater: (store: any) => {
       // Get the payload returned from the server
-      const payload = store.getRootField('addTodo');
+      const payload = store.getRootField("addTodo");
 
       // Get the edge of the newly created Todo record
-      const newEdge = payload.getLinkedRecord('todoEdge');
+      const newEdge = payload.getLinkedRecord("todoEdge");
 
       // Add it to the user's todo list
       sharedUpdater(store, user, newEdge);
     },
     optimisticUpdater: (store: any) => {
-
-      
       const id = idTodo;
-      const node = store.create(id, 'Todo');
+      const node = store.create(id, "Todo");
       node.setValue(false, "complete");
-      node.setValue(text, 'text');
-      node.setValue(idTodo, 'id');
-      const newEdge = store.create('client:newEdge:' + idTodo, 'TodoEdge');
-      newEdge.setLinkedRecord(node, 'node');
+      node.setValue(text, "text");
+      node.setValue(idTodo, "id");
+      const newEdge = store.create("client:newEdge:" + idTodo, "TodoEdge");
+      newEdge.setLinkedRecord(node, "node");
+      newEdge.setValue(null, "cursor");
       // Add it to the user's todo list
       sharedUpdater(store, user, newEdge);
 
       // Given that we don't have a server response here,
       // we also need to update the todo item count on the user
       const userRecord = store.get(user.id);
-      userRecord.setValue(userRecord.getValue('totalCount') + 1, 'totalCount');
-    },
+      userRecord.setValue(userRecord.getValue("totalCount") + 1, "totalCount");
+    }
   });
 }
 
-export default {commit};
+export default { commit };

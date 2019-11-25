@@ -1025,22 +1025,22 @@
     array-find-index "1.0.2"
     fbjs "^1.0.0"
 
-"@wora/offline-first@^2.0.3":
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/@wora/offline-first/-/offline-first-2.0.3.tgz#ffedc259e4d8343360fc63a8a8b293c2a9ab87f2"
-  integrity sha512-SkPF3kMJ2F+mV4hMfWRa9Cu8pYbGB1DYQivePK8Z2h6CjoLiNDXK/yDIEfJ/mC6eFcAYvwTsfHCQKlQFxjc92Q==
+"@wora/offline-first@^2.0.4":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@wora/offline-first/-/offline-first-2.0.4.tgz#56048ba083350199ae287da38860261ab9f04779"
+  integrity sha512-hUEbmBe1Zq++qNbYxJ+YPJugKSsXgnRZcy8nJ145BmGDRJvPc0YqsmgLEhnYbh7GaOfTO55Ppp5JWhPWk0iKPw==
   dependencies:
     "@wora/cache-persist" "^2.0.4"
     "@wora/netinfo" "^1.1.0"
     fbjs "^1.0.0"
 
-"@wora/relay-offline@^2.0.3":
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/@wora/relay-offline/-/relay-offline-2.0.3.tgz#58912359e55001dedc98f65c5341207e7ed9cdf9"
-  integrity sha512-sMjdE8Mckys8MXjBrbf6YVHuSPJK4iP1x0AjFM/kOlG+CW8xJGYOA6NzvAwSE/N6mggq5dTsfzRY/xyMegMVRQ==
+"@wora/relay-offline@^2.0.4":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@wora/relay-offline/-/relay-offline-2.0.4.tgz#163db2108f6e256757ad4f9735667b32dbaa144c"
+  integrity sha512-ls/VUmjzz+IrgMl7fN1OQZRI8ZQQfD36p6jZc+CbDMU0VkZJFm3Bc2sSmHN6k9DIv0AFBUQYsc+BisllW++HDQ==
   dependencies:
     "@wora/cache-persist" "^2.0.4"
-    "@wora/offline-first" "^2.0.3"
+    "@wora/offline-first" "^2.0.4"
     "@wora/relay-store" "^2.0.3"
     fbjs "^1.0.0"
     uuid "3.3.2"
@@ -5243,14 +5243,14 @@ react-is@^16.8.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.6.tgz#5bbc1e2d29141c9fbdfed456343fe2bc430a6a16"
   integrity sha512-aUk3bHfZ2bRSVFFbbeVS4i+lNPZr3/WM5jT2J5omUVV1zzcs1nAaf3l51ctA5FFvCRbhrH0bdAsRRQddFJZPtA==
 
-react-relay-offline@1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/react-relay-offline/-/react-relay-offline-1.0.1.tgz#8292065ea1330674cbe0d8069699857a843f2273"
-  integrity sha512-7xCyY4r3s4oU/xr9S5OJOo5D2OGXl1wMCb2CUVbjHqcg1/jLgiMXx6J7xX1TEs3WX5ksEVJRCUSBIXbrP7hV9w==
+react-relay-offline@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-relay-offline/-/react-relay-offline-1.0.2.tgz#3c54b3963eb312717dc7d9dbb9e1e65dd0a483af"
+  integrity sha512-MHxY10H5HuTKwvWRviwhcpgIKNOOCW9GGkqCNSkoOgm4pjy8TusiwbWS8/LgeJKI4SNC7Vf3IwSGMzXXOvIPPw==
   dependencies:
     "@babel/runtime" "^7.0.0"
     "@wora/detect-network" "^1.3.0"
-    "@wora/relay-offline" "^2.0.3"
+    "@wora/relay-offline" "^2.0.4"
     fbjs "^1.0.0"
     nullthrows "^1.1.0"
     relay-hooks "2.0.0"

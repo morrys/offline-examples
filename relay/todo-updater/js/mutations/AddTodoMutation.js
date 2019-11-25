@@ -24,8 +24,7 @@ import {ConnectionHandler} from 'relay-runtime';
 import type {TodoApp_user} from 'relay/TodoApp_user.graphql';
 import type {AddTodoInput} from 'relay/AddTodoMutation.graphql';
 
-
-import { v4 as uuid } from "uuid";
+import {v4 as uuid} from 'uuid';
 
 const mutation = graphql`
   mutation AddTodoMutation($input: AddTodoInput!) {
@@ -64,8 +63,6 @@ function sharedUpdater(store, user, newEdge) {
   ConnectionHandler.insertEdgeAfter(conn, newEdge);
 }
 
-
-
 function commit(
   environment: Environment,
   text: string,
@@ -81,8 +78,8 @@ function commit(
     userId: user.userId,
   };
   const totalCount = user.totalCount + 1;
-  const idTot = totalCount+user.completedCount;
-/*
+  const idTot = totalCount + user.completedCount;
+  /*
   return commitMutation(environment, {
     mutation,
     variables: {
@@ -115,14 +112,14 @@ function commit(
       edgeName: 'todoEdge',
     }],
   });*/
-  
+
   return commitMutation(environment, {
     mutation,
     variables: {
       input,
     },
-    onCompleted: (data) => {
-      console.log("onCompleted", data)
+    onCompleted: data => {
+      console.log('onCompleted', data);
     },
     updater: store => {
       // Get the payload returned from the server
@@ -135,15 +132,14 @@ function commit(
       sharedUpdater(store, user, newEdge);
     },
     optimisticUpdater: store => {
-
-      
       const id = idTodo;
       const node = store.create(id, 'Todo');
-      node.setValue(false, "complete");
+      node.setValue(false, 'complete');
       node.setValue(text, 'text');
       node.setValue(idTodo, 'id');
       const newEdge = store.create('client:newEdge:' + idTodo, 'TodoEdge');
       newEdge.setLinkedRecord(node, 'node');
+      newEdge.setValue(null, 'cursor');
       // Add it to the user's todo list
       sharedUpdater(store, user, newEdge);
 

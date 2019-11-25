@@ -130,6 +130,7 @@ function commit(environment: RelayModernEnvironment, text: string, user: any) {
       node.setValue(text, 'text');
       node.setValue(idTodo, 'id');
       const newEdge = store.create('client:newEdge:' + idTodo, 'TodoEdge');
+      newEdge.setValue(null, 'cursor');
       newEdge.setLinkedRecord(node, 'node');
       // Add it to the user's todo list
       sharedUpdater(store, user, newEdge);

@@ -2,7 +2,6 @@ import { RecordSource, Store, Environment } from "react-relay-offline";
 
 import { Network, FetchFunction } from "relay-runtime";
 export { QueryRenderer, graphql } from "react-relay-offline";
-import RelayNetworkLogger from "relay-runtime/lib/RelayNetworkLogger";
 
 /**
  * Define fetch query
@@ -20,6 +19,7 @@ const fetchQuery: FetchFunction = (operation, variables) => {
       variables
     })
   }).then(response => {
+    console.log("response");
     return response.json();
   });
 };
@@ -27,21 +27,19 @@ const fetchQuery: FetchFunction = (operation, variables) => {
 /**
  * Network
  */
-const network = Network.create(
-  RelayNetworkLogger.wrapFetch(fetchQuery, () => "")
-);
+const network = Network.create(fetchQuery);
 export default network;
 
 const offlineOptions = {
   manualExecution: false, //optional
   network: network, //optional
-  onComplete: (options: any) => {
+  onComplete: async (options: any) => {
     //optional
     const { id, offlinePayload, snapshot } = options;
     console.log("onComplete", options);
     return true;
   },
-  onDiscard: (options: any) => {
+  onDiscard: async (options: any) => {
     //optio
     const { id, offlinePayload, error } = options;
     console.log("onDiscard", options);
@@ -63,4 +61,5 @@ export const store = new Store(recourdSource, options);
 /**
  * Environment
  */
-export const environment = new Environment({ network, store }, offlineOptions);
+export const environment = new Environment({ network, store });
+environment.setOfflineOptions(offlineOptions);

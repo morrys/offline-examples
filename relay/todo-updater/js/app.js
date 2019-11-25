@@ -14,7 +14,7 @@
 import * as React from 'react';
 
 import {graphql} from 'react-relay';
-import {QueryRenderer, fetchQuery} from 'react-relay-offline';
+import {QueryRenderer, fetchQuery, useRestore} from 'react-relay-offline';
 
 import TodoApp from './components/TodoApp';
 import type {appQueryResponse} from 'relay/appQuery.graphql';
@@ -22,6 +22,12 @@ import type {appQueryResponse} from 'relay/appQuery.graphql';
 import environment from './relay';
 
 const AppTodo = props => {
+  const isRehydrated = useRestore(environment);
+  if (!isRehydrated) {
+    console.log('loading');
+    return <div />;
+  }
+  console.log('renderer');
   // ***** added to verify useRestore and fetchQuery ***
   /*const [load, setLoad] = React.useState(false);
 
@@ -62,7 +68,7 @@ const AppTodo = props => {
           }
         }
       `}
-      fetchPolicy="store-and-network"
+      fetchPolicy="network-only"
       ttl={10000}
       variables={{
         // Mock authenticated ID that matches database
