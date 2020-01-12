@@ -77,6 +77,9 @@ function commit(
     variables: {
       input,
     },
+    onCompleted: data => {
+      console.log('relay onCompleted', data);
+    },
     optimisticResponse: getOptimisticResponse(complete, todo, user),
   });
 }

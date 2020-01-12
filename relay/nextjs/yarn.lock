@@ -1623,10 +1623,10 @@
     "@wora/netinfo" "^1.1.0"
     fbjs "^1.0.0"
 
-"@wora/relay-offline@^2.0.4":
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/@wora/relay-offline/-/relay-offline-2.0.4.tgz#163db2108f6e256757ad4f9735667b32dbaa144c"
-  integrity sha512-ls/VUmjzz+IrgMl7fN1OQZRI8ZQQfD36p6jZc+CbDMU0VkZJFm3Bc2sSmHN6k9DIv0AFBUQYsc+BisllW++HDQ==
+"@wora/relay-offline@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@wora/relay-offline/-/relay-offline-2.1.0.tgz#e8670368d05a7483425e196c92b9a91f55292f64"
+  integrity sha512-5M/CwsU6sX/pGIpMfVHAnGMpomWMspSECsJHjmk15Nj7y+4k/gXJVceScVCeZE7mcjDy+3kljJJuzVWjZ5Ct0g==
   dependencies:
     "@wora/cache-persist" "^2.0.4"
     "@wora/offline-first" "^2.0.4"
@@ -6945,17 +6945,17 @@ react-is@^16.8.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.4.tgz#90f336a68c3a29a096a3d648ab80e87ec61482a2"
   integrity sha512-PVadd+WaUDOAciICm/J1waJaSvgq+4rHE/K70j0PFqKhkTBsPv/82UGQJNXAngz1fOQLLxI6z1sEDmJDQhCTAA==
 
-react-relay-offline@1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/react-relay-offline/-/react-relay-offline-1.0.2.tgz#3c54b3963eb312717dc7d9dbb9e1e65dd0a483af"
-  integrity sha512-MHxY10H5HuTKwvWRviwhcpgIKNOOCW9GGkqCNSkoOgm4pjy8TusiwbWS8/LgeJKI4SNC7Vf3IwSGMzXXOvIPPw==
+react-relay-offline@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-relay-offline/-/react-relay-offline-1.1.0.tgz#e75a8d9741f16587e70f89d201f2095640129e35"
+  integrity sha512-t3KQTp3TbhYxz0o+VFkzU3I1j969+cy2cagKJ2hdYpQ+1RAr0CD/mcYsfEhVJpDxGddXVnaC6lSzqqGE7j5Jkw==
   dependencies:
     "@babel/runtime" "^7.0.0"
     "@wora/detect-network" "^1.3.0"
-    "@wora/relay-offline" "^2.0.4"
+    "@wora/relay-offline" "^2.1.0"
     fbjs "^1.0.0"
     nullthrows "^1.1.0"
-    relay-hooks "2.0.0"
+    relay-hooks "^2.1.0"
     uuid "3.3.2"
 
 react-relay@^7.1.0:
@@ -7156,10 +7156,10 @@ regjsparser@^0.6.0:
   dependencies:
     jsesc "~0.5.0"
 
-relay-compiler-language-typescript@10.1.0:
-  version "10.1.0"
-  resolved "https://registry.yarnpkg.com/relay-compiler-language-typescript/-/relay-compiler-language-typescript-10.1.0.tgz#997c3f5362d4cc051bddce05c655b1037bc95508"
-  integrity sha512-QYMLQvLUlds0XbHiue9bNcTkWb04vnN/sIXIOP3zEvNdmeSG0dvgjU5G1S54or4P9ledmX3RI4UO2ka+LxlOSQ==
+relay-compiler-language-typescript@10.1.3:
+  version "10.1.3"
+  resolved "https://registry.yarnpkg.com/relay-compiler-language-typescript/-/relay-compiler-language-typescript-10.1.3.tgz#5a61b9b518b18d98215f2da0198f344d3b1d7c8d"
+  integrity sha512-kyt+yD26Dk9lvCCAtR2JBgrr5JtxdYEGiOZf5T6CXGaUVr43FEKh94cdGMwGYX1e+vHZg3gBH4EFi/VHC4Qs4Q==
   dependencies:
     immutable "^4.0.0-rc.12"
     invariant "^2.2.4"
@@ -7186,10 +7186,10 @@ relay-compiler@^7.1.0:
     signedsource "^1.0.0"
     yargs "^9.0.0"
 
-relay-hooks@2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/relay-hooks/-/relay-hooks-2.0.0.tgz#432aa6dfee2c0106e15b33d7791e1b02f777ff8a"
-  integrity sha512-QEBJauHWdZs38ZOnQ37H/hQOhnyDAtb5DcdKF7TKxZPny6Onus1c/vyPhHQPOtIgtfF8Wd7PqyiENFGsapmZHw==
+relay-hooks@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/relay-hooks/-/relay-hooks-2.1.0.tgz#8849f31edfab4984d7df549e83c12dd48db4b6b6"
+  integrity sha512-s+ut/4V8ethjQCE/dsJ0O9JpM1esawNRcgIimRbRSrL89gIwShDeIQOoFIj5Gb6p6VwU7z3pQb1Jx0TweSoEWg==
   dependencies:
     "@restart/hooks" "^0.3.1"
     fbjs "^1.0.0"

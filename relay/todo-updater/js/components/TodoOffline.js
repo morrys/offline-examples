@@ -36,7 +36,9 @@ const RequestOffline = ({offlineRecord, user}) => {
   let todoPublish = sink[input.id];
 
   if (name === 'ChangeTodoStatusMutation') {
-    todoPublish = Object.assign({}, todoPublish, {text: todoBackup.text});
+    todoPublish = Object.assign({}, todoPublish, {
+      text: todoBackup ? todoBackup.text : '',
+    });
   }
 
   const isMultiple =

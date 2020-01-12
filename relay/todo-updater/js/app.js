@@ -68,7 +68,7 @@ const AppTodo = props => {
           }
         }
       `}
-      fetchPolicy="network-only"
+      fetchPolicy="store-or-network"
       ttl={10000}
       variables={{
         // Mock authenticated ID that matches database
