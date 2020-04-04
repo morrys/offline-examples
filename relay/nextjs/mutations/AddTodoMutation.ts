@@ -23,7 +23,6 @@ import {
 import {ConnectionHandler} from 'relay-runtime';
 
 import {v4 as uuid} from 'uuid';
-import RelayModernEnvironment from '@wora/relay-offline/lib/RelayModernEnvironment';
 
 const mutation = graphql`
   mutation AddTodoMutation($input: AddTodoInput!) {
@@ -62,7 +61,7 @@ function sharedUpdater(store: any, user: any, newEdge: any) {
   ConnectionHandler.insertEdgeAfter(conn, newEdge);
 }
 
-function commit(environment: RelayModernEnvironment, text: string, user: any) {
+function commit(environment: Environment, text: string, user: any) {
   //const totalCount = user.totalCount + 1;
   //const idTot = totalCount + user.completedCount;
   const idTodo = uuid();

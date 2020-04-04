@@ -4,7 +4,7 @@
     "dev": "babel-node server.js",
     "build": "next build",
     "start": "cross-env NODE_ENV=production babel-node server.js",
-    "compile": "relay-compiler --src ./ --include '**pages**' '**components**' '**mutations**' --schema ./data/schema.graphql --language typescript --artifactDirectory ./__generated__/relay",
+    "compile": "relay-compiler --src ./ --include 'pages/**' 'components/**' 'mutations/**' --schema ./data/schema.graphql --language typescript --artifactDirectory ./__generated__/relay",
     "update-schema": "babel-node ./scripts/updateSchema.js",
     "lint": "eslint ./ --cache"
   },
@@ -21,7 +21,7 @@
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-relay": "^9.0.0",
-    "react-relay-offline": "2.0.0-rc.3",
+    "react-relay-offline": "2.0.0-rc.4",
     "relay-runtime": "9.0.0",
     "styled-components": "4.4.0",
     "whatwg-fetch": "3.0.0"
