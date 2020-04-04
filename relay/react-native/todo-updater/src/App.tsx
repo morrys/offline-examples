@@ -5,7 +5,10 @@ import { environment, QueryRenderer } from "./relay";
 import { default as Loading } from "./components/Loading";
 import TodoApp from "./components/TodoApp";
 import styled from "styled-components";
-
+import Icon from "react-native-vector-icons/FontAwesome";
+import IconMaterial from "react-native-vector-icons/MaterialIcons";
+IconMaterial.loadFont();
+Icon.loadFont();
 /**
  * Query Definitions
  */
@@ -49,7 +52,7 @@ const AppTodo = () => {
         fetchPolicy={STORE_OR_NETWORK}
         variables={{
           // Mock authenticated ID that matches database
-          userId: "me"
+          userId: "me",
         }}
         render={({ props, error, retry, cached }: any) => {
           console.log("props", props);
@@ -85,18 +88,18 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#F5FCFF"
+    backgroundColor: "#F5FCFF",
   },
   welcome: {
     fontSize: 20,
     textAlign: "center",
-    margin: 10
+    margin: 10,
   },
   instructions: {
     textAlign: "center",
     color: "#333333",
-    marginBottom: 5
-  }
+    marginBottom: 5,
+  },
 });
 
 //const App = <AppTodo />;

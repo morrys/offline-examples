@@ -7,18 +7,18 @@ export { QueryRenderer, graphql } from "react-relay-offline";
  * Define fetch query
  */
 const fetchQuery: FetchFunction = (operation, variables) => {
-  const localIP = "192.168.1.105";
+  const localIP = "localhost";
   console.log("fetch", localIP, operation);
   return fetch("http://" + localIP + ":3000/graphql", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
       query: operation.text,
-      variables
-    })
-  }).then(response => {
+      variables,
+    }),
+  }).then((response) => {
     console.log("response");
     return response.json();
   });
@@ -44,14 +44,15 @@ const offlineOptions = {
     const { id, offlinePayload, error } = options;
     console.log("onDiscard", options);
     return true;
-  }
+  },
 };
 
 /**
  * Store
  */
 const options: any = {
-  errorHandling: (cache: any, error: any) => console.log("error storage", error)
+  errorHandling: (cache: any, error: any) =>
+    console.log("error storage", error),
 };
 
 export const recourdSource = new RecordSource(options);

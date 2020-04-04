@@ -1,7 +1,8 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
-export type TodoListFooter_user$ref = any;
+import { FragmentRefs } from "relay-runtime";
 export type TodoListFooter_user = {
     readonly id: string;
     readonly userId: string;
@@ -15,7 +16,12 @@ export type TodoListFooter_user = {
         } | null> | null;
     } | null;
     readonly totalCount: number;
-    readonly " $refType": TodoListFooter_user$ref;
+    readonly " $refType": "TodoListFooter_user";
+};
+export type TodoListFooter_user$data = TodoListFooter_user;
+export type TodoListFooter_user$key = {
+    readonly " $data"?: TodoListFooter_user$data;
+    readonly " $fragmentRefs": FragmentRefs<"TodoListFooter_user">;
 };
 
 

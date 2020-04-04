@@ -1,14 +1,16 @@
 /* tslint:disable */
+/* eslint-disable */
+/* @relayHash add67b3aeb2fbd668137b888dc82dad5 */
 
 import { ConcreteRequest } from "relay-runtime";
 export type AddTodoInput = {
-    readonly id: string;
-    readonly text: string;
-    readonly userId: string;
-    readonly clientMutationId?: string | null;
+    id: string;
+    text: string;
+    userId: string;
+    clientMutationId?: string | null;
 };
 export type AddTodoMutationVariables = {
-    readonly input: AddTodoInput;
+    input: AddTodoInput;
 };
 export type AddTodoMutationResponse = {
     readonly addTodo: {
