@@ -30,6 +30,7 @@ export type TodoListFooter_user$data = TodoListFooter_user;
 export type TodoListFooter_user$key = {
   +$data?: TodoListFooter_user$data,
   +$fragmentRefs: TodoListFooter_user$ref,
+  ...
 };
 */
 
@@ -167,4 +168,5 @@ return {
 })();
 // prettier-ignore
 (node/*: any*/).hash = '3225adf0f3b5d0a46ee4c63c8dbd9b08';
+
 module.exports = node;

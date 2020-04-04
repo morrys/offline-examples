@@ -25,6 +25,7 @@ export type TodoApp_user$data = TodoApp_user;
 export type TodoApp_user$key = {
   +$data?: TodoApp_user$data,
   +$fragmentRefs: TodoApp_user$ref,
+  ...
 };
 */
 
@@ -78,4 +79,5 @@ const node/*: ReaderFragment*/ = {
 };
 // prettier-ignore
 (node/*: any*/).hash = 'ecccdb5a17f0428603f76e1bbaa8ea9d';
+
 module.exports = node;

@@ -21,6 +21,7 @@ export type Todo_todo$data = Todo_todo;
 export type Todo_todo$key = {
   +$data?: Todo_todo$data,
   +$fragmentRefs: Todo_todo$ref,
+  ...
 };
 */
 
@@ -57,4 +58,5 @@ const node/*: ReaderFragment*/ = {
 };
 // prettier-ignore
 (node/*: any*/).hash = '1f979eb84ff026fe8a89323dd533d1fc';
+
 module.exports = node;
