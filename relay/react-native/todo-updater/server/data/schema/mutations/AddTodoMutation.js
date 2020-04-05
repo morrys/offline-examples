@@ -29,7 +29,6 @@ import {
   User,
 } from '../../database';
 
-
 type Input = {|
   +id: string,
   +text: string,
@@ -66,6 +65,7 @@ const AddTodoMutation = mutationWithClientMutationId({
     },
   },
   mutateAndGetPayload: ({id, text, userId}: Input): Payload => {
+    console.log('add mutation execute');
     const todoId = addTodo(id, text, false);
 
     return {todoId, userId};

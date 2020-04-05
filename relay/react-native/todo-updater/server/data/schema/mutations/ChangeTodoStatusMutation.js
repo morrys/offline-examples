@@ -53,6 +53,7 @@ const ChangeTodoStatusMutation = mutationWithClientMutationId({
     },
   },
   mutateAndGetPayload: ({id, complete, userId}: Input): Payload => {
+    console.log('changeTodoStatus mutation execute');
     changeTodoStatus(id, complete);
     return {id, userId};
   },
