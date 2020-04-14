@@ -21,7 +21,7 @@
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-relay": "^9.0.0",
-    "react-relay-offline": "2.0.0-rc.4",
+    "react-relay-offline": "2.0.0",
     "relay-runtime": "9.0.0",
     "styled-components": "4.4.0",
     "whatwg-fetch": "3.0.0"
