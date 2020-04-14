@@ -1,13 +1,15 @@
 /* tslint:disable */
+/* eslint-disable */
+/* @relayHash ae532190788a732c3a6c4654946dff8a */
 
 import { ConcreteRequest } from "relay-runtime";
-type TodoApp_user$ref = any;
+import { FragmentRefs } from "relay-runtime";
 export type AppQueryVariables = {
-    readonly userId?: string | null;
+    userId?: string | null;
 };
 export type AppQueryResponse = {
     readonly user: {
-        readonly " $fragmentRefs": TodoApp_user$ref;
+        readonly " $fragmentRefs": FragmentRefs<"TodoApp_user">;
     } | null;
 };
 export type AppQuery = {

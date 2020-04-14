@@ -26,7 +26,10 @@ const UserQuery = {
   args: {
     id: {type: GraphQLString},
   },
-  resolve: (root: {}, {id}: Input): User => getUserOrThrow(id),
+  resolve: (root: {}, {id}: Input): User => {
+    console.log('query execute');
+    return getUserOrThrow(id);
+  },
 };
 
 export {UserQuery};

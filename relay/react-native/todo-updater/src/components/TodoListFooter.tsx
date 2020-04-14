@@ -11,21 +11,21 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import RemoveCompletedTodosMutation from '../mutations/RemoveCompletedTodosMutation';
+import RemoveCompletedTodosMutation from "../mutations/RemoveCompletedTodosMutation";
 
-import React from 'react';
-import {graphql, createFragmentContainer} from 'react-relay';
+import React from "react";
+import { graphql, createFragmentContainer } from "react-relay";
 
-import { Text, Button } from 'react-native-elements';
-import { View } from 'react-native';
+import { Text, Button } from "react-native-elements";
+import { View } from "react-native";
 
-import styled, {css} from "styled-components";
+import styled, { css } from "styled-components";
 
 const StyledContainer = styled.View`
-  flexDirection: row;
-  backgroundColor: #fff;
-  justifyContent: center;
-  alignItems: center;
+  flex-direction: row;
+  background-color: #fff;
+  justify-content: center;
+  align-items: center;
 `;
 
 const StyleButtonContainer = styled.View`
@@ -39,12 +39,12 @@ const StyledLabel = styled(Text)`
 const TodoListFooter = ({
   relay,
   user,
-  user: {todos, completedCount, totalCount},
+  user: { todos, completedCount, totalCount },
 }: any) => {
   const completedEdges =
     todos && todos.edges
       ? todos.edges.filter(
-          (edge: any) => edge && edge.node && edge.node.complete,
+          (edge: any) => edge && edge.node && edge.node.complete
         )
       : [];
 
@@ -54,8 +54,14 @@ const TodoListFooter = ({
       {
         edges: completedEdges,
       },
-      user,
+      user
     );
+  };
+
+  const purge = () => {
+    relay.environment
+      .clearCache()
+      .then((result: any) => console.log("clearCache", result));
   };
 
   const numRemainingTodos = totalCount - completedCount;
@@ -63,18 +69,30 @@ const TodoListFooter = ({
   return (
     <StyledContainer>
       <StyleButtonContainer>
-      <StyledLabel h4>
-      {numRemainingTodos + " Item" + (numRemainingTodos === 1 ? '' : 's') +" left"}
+        <StyledLabel h4>
+          {numRemainingTodos +
+            " Item" +
+            (numRemainingTodos === 1 ? "" : "s") +
+            " left"}
         </StyledLabel>
-        </StyleButtonContainer>
+      </StyleButtonContainer>
 
-        <StyleButtonContainer>
+      <StyleButtonContainer>
         <Button
-        onPress={handleRemoveCompletedTodosClick}
-        title="Clear completed"
-        disabled={completedCount == 0}
-        accessibilityLabel="Clear completed"
-      />
+          onPress={purge}
+          title="Purge"
+          disabled={completedCount == 0}
+          accessibilityLabel="purge"
+        />
+      </StyleButtonContainer>
+
+      <StyleButtonContainer>
+        <Button
+          onPress={handleRemoveCompletedTodosClick}
+          title="Clear"
+          disabled={completedCount == 0}
+          accessibilityLabel="Clear completed"
+        />
       </StyleButtonContainer>
     </StyledContainer>
   );

@@ -1,14 +1,16 @@
 /* tslint:disable */
+/* eslint-disable */
+/* @relayHash 54e1140d5816ebc3e65c63d5d7d65c10 */
 
 import { ConcreteRequest } from "relay-runtime";
 export type ChangeTodoStatusInput = {
-    readonly complete: boolean;
-    readonly id: string;
-    readonly userId: string;
-    readonly clientMutationId?: string | null;
+    complete: boolean;
+    id: string;
+    userId: string;
+    clientMutationId?: string | null;
 };
 export type ChangeTodoStatusMutationVariables = {
-    readonly input: ChangeTodoStatusInput;
+    input: ChangeTodoStatusInput;
 };
 export type ChangeTodoStatusMutationResponse = {
     readonly changeTodoStatus: {
