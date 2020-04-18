@@ -6,7 +6,7 @@ import {Todo} from './Todo';
   version 0.4.0
 import {createFragmentContainer, graphql, useIsConnected, useNetInfo } from 'react-relay-offline';
 */
-import useOffline from 'react-relay-offline/lib/hooks/useOffline';
+import {useOffline} from 'react-relay-offline/lib/hooks/useOffline';
 
 import {manualExecution} from '../relay';
 
