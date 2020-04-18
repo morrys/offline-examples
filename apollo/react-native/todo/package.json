@@ -37,7 +37,8 @@
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.1",
     "subscriptions-transport-ws": "^0.9.16",
-    "@wora/apollo-offline": "2.2.0",
+    "@wora/apollo-offline": "2.3.0",
+    "@wora/detect-network": "2.0.0",
     "uuid": "3.3.2",
     "styled-components": "4.3.1",
     "tslib": "1.10.0"

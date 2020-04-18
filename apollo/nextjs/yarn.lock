@@ -1327,46 +1327,45 @@
     "@webassemblyjs/wast-parser" "1.8.5"
     "@xtuc/long" "4.2.2"
 
-"@wora/apollo-cache@^2.1.0":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@wora/apollo-cache/-/apollo-cache-2.1.0.tgz#4bcd36eb1d33219eafa105b45b61fd9dbef307cb"
-  integrity sha512-alT/VMz5Jlm/Ua309RwgFTKzcEcSwzwmlNWVpEUoEnb8yFRTobwSmk+xUcg9WiJPW4bfNfKahB1znTjdYsdSBw==
-  dependencies:
-    "@wora/cache-persist" "^2.0.4"
-
-"@wora/apollo-offline@2.2.0":
+"@wora/apollo-cache@^2.2.0":
   version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@wora/apollo-offline/-/apollo-offline-2.2.0.tgz#3e85033e079481526c06308a7f3a43d8d8a6d66d"
-  integrity sha512-3n6286B9BkRVvLYizquTgVUPhM2r3dymAAFXW3hC3MFJQZL3/nrzmMY6ZDr8mJQGw0UUs36LI7UutJlTmXv27g==
+  resolved "https://registry.yarnpkg.com/@wora/apollo-cache/-/apollo-cache-2.2.0.tgz#52dcf1466f4efe50ca79950a7faebd9a77257faf"
+  integrity sha512-zPTFk413ZIZcTvKwCfUJfahRK1sCqReZkCoTswW/qy04Aj+/sUTcmwaEueSfy8OpyN1v4aExDEQbu1RTSP75CQ==
   dependencies:
-    "@wora/apollo-cache" "^2.1.0"
-    "@wora/cache-persist" "^2.0.4"
-    "@wora/offline-first" "^2.0.4"
+    "@wora/cache-persist" "^2.1.0"
+
+"@wora/apollo-offline@2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@wora/apollo-offline/-/apollo-offline-2.3.0.tgz#1bbdb1590cc02e3e3ad0754c7471f6efa4befbf2"
+  integrity sha512-d7akT2U4ji2rVcT4CVKAT53xd9fkwSs31fdvuwQj1NxtTS1wPkon6bzd173t+TkCvbr+C35QCGH3e9CCbRG/fw==
+  dependencies:
+    "@wora/apollo-cache" "^2.2.0"
+    "@wora/cache-persist" "^2.1.0"
+    "@wora/offline-first" "^2.1.0"
     apollo-cache-inmemory "^1.6.2"
     uuid "3.3.2"
 
-"@wora/cache-persist@^2.0.4":
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/@wora/cache-persist/-/cache-persist-2.0.4.tgz#01c1f237dcb289632e9d9e48f3c90a62de910b2b"
-  integrity sha512-EdpoGFMdAQ1AseO7XBaIJ2IipRSLFy4bmMk6B6VysDIOth3VaIlQuXyxxV5CTnOyyZfZ2drPvnw/XsVfDDUMvg==
+"@wora/cache-persist@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@wora/cache-persist/-/cache-persist-2.1.0.tgz#de5ce1a7b7a8f8a08494f672cb1f49fea5b3869e"
+  integrity sha512-oOuzWyqXhFQ9eixepzRusGS/WmeF5SrFjV6KEPl4Qxrk7hHICKhR4AoF0gHl5HzIX8Ao3grUtiRmYzqQiFwiNQ==
   dependencies:
     idb "^4.0.0"
 
-"@wora/netinfo@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@wora/netinfo/-/netinfo-1.1.1.tgz#abe5b027755a3ef13ef141536ea0961e55482be9"
-  integrity sha512-PVzITUdW0xCnN4CyWvf3CN4IqWYePEcHZ/Nk920+UZvG+3kmvcXgZAODushcF4gv6A+oSehR22OfTl3hX3G7rg==
+"@wora/netinfo@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@wora/netinfo/-/netinfo-2.0.0.tgz#8f7e53f19029bbb621c8fe46e7054c00d6a09190"
+  integrity sha512-Yw+ELfv6k8VMAV+NxwgzCvHewpaQbLLhZfBSDwklDcpvdwvZC+0lvvtzHYNtXTMINKML6wtvcaP5WOk1sKOPxQ==
   dependencies:
-    array-find-index "1.0.2"
     fbjs "^1.0.0"
 
-"@wora/offline-first@^2.0.4":
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/@wora/offline-first/-/offline-first-2.0.5.tgz#d58d5ee18e58d4f8e1b497d7063bc6b27cd23715"
-  integrity sha512-tmlYi1mdcRTiGLETdiIUwq3igsX2bas7Qa07PEGNq4NFFkRzabJfos2YuKn6r0Pl/tWS0w0Jt7q+RXmxyeis4A==
+"@wora/offline-first@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@wora/offline-first/-/offline-first-2.1.0.tgz#4a985f8887fa09aba0f71c6e1396695bdf7e4138"
+  integrity sha512-6LaAHEfCPmH8Kyp9T3EmwyarXmHrzisgy2nbWU5VzO9E6P671oUkcb8wU4tq/qeB5arsZdq+subeLCMm+UE8cw==
   dependencies:
-    "@wora/cache-persist" "^2.0.4"
-    "@wora/netinfo" "^1.1.1"
+    "@wora/cache-persist" "^2.1.0"
+    "@wora/netinfo" "^2.0.0"
     fbjs "^1.0.0"
 
 "@wry/context@^0.4.0":
@@ -1616,11 +1615,6 @@ arr-union@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/arr-union/-/arr-union-3.1.0.tgz#e39b09aea9def866a8f206e288af63919bae39c4"
   integrity sha1-45sJrqne+Gao8gbiiK9jkZuuOcQ=
-
-array-find-index@1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/array-find-index/-/array-find-index-1.0.2.tgz#df010aa1287e164bbda6f9723b0a96a1ec4187a1"
-  integrity sha1-3wEKoSh+Fku9pvlyOwqWoexBh6E=
 
 array-flatten@1.1.1:
   version "1.1.1"
