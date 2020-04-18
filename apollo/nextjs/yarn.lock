@@ -1334,23 +1334,16 @@
   dependencies:
     "@wora/cache-persist" "^2.0.4"
 
-"@wora/apollo-offline@2.1.0":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@wora/apollo-offline/-/apollo-offline-2.1.0.tgz#9d6a1d205544f7b14c5e92e17f0a6deab92088ab"
-  integrity sha512-wqXlv0hM1/4m6Ecnnpp4GA4SjMkQNZevBv9+SBsbgoXw9srhQXe+SCujuBnmc26kAEqufGmKyddr3jI0ed088w==
+"@wora/apollo-offline@2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@wora/apollo-offline/-/apollo-offline-2.2.0.tgz#3e85033e079481526c06308a7f3a43d8d8a6d66d"
+  integrity sha512-3n6286B9BkRVvLYizquTgVUPhM2r3dymAAFXW3hC3MFJQZL3/nrzmMY6ZDr8mJQGw0UUs36LI7UutJlTmXv27g==
   dependencies:
     "@wora/apollo-cache" "^2.1.0"
     "@wora/cache-persist" "^2.0.4"
-    "@wora/offline-first" "^2.0.2"
+    "@wora/offline-first" "^2.0.4"
     apollo-cache-inmemory "^1.6.2"
     uuid "3.3.2"
-
-"@wora/cache-persist@^2.0.3":
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/@wora/cache-persist/-/cache-persist-2.0.3.tgz#b24d484e2fd62791eb9b6bf69ce650d1fc552421"
-  integrity sha512-XRk9+mAQn0YUjtZuUDTKEN45dmlfhNTvMj7BEBsAYIkTGK/yB1Ysuc3hy+QcDaRG9f2J4lg2yaGAhWX/tXTVdg==
-  dependencies:
-    idb "^4.0.0"
 
 "@wora/cache-persist@^2.0.4":
   version "2.0.4"
@@ -1359,21 +1352,21 @@
   dependencies:
     idb "^4.0.0"
 
-"@wora/netinfo@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@wora/netinfo/-/netinfo-1.1.0.tgz#225d9f8d1bd586b87fe4d0748caf559ad9f789c7"
-  integrity sha512-VVIlT1IM6Vs/MmHaD2UEjFH2A0UBsDd10LR36HEl3SjMO0y+H6uSj5pGNvkPC/nB589U9t4XnaEVmtn608/kyg==
+"@wora/netinfo@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@wora/netinfo/-/netinfo-1.1.1.tgz#abe5b027755a3ef13ef141536ea0961e55482be9"
+  integrity sha512-PVzITUdW0xCnN4CyWvf3CN4IqWYePEcHZ/Nk920+UZvG+3kmvcXgZAODushcF4gv6A+oSehR22OfTl3hX3G7rg==
   dependencies:
     array-find-index "1.0.2"
     fbjs "^1.0.0"
 
-"@wora/offline-first@^2.0.2":
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/@wora/offline-first/-/offline-first-2.0.2.tgz#ecd09bc9a94b62c5e753e9aa185791cd2b314c42"
-  integrity sha512-dpuBKQFQo8SaO7j1V1civp53Q9vmpjOePAmGiUF/ykJF4fKx+z1os/afRU9rQ30cX1LYwa3BwMTI9eIc+U/Ulw==
+"@wora/offline-first@^2.0.4":
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/@wora/offline-first/-/offline-first-2.0.5.tgz#d58d5ee18e58d4f8e1b497d7063bc6b27cd23715"
+  integrity sha512-tmlYi1mdcRTiGLETdiIUwq3igsX2bas7Qa07PEGNq4NFFkRzabJfos2YuKn6r0Pl/tWS0w0Jt7q+RXmxyeis4A==
   dependencies:
-    "@wora/cache-persist" "^2.0.3"
-    "@wora/netinfo" "^1.1.0"
+    "@wora/cache-persist" "^2.0.4"
+    "@wora/netinfo" "^1.1.1"
     fbjs "^1.0.0"
 
 "@wry/context@^0.4.0":

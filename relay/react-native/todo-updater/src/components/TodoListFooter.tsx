@@ -20,6 +20,7 @@ import { Text, Button } from "react-native-elements";
 import { View } from "react-native";
 
 import styled, { css } from "styled-components";
+import { useNetInfo, useIsConnected } from "react-relay-offline";
 
 const StyledContainer = styled.View`
   flex-direction: row;
@@ -65,6 +66,11 @@ const TodoListFooter = ({
   };
 
   const numRemainingTodos = totalCount - completedCount;
+
+  const netstate = useNetInfo();
+  const connected = useIsConnected();
+  console.log("netstate", netstate);
+  console.log("connected", connected);
 
   return (
     <StyledContainer>

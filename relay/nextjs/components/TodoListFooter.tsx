@@ -16,6 +16,7 @@ import RemoveCompletedTodosMutation from '../mutations/RemoveCompletedTodosMutat
 import React from 'react';
 import {graphql, createFragmentContainer} from 'react-relay';
 import styled, {css} from 'styled-components';
+import {useIsConnected, useNetInfo} from 'react-relay-offline';
 /*import type {TodoListFooter_user} from 'relay/TodoListFooter_user.graphql';
 type Todos = $NonMaybeType<$ElementType<TodoListFooter_user, 'todos'>>;
 type Edges = $NonMaybeType<$ElementType<Todos, 'edges'>>;
@@ -90,6 +91,11 @@ const TodoListFooter = ({
   };
 
   const numRemainingTodos = totalCount - completedCount;
+
+  const netstate = useNetInfo();
+  const connected = useIsConnected();
+  console.log('netstate', netstate);
+  console.log('connected', connected);
 
   return (
     <StyledFooter>

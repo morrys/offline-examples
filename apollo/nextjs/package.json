@@ -9,7 +9,7 @@
     "lint": "eslint ./ --cache"
   },
   "dependencies": {
-    "@wora/apollo-offline": "2.1.0",
+    "@wora/apollo-offline": "2.2.0",
     "@apollo/react-hooks": "3.0.0",
     "@apollo/react-ssr": "3.0.0",
     "apollo-cache-inmemory": "1.6.3",
