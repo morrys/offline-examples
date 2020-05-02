@@ -31,51 +31,51 @@ export type TodoApp_user$key = {
 
 
 const node/*: ReaderFragment*/ = {
-  "kind": "Fragment",
-  "name": "TodoApp_user",
-  "type": "User",
-  "metadata": null,
   "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "TodoApp_user",
   "selections": [
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "id",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "userId",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "totalCount",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "completedCount",
       "args": null,
+      "kind": "ScalarField",
+      "name": "completedCount",
       "storageKey": null
     },
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "TodoListFooter_user",
-      "args": null
+      "name": "TodoListFooter_user"
     },
     {
+      "args": null,
       "kind": "FragmentSpread",
-      "name": "TodoList_user",
-      "args": null
+      "name": "TodoList_user"
     }
-  ]
+  ],
+  "type": "User"
 };
 // prettier-ignore
 (node/*: any*/).hash = 'ecccdb5a17f0428603f76e1bbaa8ea9d';
