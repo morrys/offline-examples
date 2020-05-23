@@ -34,17 +34,17 @@ function getOptimisticResponse(complete, todo, user) {
       todo: {
         complete: complete,
         id: todo.id,
-        __typename: "Todo"
+        __typename: "Todo",
       },
       user: {
         __typename: "User",
         id: user.id,
         completedCount: complete
           ? user.completedCount + 1
-          : user.completedCount - 1
+          : user.completedCount - 1,
       },
-      __typename: "ChangeTodoStatusPayload"
-    }
+      __typename: "ChangeTodoStatusPayload",
+    },
   };
 }
 
@@ -52,18 +52,23 @@ function commit(client, complete, todo, user) {
   const input = {
     complete,
     userId: user.userId,
-    id: todo.id
+    id: todo.id,
   };
   return client
     .mutate({
       mutation,
       variables: {
-        input
+        input,
       },
-      onError: error => console.log("prova"),
-      optimisticResponse: getOptimisticResponse(complete, todo, user)
+      update: (client, mutationData) => (mutationData) =>
+        console.log("mutationData", mutationData),
+      onError: (error) => console.log("prova"),
+      optimisticResponse: (data) => {
+        console.log("data", data);
+        return getOptimisticResponse(complete, todo, user);
+      },
     })
-    .catch(error => console.log("error"));
+    .catch((error) => console.log("error", error));
 }
 
 export default { commit };
