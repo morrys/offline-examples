@@ -1,8 +1,9 @@
 import React from 'react';
 import TodoApp, {QUERY_APP} from '../components/TodoApp';
 import {withData} from '../relay';
-import {useLazyLoadQuery, STORE_OR_NETWORK} from 'relay-hooks';
+import {STORE_OR_NETWORK} from 'relay-hooks';
 import {TodoAppQuery} from '../__generated__/relay/TodoAppQuery.graphql';
+import {useLazyLoadQuery} from 'react-relay-offline';
 
 const query = QUERY_APP;
 
@@ -12,9 +13,7 @@ const variables = {
 };
 
 const Home = () => {
-  const {props, retry} = useLazyLoadQuery<TodoAppQuery>(query, variables, {
-    fetchPolicy: STORE_OR_NETWORK,
-  });
+  const {props, retry} = useLazyLoadQuery<TodoAppQuery>(query, variables);
   if (!props) {
     return <div>no data || skip</div>;
   }

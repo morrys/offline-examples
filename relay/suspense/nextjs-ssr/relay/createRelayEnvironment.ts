@@ -1,10 +1,22 @@
 import {Network} from 'relay-runtime';
-import {Store, Environment, RecordSource} from 'relay-runtime';
+import {Store, Environment, RecordSource} from 'react-relay-offline';
+
+// import { Network, RecordSource } from 'relay-runtime'
+import EnvironmentIDB from 'react-relay-offline/lib/runtime/EnvironmentIDB';
 
 import fetch from 'isomorphic-unfetch';
 
 let relayEnvironment: Environment;
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+// TODO: support offline:
+// https://github.com/morrys/react-relay-offline
+
+// Define a function that fetches the results of an operation (query/mutation/etc)
+// and returns its results as a Promise:
 function fetchQuery(operation, variables, cacheConfig, uploadables) {
   const endpoint = 'http://localhost:3000/graphql';
   return fetch(endpoint, {
@@ -24,10 +36,11 @@ type InitProps = {
   records?: any;
 };
 
+export const manualExecution = false;
 const network = Network.create(fetchQuery);
 
-function createEnvironment(records) {
-  const recordSource = new RecordSource(records);
+function createLocalStorageEnvironment() {
+  const recordSource = new RecordSource();
   const store = new Store(recordSource);
   const environment = new Environment({
     network,
@@ -36,16 +49,88 @@ function createEnvironment(records) {
   return environment;
 }
 
+function createIndexedDB(records) {
+  const recordSourceOptions = {
+    initialState: records,
+    mergeState: (restoredState, initialState = {}) => {
+      if (!restoredState) {
+        return initialState;
+      }
+      if (restoredState && restoredState['0']) {
+        // test
+        const newStat = {
+          ...restoredState,
+          '0': {
+            ...restoredState['0'],
+            text: 'changed',
+          },
+        };
+        return newStat;
+      }
+      return restoredState;
+    },
+  };
+  const idbOptions = undefined;
+  const environment = EnvironmentIDB.create(
+    {
+      network,
+    },
+    idbOptions,
+    recordSourceOptions,
+  );
+  return environment;
+}
+
 export default function initEnvironment(options: InitProps = {}) {
   const {records = {}} = options;
 
+  const createEnvironment = indexed => {
+    const environment = indexed
+      ? createIndexedDB(records)
+      : createLocalStorageEnvironment();
+    environment.setOfflineOptions({
+      manualExecution, //optional
+      network: network, //optional
+      start: async mutations => {
+        //optional
+        console.log('start offline', mutations);
+        return mutations;
+      },
+      finish: async (mutations, error) => {
+        //optional
+        console.log('finish offline', error, mutations);
+      },
+      onExecute: async mutation => {
+        //optional
+        console.log('onExecute offline', mutation);
+        return mutation;
+      },
+      onComplete: async options => {
+        //optional
+        console.log('onComplete offline', options);
+        return true;
+      },
+      onDiscard: async options => {
+        //optional
+        console.log('onDiscard offline', options);
+        return true;
+      },
+      onPublish: async offlinePayload => {
+        //optional
+        console.log('offlinePayload', offlinePayload);
+        return offlinePayload;
+      },
+    });
+    return environment;
+  };
+
   if (typeof window === 'undefined') {
-    return createEnvironment(records);
+    return createEnvironment(false);
   }
 
   // reuse Relay environment on client-side
   if (!relayEnvironment) {
-    relayEnvironment = createEnvironment(records);
+    relayEnvironment = createEnvironment(true);
   }
 
   return relayEnvironment;
