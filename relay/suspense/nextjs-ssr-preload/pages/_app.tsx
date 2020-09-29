@@ -7,6 +7,7 @@ import {Router} from 'next/router';
 import initEnvironment from '../relay/createRelayEnvironment';
 import {QUERY_APP} from '../components/TodoApp';
 import {RelayEnvironmentProvider, useRelayEnvironment} from 'relay-hooks';
+import {Environment} from 'react-relay-offline';
 
 let ssrPrefethed = false;
 
@@ -42,15 +43,25 @@ const Suspense = ({children, ssr, reload}) => {
 };
 
 const Routing = ({ssr, variables, prefetch}) => {
-  const environment = useRelayEnvironment();
+  const environment = useRelayEnvironment<Environment>();
 
   if (ssr && !ssrPrefethed) {
     ssrPrefethed = true;
     prefetch.next(environment, QUERY_APP, variables);
   }
 
+  if (!environment.isRehydrated()) {
+    environment.hydrate().then(() => {
+      /*
+      prefetch.next(environment, QUERY_APP, variables, {
+        fetchPolicy: NETWORK_ONLY,
+      });*/
+    });
+  }
+
   useEffect(() => {
     const handleRouteChange = url => {
+      console.log('handleRouteChange', url);
       const isMe = url === '/';
       prefetch.next(environment, QUERY_APP, {userId: isMe ? 'me' : 'you'});
     };
