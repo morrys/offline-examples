@@ -14,7 +14,7 @@
     "relay-compiler": "^9.0.0",
     "relay-hooks": "3.7.0",
     "relay-runtime": "9.0.0",
-    "react-relay-offline": "2.2.0",
+    "react-relay-offline": "2.3.0",
     "react-relay": "9.0.0"
   },
   "devDependencies": {
