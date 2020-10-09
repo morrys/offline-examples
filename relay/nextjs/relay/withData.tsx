@@ -28,13 +28,13 @@ export default <P extends Props>(
             records: props.queryRecords,
           });
     return (
-      <QueryRenderer
+      <QueryRenderer<any>
         environment={environment}
         query={query}
         variables={variables}
         fetchPolicy={STORE_OR_NETWORK}
         ttl={300000}
-        render={({error, cached, props, ...others}: any) => {
+        render={({error, cached, props, online, ...others}) => {
           if (props && props.user) {
             return <ComposedComponent {...props} {...others} />;
           } else if (error) {
