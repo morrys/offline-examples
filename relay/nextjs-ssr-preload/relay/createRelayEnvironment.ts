@@ -5,11 +5,15 @@ import {Store, Environment, RecordSource} from 'react-relay-offline';
 import EnvironmentIDB from 'react-relay-offline/lib/runtime/EnvironmentIDB';
 
 import fetch from 'isomorphic-unfetch';
-import {loadQuery} from 'react-relay-offline/lib/runtime/loadQuery';
+import {loadQuery} from 'react-relay-offline';
+import {OfflineLoadQuery} from 'react-relay-offline/lib/RelayOfflineTypes';
 
 const prefetch = loadQuery();
 
-let relayEnvironment: any;
+let relayEnvironment: {
+  environment: Environment;
+  prefetch: OfflineLoadQuery;
+};
 
 // TODO: support offline:
 // https://github.com/morrys/react-relay-offline

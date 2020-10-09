@@ -11,11 +11,20 @@ import {
   useRelayEnvironment,
   NETWORK_ONLY,
 } from 'relay-hooks';
+import {OfflineLoadQuery, Environment} from 'react-relay-offline';
 
 let ssrPrefethed = false;
 
-const Routing = ({ssr, variables, prefetch}) => {
-  const environment: any = useRelayEnvironment();
+const Routing = ({
+  ssr,
+  variables,
+  prefetch,
+}: {
+  ssr: boolean;
+  variables: any;
+  prefetch: OfflineLoadQuery;
+}) => {
+  const environment = useRelayEnvironment<Environment>();
   console.log('routing', ssr, ssrPrefethed);
 
   if (!environment.isRehydrated()) {
