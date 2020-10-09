@@ -19,17 +19,19 @@ function sleep(ms) {
 // and returns its results as a Promise:
 function fetchQuery(operation, variables, cacheConfig, uploadables) {
   const endpoint = 'http://localhost:3000/graphql';
-  return fetch(endpoint, {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    }, // Add authentication and other headers here
-    body: JSON.stringify({
-      query: operation.text, // GraphQL text from input
-      variables,
-    }),
-  }).then(response => response.json());
+  return sleep(2000).then(() =>
+    fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      }, // Add authentication and other headers here
+      body: JSON.stringify({
+        query: operation.text, // GraphQL text from input
+        variables,
+      }),
+    }).then(response => response.json()),
+  );
 }
 
 type InitProps = {
