@@ -1,5 +1,5 @@
-var express = require('express');
-const {ApolloServer, gql} = require('apollo-server-express');
+var express = require("express");
+const { ApolloServer, gql } = require("apollo-server-express");
 
 // Construct a schema, using GraphQL schema language
 var typeDefs = gql`
@@ -45,10 +45,10 @@ const server = new ApolloServer({
 
 var app = express();
 
-server.applyMiddleware({app});
+server.applyMiddleware({ app });
 
 app.listen(3003);
-console.log('Running a GraphQL API server at localhost:3003');
+console.log("Running a GraphQL API server at localhost:3003");
 
 let entries = [];
 
@@ -57,10 +57,10 @@ function getEntries() {
 }
 
 function createEntry(parent, args, context) {
-  const {id, text} = args.input;
-  const entry = {id, text};
+  const { id, text } = args.input;
+  const entry = { id, text };
 
-  console.log('creating the entry: ', entry);
+  console.log("creating the entry: ", entry, args.input.clientMutationId);
   entries.push(entry);
   return {
     clientMutationId: args.input.clientMutationId,

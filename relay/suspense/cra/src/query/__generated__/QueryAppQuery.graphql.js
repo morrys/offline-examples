@@ -1,6 +1,5 @@
 /**
  * @flow
- * @relayHash 76893ccb52ea08e98e9609fb7af57754
  */
 
 /* eslint-disable */
@@ -38,70 +37,70 @@ fragment Entries_entries on Entry {
 */
 
 const node/*: ConcreteRequest*/ = {
-  "kind": "Request",
   "fragment": {
-    "kind": "Fragment",
-    "name": "QueryAppQuery",
-    "type": "Query",
-    "metadata": null,
     "argumentDefinitions": [],
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "QueryAppQuery",
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "entries",
-        "storageKey": null,
         "args": null,
         "concreteType": "Entry",
+        "kind": "LinkedField",
+        "name": "entries",
         "plural": true,
         "selections": [
           {
+            "args": null,
             "kind": "FragmentSpread",
-            "name": "Entries_entries",
-            "args": null
+            "name": "Entries_entries"
           }
-        ]
+        ],
+        "storageKey": null
       }
-    ]
+    ],
+    "type": "Query"
   },
+  "kind": "Request",
   "operation": {
+    "argumentDefinitions": [],
     "kind": "Operation",
     "name": "QueryAppQuery",
-    "argumentDefinitions": [],
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "entries",
-        "storageKey": null,
         "args": null,
         "concreteType": "Entry",
+        "kind": "LinkedField",
+        "name": "entries",
         "plural": true,
         "selections": [
           {
-            "kind": "ScalarField",
             "alias": null,
-            "name": "id",
             "args": null,
+            "kind": "ScalarField",
+            "name": "id",
             "storageKey": null
           },
           {
-            "kind": "ScalarField",
             "alias": null,
-            "name": "text",
             "args": null,
+            "kind": "ScalarField",
+            "name": "text",
             "storageKey": null
           }
-        ]
+        ],
+        "storageKey": null
       }
     ]
   },
   "params": {
-    "operationKind": "query",
-    "name": "QueryAppQuery",
     "id": null,
-    "text": "query QueryAppQuery {\n  entries {\n    ...Entries_entries\n    id\n  }\n}\n\nfragment Entries_entries on Entry {\n  id\n  text\n}\n",
-    "metadata": {}
+    "metadata": {},
+    "name": "QueryAppQuery",
+    "operationKind": "query",
+    "text": "query QueryAppQuery {\n  entries {\n    ...Entries_entries\n    id\n  }\n}\n\nfragment Entries_entries on Entry {\n  id\n  text\n}\n"
   }
 };
 // prettier-ignore
