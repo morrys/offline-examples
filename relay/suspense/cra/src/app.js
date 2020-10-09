@@ -1,7 +1,13 @@
 import * as React from "react";
 
-import { useLazyLoadQuery, RelayEnvironmentProvider } from "relay-hooks";
-import { Environment, Network, RecordSource, Store } from "relay-runtime";
+import { RelayEnvironmentProvider } from "relay-hooks";
+import { Network } from "relay-runtime";
+import {
+  useLazyLoadQuery,
+  Store,
+  Environment,
+  RecordSource,
+} from "react-relay-offline";
 
 import { create } from "./mutations/create";
 
@@ -22,17 +28,52 @@ async function fetchQuery(operation, variables) {
 
   return response.json();
 }
-
+const network = Network.create(fetchQuery);
+const recordSource = new RecordSource();
+const store = new Store(recordSource);
 const modernEnvironment = new Environment({
-  network: Network.create(fetchQuery),
-  store: new Store(new RecordSource()),
+  network,
+  store,
+});
+modernEnvironment.setOfflineOptions({
+  manualExecution: false, //optional
+  network: network, //optional
+  start: async (mutations) => {
+    //optional
+    console.log("start offline", mutations);
+    return mutations;
+  },
+  finish: async (mutations, error) => {
+    //optional
+    console.log("finish offline", error, mutations);
+  },
+  onExecute: async (mutation) => {
+    //optional
+    console.log("onExecute offline", mutation);
+    return mutation;
+  },
+  onComplete: async (options) => {
+    //optional
+    console.log("onComplete offline", options);
+    return true;
+  },
+  onDiscard: async (options) => {
+    //optional
+    console.log("onDiscard offline", options);
+    return true;
+  },
+  onPublish: async (offlinePayload) => {
+    //optional
+    console.log("offlinePayload", offlinePayload);
+    return offlinePayload;
+  },
 });
 
 const AppTodo = (propsApp) => {
   const { props } = useLazyLoadQuery(QueryApp, {}); /*propsApp; */
   const submitEntry = React.useCallback(async function () {
     await create("try", modernEnvironment).catch(console.error);
-  }, modernEnvironment);
+  }, []);
 
   console.log("renderer", props, propsApp);
   return (
