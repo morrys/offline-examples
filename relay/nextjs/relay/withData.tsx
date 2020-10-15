@@ -1,7 +1,7 @@
 import React from 'react';
 import initEnvironment from './createRelayEnvironment';
 import {fetchQuery, QueryRenderer} from 'react-relay-offline';
-import {STORE_OR_NETWORK} from 'react-relay-offline';
+import {STORE_OR_NETWORK, STORE_THEN_NETWORK} from 'react-relay-offline';
 import {Variables} from 'relay-runtime';
 import {DocumentContext} from 'next/document';
 import {NextPage} from 'next';
@@ -28,14 +28,14 @@ export default <P extends Props>(
             records: props.queryRecords,
           });
     return (
-      <QueryRenderer
+      <QueryRenderer<any>
         environment={environment}
         query={query}
         variables={variables}
         fetchPolicy={STORE_OR_NETWORK}
-        ttl={600000}
-        render={({error, cached, props, ...others}: any) => {
-          if (props) {
+        ttl={300000}
+        render={({error, cached, props, online, ...others}) => {
+          if (props && props.user) {
             return <ComposedComponent {...props} {...others} />;
           } else if (error) {
             return <div>{error.message}</div>;

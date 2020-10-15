@@ -30,6 +30,7 @@ const AddTodoMutation = ({user}) => {
   const [addTodo, {data}] = useMutation(ADD_TODO);
   return (
     <TodoTextInput
+      edit
       className="new-todo"
       placeholder="What needs to be done?"
       onSave={text => {

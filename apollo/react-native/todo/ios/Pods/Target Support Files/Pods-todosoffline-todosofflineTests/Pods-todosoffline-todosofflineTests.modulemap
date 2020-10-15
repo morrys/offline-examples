@@ -1,0 +1,6 @@
+module Pods_todosoffline_todosofflineTests {
+  umbrella header "Pods-todosoffline-todosofflineTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -85,7 +85,7 @@ const AppTodo = ({relay, user, retry}: Props) => {
   };
 
   const hasTodos = user.totalCount > 0;
-
+  console.log('renderer');
   return (
     <React.Fragment>
       <StyledSection>

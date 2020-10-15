@@ -7,7 +7,9 @@ import {Store, Environment, RecordSource} from 'react-relay-offline';
 async function fetchQuery(
   operation: RequestNode,
   variables: Variables,
+  cacheConfig: any,
 ): Promise<{}> {
+  console.log('cacheConfig', cacheConfig);
   const response = await fetch('/graphql', {
     method: 'POST',
     headers: {

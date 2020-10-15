@@ -1,53 +1,55 @@
 import { ApolloClient } from "@wora/apollo-offline";
-import ApolloCache from "@wora/apollo-cache";
+import { ApolloCache } from "@wora/apollo-cache";
 import { HttpLink } from "apollo-link-http";
 
-
-
-const localIP = "192.168.1.105";
+const localIP = "localhost";
 const httpLink = new HttpLink({
-  uri: 'http://'+localIP+':3000/graphql'
+  uri: "http://" + localIP + ":3000/graphql",
 });
 
-const offlineOptions = {
-  manualExecution: false, //optional
-  link: httpLink, //optional
-  finish: (isSuccess, mutations) => { //optional
-    console.log("finish offline", isSuccess, mutations)
-    /*if(mutations){
-      mutations.forEach(mut => {
-        const { request, ...others } = mut;
-        console.log("mutation", others);
-      })
-    }*/
-  },
-  onComplete: (options ) => { //optional
-    const { id, offlinePayload, response } = options;
-    console.log("onComplete offline", options)
-    return true;
-  },
-  onDiscard: ( options ) => { //optional
-    const { id, offlinePayload , error } = options;
-    console.log("onDiscard offline", options)
-    return true;
-  },
-  onPublish: (offlinePayload) => { //optional
-    //const rand = Math.floor(Math.random() * 4) + 1  
-    //offlinePayload.serial = rand===1;
-    //console.log("offlinePayload", offlinePayload.serial)
-    console.log("onPublish offline", offlinePayload)
-    return offlinePayload
-  }
+const cacheOptions = {
+  dataIdFromObject: (o) => o.id,
 };
 
-const cacheOptions = {
-  dataIdFromObject: o => o.id
-};
+console.log("cache", ApolloCache);
 
 const client = new ApolloClient({
   link: httpLink,
-  cache: new ApolloCache(cacheOptions)
-}, offlineOptions);
+  cache: new ApolloCache(cacheOptions),
+});
 
+client.setOfflineOptions({
+  manualExecution: false, //optional
+  link: httpLink, //optional
+  start: async (mutations) => {
+    //optional
+    console.log("start offline", mutations);
+    return mutations;
+  },
+  finish: async (mutations, error) => {
+    //optional
+    console.log("finish offline", error, mutations);
+  },
+  onExecute: async (mutation) => {
+    //optional
+    console.log("onExecute offline", mutation);
+    return mutation;
+  },
+  onComplete: async (options) => {
+    //optional
+    console.log("onComplete offline", options);
+    return true;
+  },
+  onDiscard: async (options) => {
+    //optional
+    console.log("onDiscard offline", options);
+    return true;
+  },
+  onPublish: async (offlinePayload) => {
+    //optional
+    console.log("offlinePayload", offlinePayload);
+    return offlinePayload;
+  },
+});
 
 export default client;

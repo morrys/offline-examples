@@ -1,13 +1,19 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
-export type Todo_user$ref = any;
+import { FragmentRefs } from "relay-runtime";
 export type Todo_user = {
     readonly id: string;
     readonly userId: string;
     readonly totalCount: number;
     readonly completedCount: number;
-    readonly " $refType": Todo_user$ref;
+    readonly " $refType": "Todo_user";
+};
+export type Todo_user$data = Todo_user;
+export type Todo_user$key = {
+    readonly " $data"?: Todo_user$data;
+    readonly " $fragmentRefs": FragmentRefs<"Todo_user">;
 };
 
 

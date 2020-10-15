@@ -1,16 +1,15 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ReaderFragment } from "relay-runtime";
-type Todo_todo$ref = any;
-type Todo_user$ref = any;
-export type TodoList_user$ref = any;
+import { FragmentRefs } from "relay-runtime";
 export type TodoList_user = {
     readonly todos: {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly id: string;
                 readonly complete: boolean;
-                readonly " $fragmentRefs": Todo_todo$ref;
+                readonly " $fragmentRefs": FragmentRefs<"Todo_todo">;
             } | null;
         } | null> | null;
     } | null;
@@ -18,8 +17,13 @@ export type TodoList_user = {
     readonly userId: string;
     readonly totalCount: number;
     readonly completedCount: number;
-    readonly " $fragmentRefs": Todo_user$ref;
-    readonly " $refType": TodoList_user$ref;
+    readonly " $fragmentRefs": FragmentRefs<"Todo_user">;
+    readonly " $refType": "TodoList_user";
+};
+export type TodoList_user$data = TodoList_user;
+export type TodoList_user$key = {
+    readonly " $data"?: TodoList_user$data;
+    readonly " $fragmentRefs": FragmentRefs<"TodoList_user">;
 };
 
 

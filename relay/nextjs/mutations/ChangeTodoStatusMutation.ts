@@ -11,12 +11,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import {
-  commitMutation,
-  graphql,
-  Disposable,
-  Environment,
-} from 'react-relay-offline';
+import {commitMutation, graphql} from 'react-relay-offline';
 
 const mutation = graphql`
   mutation ChangeTodoStatusMutation($input: ChangeTodoStatusInput!) {
@@ -33,11 +28,7 @@ const mutation = graphql`
   }
 `;
 
-function getOptimisticResponse(
-  complete: boolean,
-  todo: any,
-  user: any,
-): any {
+function getOptimisticResponse(complete: boolean, todo: any, user: any): any {
   return {
     changeTodoStatus: {
       todo: {
@@ -54,12 +45,7 @@ function getOptimisticResponse(
   };
 }
 
-function commit(
-  environment: Environment,
-  complete: boolean,
-  todo: any,
-  user: any,
-) {
+function commit(environment: any, complete: boolean, todo: any, user: any) {
   const input: any = {
     complete,
     userId: user.userId,

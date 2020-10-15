@@ -6,7 +6,7 @@ import {Todo} from './Todo';
   version 0.4.0
 import {createFragmentContainer, graphql, useIsConnected, useNetInfo } from 'react-relay-offline';
 */
-import useOffline from 'react-relay-offline/lib/hooks/useOffline';
+import {useOffline} from 'react-relay-offline/lib/hooks/useOffline';
 
 import {manualExecution} from '../relay';
 
@@ -36,7 +36,9 @@ const RequestOffline = ({offlineRecord, user}) => {
   let todoPublish = sink[input.id];
 
   if (name === 'ChangeTodoStatusMutation') {
-    todoPublish = Object.assign({}, todoPublish, {text: todoBackup.text});
+    todoPublish = Object.assign({}, todoPublish, {
+      text: todoBackup ? todoBackup.text : '',
+    });
   }
 
   const isMultiple =

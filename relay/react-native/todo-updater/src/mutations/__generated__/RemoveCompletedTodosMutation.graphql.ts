@@ -1,12 +1,14 @@
 /* tslint:disable */
+/* eslint-disable */
+/* @relayHash f5a54fa0ba4ca74f7cc1befda6afbe46 */
 
 import { ConcreteRequest } from "relay-runtime";
 export type RemoveCompletedTodosInput = {
-    readonly userId: string;
-    readonly clientMutationId?: string | null;
+    userId: string;
+    clientMutationId?: string | null;
 };
 export type RemoveCompletedTodosMutationVariables = {
-    readonly input: RemoveCompletedTodosInput;
+    input: RemoveCompletedTodosInput;
 };
 export type RemoveCompletedTodosMutationResponse = {
     readonly removeCompletedTodos: {

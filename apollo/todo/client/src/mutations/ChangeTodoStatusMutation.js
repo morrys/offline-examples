@@ -28,48 +28,47 @@ const mutation = gql`
   }
 `;
 
-function getOptimisticResponse(
-  complete,
-  todo,
-  user,
-) {
+function getOptimisticResponse(complete, todo, user) {
   return {
     changeTodoStatus: {
       todo: {
         complete: complete,
         id: todo.id,
-        __typename: 'Todo'
+        __typename: "Todo",
       },
       user: {
-        __typename: 'User',
+        __typename: "User",
         id: user.id,
         completedCount: complete
           ? user.completedCount + 1
           : user.completedCount - 1,
       },
-      __typename: "ChangeTodoStatusPayload"
+      __typename: "ChangeTodoStatusPayload",
     },
   };
 }
 
-function commit(
-  client,
-  complete,
-  todo,
-  user,
-) {
+function commit(client, complete, todo, user) {
   const input = {
     complete,
     userId: user.userId,
     id: todo.id,
   };
-  return client.mutate({
-    mutation,
-    variables: {
-      input,
-    },
-    optimisticResponse: getOptimisticResponse(complete, todo, user),
-  });
+  return client
+    .mutate({
+      mutation,
+      variables: {
+        input,
+      },
+      update: (client, mutationData) => (mutationData) =>
+        console.log("mutationData", mutationData),
+      onError: (error) => console.log("prova"),
+      optimisticResponse: (data) => {
+        console.log("data", data);
+        return getOptimisticResponse(complete, todo, user);
+      },
+    })
+    .catch((error) => console.log("error", error));
 }
 
-export default {commit};
+export default { commit };

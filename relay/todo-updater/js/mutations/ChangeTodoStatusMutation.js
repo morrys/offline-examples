@@ -77,6 +77,14 @@ function commit(
     variables: {
       input,
     },
+    onCompleted: data => {
+      console.log('relay onCompleted', data);
+    },
+    cacheConfig: {
+      metadata: {
+        try: 'it',
+      },
+    },
     optimisticResponse: getOptimisticResponse(complete, todo, user),
   });
 }

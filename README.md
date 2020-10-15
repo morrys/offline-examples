@@ -53,7 +53,7 @@ npm run start
 
 ```
 cd relay/react-native/todo-updater
-npm run run-android
+npm run android
 ```
 
 ### Apollo
@@ -106,5 +106,5 @@ yarn start
 
 ```
 cd apollo/react-native/todo
-yarn run-android
+yarn run android
 ```

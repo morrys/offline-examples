@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@apollo/client": "3.0.0-beta.7",
-    "@wora/apollo-offline": "2.1.0",
+    "@wora/apollo-offline": "2.3.0",
     "@apollo/react-hooks": "3.2.0-beta.0",
     "@apollo/react-ssr": "3.2.0-beta.0",
     "graphql": "^14.5.4",

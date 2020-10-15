@@ -53,7 +53,7 @@ const StyledDivButton = styled.div`
 
 const isServer = typeof window === 'undefined';
 type Props = {
-  refetch: () => void;
+  refetch: (variables: any) => void;
   user: any;
 };
 const AppTodo = ({user, refetch}: Props) => {
@@ -77,7 +77,14 @@ const AppTodo = ({user, refetch}: Props) => {
         <TodoList user={user} />
         {hasTodos && <TodoListFooter user={user} />}
         <StyledDivButton>
-          <StyledButton onClick={refetch}>Retry</StyledButton>
+          <StyledButton
+            onClick={() =>
+              refetch({
+                userId: user.userId,
+              })
+            }>
+            Retry
+          </StyledButton>
           <StyledButton onClick={purge}>Purge</StyledButton>
         </StyledDivButton>
         <StyledFooter>

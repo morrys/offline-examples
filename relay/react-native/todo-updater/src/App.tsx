@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { graphql } from "react-relay-offline";
+import { graphql, STORE_OR_NETWORK, useRestore } from "react-relay-offline";
 import { environment, QueryRenderer } from "./relay";
 import { default as Loading } from "./components/Loading";
 import TodoApp from "./components/TodoApp";
 import styled from "styled-components";
-import { CACHE_FIRST } from "react-relay-offline/lib/RelayOfflineTypes";
-
+import Icon from "react-native-vector-icons/FontAwesome";
+import IconMaterial from "react-native-vector-icons/MaterialIcons";
+IconMaterial.loadFont();
+Icon.loadFont();
 /**
  * Query Definitions
  */
@@ -35,30 +37,34 @@ interface Props {}
 /**
  * Component Definition
  */
-export default class extends Component<Props> {
-  render() {
-    return (
-      <StyledBody>
-        <QueryRenderer
-          environment={environment}
-          query={query}
-          dataFrom={CACHE_FIRST}
-          variables={{
-            // Mock authenticated ID that matches database
-            userId: "me"
-          }}
-          render={({ props, error, retry, cached }: any) => {
-            if (props && props.user) {
-              return <TodoApp user={props.user} />;
-            } else if (error) {
-              console.log("error", error);
-              return (
-                <Text style={styles.welcome}>{JSON.stringify(error)}</Text>
-              );
-            }
+const AppTodo = () => {
+  const isRehydrated = useRestore(environment);
+  if (!isRehydrated) {
+    console.log("loading");
+    return <Loading />;
+  }
+  console.log("renderer");
+  return (
+    <StyledBody>
+      <QueryRenderer
+        environment={environment}
+        query={query}
+        fetchPolicy={STORE_OR_NETWORK}
+        variables={{
+          // Mock authenticated ID that matches database
+          userId: "me",
+        }}
+        render={({ props, error, retry, cached }: any) => {
+          console.log("props", props);
+          if (props && props.user) {
+            return <TodoApp user={props.user} />;
+          } else if (error) {
+            console.log("error", error);
+            return <Text style={styles.welcome}>{JSON.stringify(error)}</Text>;
+          }
 
-            return <Loading />;
-            /*return(
+          return <Loading />;
+          /*return(
             <View style={styles.container}>
               <Text style={styles.welcome}>Welcome to React Offline Native Example!</Text>
               <Text style={styles.instructions}>{JSON.stringify({ 
@@ -71,28 +77,31 @@ export default class extends Component<Props> {
                 })}</Text>
             </View>
           )*/
-          }}
-        />
-      </StyledBody>
-    );
-  }
-}
+        }}
+      />
+    </StyledBody>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#F5FCFF"
+    backgroundColor: "#F5FCFF",
   },
   welcome: {
     fontSize: 20,
     textAlign: "center",
-    margin: 10
+    margin: 10,
   },
   instructions: {
     textAlign: "center",
     color: "#333333",
-    marginBottom: 5
-  }
+    marginBottom: 5,
+  },
 });
+
+//const App = <AppTodo />;
+
+export default AppTodo;
