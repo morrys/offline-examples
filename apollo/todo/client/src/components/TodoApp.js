@@ -19,12 +19,22 @@ import TodoListFooter from './TodoListFooter';
 import React from 'react';
 
 
-const TodoApp = ({ user = {}, retry }) => {
+const TodoApp = ({ user = {}, retry, client }) => {
 
   const purge = () => {
+    client.resetStore();
+    //relay.environment.clearCache().then(result => console.log("clearCache", result));
+  };
+
+  const evict = () => {
+    client.cache.evict({})
     //relay.environment.clearCache().then(result => console.log("clearCache", result));
   };
   
+  const gc = () => {
+    console.log("gc", client.cache.gc());
+    //relay.environment.clearCache().then(result => console.log("clearCache", result));
+  };
   
 
   const hasTodos = user.totalCount > 0;
@@ -44,6 +54,12 @@ const TodoApp = ({ user = {}, retry }) => {
           {hasTodos && <TodoListFooter user={user} />}
           <button onClick={() => retry()} className="refetch" >
           Retry
+        </button>
+        <button onClick={gc} className="refetch" >
+          Garbage
+        </button>
+        <button onClick={evict} className="refetch" >
+          Evict
         </button>
         <button onClick={purge} className="refetch" >
           Purge

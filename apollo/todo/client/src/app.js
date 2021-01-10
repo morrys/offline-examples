@@ -36,7 +36,7 @@ const AppTodo = function(appProps) {
     return;
   };
 
-  const [rehydrated, setRehydrated] = useState(false);
+  const [rehydrated, setRehydrated] = useState(true);
 
   React.useEffect(() => {
     client.hydrate().then(() => setRehydrated(true));
@@ -72,12 +72,12 @@ const AppTodo = function(appProps) {
           </div>
         </div>
       </div>
-      {rehydrated && <LayoutTodo userId={userId} />}
+      {rehydrated && <LayoutTodo userId={userId} client={client} />}
     </div>
   );
 };
 
-const LayoutTodo = ({ userId }) => {
+const LayoutTodo = ({ userId, client }) => {
   const { loading, error, data, refetch, ...others } = useQuery(USER_TODOS, {
     variables: { userId }
   });
@@ -85,7 +85,7 @@ const LayoutTodo = ({ userId }) => {
   if (loading || !data) return <div />;
   if (error) return `Error! ${error.message}`;
 
-  return <TodoApp user={data.user} retry={refetch} />;
+  return <TodoApp client={client} user={data.user} retry={refetch} />;
   //
 };
 

@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@apollo/client": "3.0.0-beta.7",
+    "@apollo/client": "3.2.4",
     "@wora/apollo-offline": "2.4.0",
-    "@apollo/react-hooks": "3.2.0-beta.0",
-    "@apollo/react-ssr": "3.2.0-beta.0",
+    "@apollo/react-hooks": "4.0.0",
+    "@apollo/react-ssr": "4.0.0",
     "graphql": "^14.5.4",
     "classnames": "2.2.6",
     "false": "0.0.4",

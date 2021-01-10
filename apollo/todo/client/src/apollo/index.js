@@ -1,6 +1,7 @@
 import { ApolloClient } from "@wora/apollo-offline";
 import ApolloCache from "@wora/apollo-cache";
 import { HttpLink } from "@apollo/client";
+//import { ApolloClient, InMemoryCache as ApolloCache } from '@apollo/client';
 
 // import ApolloClientIDB from '@wora/apollo-offline/lib/ApolloClientIDB';
 
@@ -9,15 +10,24 @@ const httpLink = new HttpLink({
 });
 
 const cacheOptions = {
-  dataIdFromObject: o => o.id
+  dataIdFromObject: o => o.id,
+  typePolicies: {
+    User: {
+      fields: {
+        todos: {
+          merge: true,
+        }
+      }
+    }
+  }
 };
 
 const client = new ApolloClient({
   link: httpLink,
-  cache: new ApolloCache(cacheOptions)
+  cache: new ApolloCache(cacheOptions),
 });
 
-client.setOfflineOptions({
+/*client.setOfflineOptions({
   manualExecution: false, //optional
   link: httpLink, //optional
   start: async mutations => {
@@ -50,6 +60,7 @@ client.setOfflineOptions({
     return offlinePayload;
   }
 });
+*/
 // const client = ApolloClientIDB.create({ link: httpLink }, cacheOptions, offlineOptions);
 
 console.log("client", client);
