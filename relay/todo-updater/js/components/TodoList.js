@@ -21,7 +21,7 @@ type Todos = $NonMaybeType<$ElementType<TodoList_user, 'todos'>>;
 type Edges = $NonMaybeType<$ElementType<Todos, 'edges'>>;
 type Edge = $NonMaybeType<$ElementType<Edges, number>>;
 type Node = $NonMaybeType<$ElementType<Edge, 'node'>>;
-
+console.log("createFragmentContainer", createFragmentContainer)
 type Props = {|
   +relay: RelayProp,
   +user: TodoList_user,

@@ -1,7 +1,6 @@
 import React from 'react';
 import initEnvironment from './createRelayEnvironment';
-import {fetchQuery, QueryRenderer} from 'react-relay-offline';
-import {STORE_OR_NETWORK, STORE_THEN_NETWORK} from 'react-relay-offline';
+import {fetchQuery, useQuery} from 'react-relay-offline';
 import {Variables} from 'relay-runtime';
 import {DocumentContext} from 'next/document';
 import {NextPage} from 'next';
@@ -20,30 +19,24 @@ export default <P extends Props>(
   options: OptionsWithData,
 ) => {
   function WithData(props) {
-    const {query, variables} = options;
-    const environment =
-      typeof window === 'undefined'
-        ? props.environment
-        : initEnvironment({
-            records: props.queryRecords,
-          });
-    return (
-      <QueryRenderer<any>
-        environment={environment}
-        query={query}
-        variables={variables}
-        fetchPolicy={STORE_OR_NETWORK}
-        ttl={300000}
-        render={({error, cached, props, online, ...others}) => {
-          if (props && props.user) {
-            return <ComposedComponent {...props} {...others} />;
-          } else if (error) {
-            return <div>{error.message}</div>;
-          }
-          return <div>loading</div>;
-        }}
-      />
+    const {query, variables = {}} = options;
+    const networkCacheConfig = {
+      ttl: 1,
+    };
+    const {error, data, isLoading, ...others} = useQuery<any>(
+      query,
+      variables,
+      {
+        networkCacheConfig,
+      },
     );
+    console.log('rendered WithData');
+    if (data && data.user) {
+      return <ComposedComponent {...data} {...others} />;
+    } else if (error) {
+      return <div>{error.message}</div>;
+    }
+    return <div>loading</div>;
   }
 
   WithData.getInitialProps = async (ctx: DocumentContext) => {
@@ -63,9 +56,9 @@ export default <P extends Props>(
     let queryRecords = {};
     const environment = initEnvironment();
 
-    const {query, variables} = options;
+    const {query, variables = {}} = options;
     if (query) {
-      queryProps = await fetchQuery(environment, query, variables);
+      queryProps = await fetchQuery<any>(environment, query, variables);
       queryRecords = environment
         .getStore()
         .getSource()

@@ -52,8 +52,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input",
-    "type": "RemoveTodoInput!"
+    "name": "input"
   }
 ],
 v1 = [
@@ -117,7 +116,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Mutation"
+    "type": "Mutation",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -160,6 +160,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "aba626ea9bdf465954e89e5590eb2c1a",
     "id": null,
     "metadata": {},
     "name": "RemoveTodoMutation",

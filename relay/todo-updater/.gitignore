@@ -1,2 +1,4 @@
 .DS_Store
 .eslintcache
+yarn.lock
+yarn-error.log

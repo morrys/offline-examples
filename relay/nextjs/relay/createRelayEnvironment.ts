@@ -1,3 +1,4 @@
+/* eslint-disable flowtype/require-parameter-type */
 import {Network} from 'relay-runtime';
 import {Store, Environment, RecordSource} from 'react-relay-offline';
 

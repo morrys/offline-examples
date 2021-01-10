@@ -75,7 +75,8 @@ const node/*: ReaderFragment*/ = {
       "name": "TodoList_user"
     }
   ],
-  "type": "User"
+  "type": "User",
+  "abstractKey": null
 };
 // prettier-ignore
 (node/*: any*/).hash = 'ecccdb5a17f0428603f76e1bbaa8ea9d';
