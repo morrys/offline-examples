@@ -177,7 +177,8 @@ return {
       "name": "Todo_user"
     }
   ],
-  "type": "User"
+  "type": "User",
+  "abstractKey": null
 };
 })();
 // prettier-ignore

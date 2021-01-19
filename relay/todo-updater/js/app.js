@@ -13,20 +13,29 @@
 
 import * as React from 'react';
 
-import {graphql} from 'react-relay';
-import {QueryRenderer, fetchQuery, useRestore} from 'react-relay-offline';
+import { graphql } from 'relay-runtime';
+import { useQuery, useRestore } from 'react-relay-offline';
+import {RelayEnvironmentProvider} from 'relay-hooks';
 
 import TodoApp from './components/TodoApp';
-import type {appQueryResponse} from 'relay/appQuery.graphql';
 
 import environment from './relay';
 
+const query = graphql`
+query appQuery($userId: String) {
+  user(id: $userId) {
+    ...TodoApp_user
+    totalCount
+  }
+}
+`;
+
+const networkCacheConfig = {
+  ttl: 10000
+}
+
 const AppTodo = props => {
   const isRehydrated = useRestore(environment);
-  if (!isRehydrated) {
-    console.log('loading');
-    return <div />;
-  }
   console.log('renderer');
   // ***** added to verify useRestore and fetchQuery ***
   /*const [load, setLoad] = React.useState(false);
@@ -55,45 +64,34 @@ const AppTodo = props => {
   if (!load) {
     return <div>Loading</div>;
   }*/
+  const { error, data, isLçading, retry } = useQuery(query, {
+    // Mock authenticated ID that matches database
+    userId: 'me',
+  }, {
+    networkCacheConfig,
+    skip: !isRehydrated
+  })
 
-  // ****************************************************
+  
+  if (!isRehydrated) {
+    console.log('loading');
+    return <div />;
+  }
+
+  if (data && data.user) {
+    console.log('data.user.totalCount', data.user.totalCount);
+    return <TodoApp user={data.user} retry={retry} />;
+  } else if (error) {
+    return <div>{error.message}</div>;
+  }
+
   return (
-    <QueryRenderer
-      environment={environment}
-      query={graphql`
-        query appQuery($userId: String) {
-          user(id: $userId) {
-            ...TodoApp_user
-            totalCount
-          }
-        }
-      `}
-      fetchPolicy="store-or-network"
-      ttl={10000}
-      variables={{
-        // Mock authenticated ID that matches database
-        userId: 'me',
-      }}
-      render={({error, props, cached, retry}) => {
-        console.log('renderer');
-        //console.log('QueryRenderer.render:', { cached, error, retry, });
-        if (props && props.user) {
-          console.log('props.user.totalCount', props.user.totalCount);
-          return <TodoApp user={props.user} retry={retry} />;
-        } else if (error) {
-          return <div>{error.message}</div>;
-        }
-
-        return (
-          <button onClick={retry} className="refetch">
-            Retry
-          </button>
-        );
-      }}
-    />
+    <button onClick={retry} className="refetch">
+      Retry
+    </button>
   );
 };
 
-const App = <AppTodo />;
+const App = <RelayEnvironmentProvider environment={environment}><AppTodo /></RelayEnvironmentProvider>;
 
 export default App;

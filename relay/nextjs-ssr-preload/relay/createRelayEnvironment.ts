@@ -6,13 +6,14 @@ import EnvironmentIDB from 'react-relay-offline/lib/runtime/EnvironmentIDB';
 
 import fetch from 'isomorphic-unfetch';
 import {loadQuery} from 'react-relay-offline';
-import {OfflineLoadQuery} from 'react-relay-offline/lib/RelayOfflineTypes';
+
+import {LoadQuery} from 'relay-hooks';
 
 const prefetch = loadQuery();
 
 let relayEnvironment: {
   environment: Environment;
-  prefetch: OfflineLoadQuery;
+  prefetch: LoadQuery;
 };
 
 // TODO: support offline:

@@ -58,8 +58,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input",
-    "type": "ChangeTodoStatusInput!"
+    "name": "input"
   }
 ],
 v1 = {
@@ -133,7 +132,8 @@ return {
     "metadata": null,
     "name": "ChangeTodoStatusMutation",
     "selections": (v2/*: any*/),
-    "type": "Mutation"
+    "type": "Mutation",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -143,6 +143,7 @@ return {
     "selections": (v2/*: any*/)
   },
   "params": {
+    "cacheID": "d7dda774dcfa32fe0d9661e01cac9a4a",
     "id": null,
     "metadata": {},
     "name": "ChangeTodoStatusMutation",

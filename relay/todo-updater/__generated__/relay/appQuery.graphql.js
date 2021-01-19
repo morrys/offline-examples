@@ -108,8 +108,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "userId",
-    "type": "String"
+    "name": "userId"
   }
 ],
 v1 = [
@@ -165,7 +164,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -299,6 +299,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "5b25aa922de4a0ce93bb10b0c342bbc6",
     "id": null,
     "metadata": {},
     "name": "appQuery",

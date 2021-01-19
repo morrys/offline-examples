@@ -4,13 +4,11 @@ import {TodoAppQuery} from '../__generated__/relay/TodoAppQuery.graphql';
 import {usePreloadedQuery} from 'react-relay-offline';
 
 const Home = ({prefetch}) => {
-  const {error, cached, props, retry, online} = usePreloadedQuery<TodoAppQuery>(
-    prefetch,
-  );
+  const {error, data, retry} = usePreloadedQuery<TodoAppQuery>(prefetch);
 
-  console.log('prefetch ssr', prefetch, online);
-  if (props) {
-    return <TodoApp query={props} retry={retry} />;
+  console.log('prefetch ssr', prefetch);
+  if (data) {
+    return <TodoApp query={data} retry={retry} />;
   } else if (error) {
     return <div>{error.message}</div>;
   }

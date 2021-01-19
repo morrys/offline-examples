@@ -163,7 +163,8 @@ return {
       "storageKey": null
     }
   ],
-  "type": "User"
+  "type": "User",
+  "abstractKey": null
 };
 })();
 // prettier-ignore

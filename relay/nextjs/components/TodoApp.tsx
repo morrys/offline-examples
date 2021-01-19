@@ -1,5 +1,5 @@
 import React from 'react';
-import {createFragmentContainer, graphql} from 'react-relay-offline';
+import {graphql} from 'react-relay-offline';
 import AddTodoMutation from '../mutations/AddTodoMutation';
 import TodoList from './TodoList';
 import TodoListFooter from './TodoListFooter';
@@ -7,6 +7,7 @@ import TodoTextInput from './TodoTextInput';
 import TodoOffline from './TodoOffline';
 import styled from 'styled-components';
 import Header from './Header';
+import {createFragmentContainer} from 'react-relay';
 //import TodoApp, { fragmentSpec } from './components/TodoApp';
 export const QUERY_APP = graphql`
   query TodoAppQuery($userId: String) {

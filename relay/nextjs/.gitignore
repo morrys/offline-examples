@@ -3,3 +3,5 @@
 .next
 node_modules
 __generated__
+yarn.lock
+yarn-error.log

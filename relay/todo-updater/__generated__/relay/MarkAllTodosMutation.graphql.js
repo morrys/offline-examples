@@ -57,8 +57,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input",
-    "type": "MarkAllTodosInput!"
+    "name": "input"
   }
 ],
 v1 = {
@@ -132,7 +131,8 @@ return {
     "metadata": null,
     "name": "MarkAllTodosMutation",
     "selections": (v2/*: any*/),
-    "type": "Mutation"
+    "type": "Mutation",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -142,6 +142,7 @@ return {
     "selections": (v2/*: any*/)
   },
   "params": {
+    "cacheID": "db9904c31d91416f21d45fe3d153884c",
     "id": null,
     "metadata": {},
     "name": "MarkAllTodosMutation",

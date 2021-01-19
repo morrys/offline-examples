@@ -22,7 +22,7 @@ import React from 'react';
   version 0.4.0
 import {createFragmentContainer, graphql, useIsConnected, useNetInfo } from 'react-relay-offline';
 */
-import {createFragmentContainer, graphql} from 'react-relay-offline';
+import {createFragmentContainer, graphql} from 'react-relay';
 
 import type {RelayProp} from 'react-relay';
 import type {TodoApp_user} from 'relay/TodoApp_user.graphql';
