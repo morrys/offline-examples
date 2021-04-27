@@ -1,7 +1,7 @@
 import React from 'react';
 import initEnvironment from './createRelayEnvironment';
-import {fetchQuery, useQuery} from 'react-relay-offline';
-import {Variables} from 'relay-runtime';
+import {useQuery} from 'react-relay-offline';
+import {Variables, fetchQuery} from 'relay-runtime';
 import {DocumentContext} from 'next/document';
 import {NextPage} from 'next';
 
@@ -58,7 +58,14 @@ export default <P extends Props>(
 
     const {query, variables = {}} = options;
     if (query) {
-      queryProps = await fetchQuery<any>(environment, query, variables);
+      if(!environment.isRehydrated()) {
+        await environment.hydrate();
+      }
+      queryProps = await fetchQuery<any>(
+        environment,
+        query,
+        variables,
+      ).toPromise()
       queryRecords = environment
         .getStore()
         .getSource()
