@@ -14,12 +14,11 @@
 import {
   commitMutation,
   graphql,
-  Disposable,
   Environment,
   //RecordSourceSelectorProxy,
 } from 'react-relay-offline';
 
-import {ConnectionHandler} from 'relay-runtime';
+import {ConnectionHandler, Disposable} from 'relay-runtime';
 
 const mutation = graphql`
   mutation RemoveCompletedTodosMutation($input: RemoveCompletedTodosInput!) {
@@ -39,19 +38,18 @@ function sharedUpdater(
   deletedIDs: ReadonlyArray<string>,
 ) {
   const userProxy = store.get(user.id);
-  const conn = ConnectionHandler.getConnection(userProxy, 'TodoList_todos');
+  const conn: any = ConnectionHandler.getConnection(
+    userProxy,
+    'TodoList_todos',
+  );
 
   // Purposefully type forEach as void, to toss the result of deleteNode
-  deletedIDs.forEach(
-    (deletedID: string): void => ConnectionHandler.deleteNode(conn, deletedID),
+  deletedIDs.forEach((deletedID: string): void =>
+    ConnectionHandler.deleteNode(conn, deletedID),
   );
 }
 
-function commit(
-  environment: Environment,
-  todos: any,
-  user: any,
-) {
+function commit(environment: Environment, todos: any, user: any) {
   const input: any = {
     userId: user.userId,
   };
@@ -80,7 +78,10 @@ function commit(
         : [];
 
       const userRecord = store.get(user.id);
-      userRecord.setValue(userRecord.getValue('totalCount')-completedNodeIds.length, 'totalCount');
+      userRecord.setValue(
+        userRecord.getValue('totalCount') - completedNodeIds.length,
+        'totalCount',
+      );
       userRecord.setValue(0, 'completedCount');
       sharedUpdater(store, user, completedNodeIds);
     },

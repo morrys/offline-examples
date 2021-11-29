@@ -11,7 +11,8 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import {commitMutation, graphql, Disposable} from 'react-relay-offline';
+import {commitMutation, graphql} from 'react-relay-offline';
+import {Disposable} from 'relay-runtime';
 
 const mutation = graphql`
   mutation RenameTodoMutation($input: RenameTodoInput!) {

@@ -11,7 +11,8 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import {commitMutation, graphql, Disposable} from 'react-relay-offline';
+import {commitMutation, graphql} from 'react-relay-offline';
+import {Disposable} from 'relay-runtime';
 /*
 import type {
   MarkAllTodosInput,
@@ -56,12 +57,10 @@ function getOptimisticResponse(complete: boolean, todos: any, user: any): any {
 
   const changedTodos: any = validNodes
     .filter((node: any): boolean => node.complete !== complete)
-    .map(
-      (node: any): any => ({
-        complete: complete,
-        id: node.id,
-      }),
-    );
+    .map((node: any): any => ({
+      complete: complete,
+      id: node.id,
+    }));
 
   return {
     markAllTodos: {

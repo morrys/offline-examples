@@ -14,13 +14,12 @@
 import {
   commitMutation,
   graphql,
-  Disposable,
   Environment,
   //RecordProxy,
   //RecordSourceSelectorProxy,
 } from 'react-relay-offline';
 
-import {ConnectionHandler} from 'relay-runtime';
+import {ConnectionHandler, Disposable} from 'relay-runtime';
 
 import {v4 as uuid} from 'uuid';
 
@@ -51,7 +50,7 @@ function sharedUpdater(store: any, user: any, newEdge: any) {
   const userProxy = store.get(user.id);
 
   // Get the user's Todo List using ConnectionHandler helper
-  const conn = ConnectionHandler.getConnection(
+  const conn: any = ConnectionHandler.getConnection(
     userProxy,
     'TodoList_todos', // This is the connection identifier, defined here
     // https://github.com/relayjs/relay-examples/blob/master/todo/js/components/TodoList.js#L76
