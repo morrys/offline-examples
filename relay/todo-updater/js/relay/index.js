@@ -24,51 +24,54 @@ async function fetchQuery(
   return response.json();
 }
 
-const network = Network.create(fetchQuery);
 export const manualExecution = false;
 
-//const environment = EnvironmentIDB.create({network}, offlineOptions); //, {ttl: 60 * 1000}
+export const createEnvironment = () => {
+  const network = Network.create(fetchQuery);
 
-const recordSource = new RecordSource();
-const store = new Store(recordSource);
-store._cache.set('provainit', 'prova');
-const environment = new Environment({network, store});
-environment.setOfflineOptions({
-  manualExecution, //optional
-  network: network, //optional
-  start: async mutations => {
-    //optional
-    console.log('start offline', mutations);
-    return mutations;
-  },
-  finish: async (mutations, error) => {
-    //optional
-    console.log('finish offline', error, mutations);
-  },
-  onExecute: async mutation => {
-    //optional
-    console.log('onExecute offline', mutation);
-    return mutation;
-  },
-  onComplete: async options => {
-    //optional
-    console.log('onComplete offline', options);
-    return true;
-  },
-  onDiscard: async options => {
-    //optional
-    console.log('onDiscard offline', options);
-    return true;
-  },
-  onPublish: async offlinePayload => {
-    //optional
-    console.log('offlinePayload', offlinePayload);
-    return offlinePayload;
-  },
-});
+  //const environment = EnvironmentIDB.create({network}, offlineOptions); //, {ttl: 60 * 1000}
+
+  const recordSource = new RecordSource();
+  const store = new Store(recordSource);
+  store._cache.set('provainit', 'prova');
+  const environment = new Environment({network, store});
+  environment.setOfflineOptions({
+    manualExecution, //optional
+    network: network, //optional
+    start: async mutations => {
+      //optional
+      console.log('start offline', mutations);
+      return mutations;
+    },
+    finish: async (mutations, error) => {
+      //optional
+      console.log('finish offline', error, mutations);
+    },
+    onExecute: async mutation => {
+      //optional
+      console.log('onExecute offline', mutation);
+      return mutation;
+    },
+    onComplete: async options => {
+      //optional
+      console.log('onComplete offline', options);
+      return true;
+    },
+    onDiscard: async options => {
+      //optional
+      console.log('onDiscard offline', options);
+      return true;
+    },
+    onPublish: async offlinePayload => {
+      //optional
+      console.log('offlinePayload', offlinePayload);
+      return offlinePayload;
+    },
+  });
+  return environment;
+};
 /*
 const environment = new Environment({
   network,
   store: new Store(new RecordSource()),
 });*/
-export default environment;

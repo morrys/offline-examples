@@ -13,28 +13,29 @@
 
 import * as React from 'react';
 
-import { graphql } from 'relay-runtime';
-import { useQuery, useRestore } from 'react-relay-offline';
-import {RelayEnvironmentProvider} from 'relay-hooks';
+import {graphql} from 'relay-runtime';
+import {useQuery, useRestore} from 'react-relay-offline';
+import {RelayEnvironmentProvider, useRelayEnvironment} from 'relay-hooks';
 
 import TodoApp from './components/TodoApp';
 
-import environment from './relay';
+import {createEnvironment} from './relay';
 
 const query = graphql`
-query appQuery($userId: String) {
-  user(id: $userId) {
-    ...TodoApp_user
-    totalCount
+  query appQuery($userId: String) {
+    user(id: $userId) {
+      ...TodoApp_user
+      totalCount
+    }
   }
-}
 `;
 
 const networkCacheConfig = {
-  ttl: 10000
-}
+  ttl: 10000,
+};
 
 const AppTodo = props => {
+  const environment = useRelayEnvironment();
   const isRehydrated = useRestore(environment);
   console.log('renderer');
   // ***** added to verify useRestore and fetchQuery ***
@@ -64,15 +65,18 @@ const AppTodo = props => {
   if (!load) {
     return <div>Loading</div>;
   }*/
-  const { error, data, isLçading, retry } = useQuery(query, {
-    // Mock authenticated ID that matches database
-    userId: 'me',
-  }, {
-    networkCacheConfig,
-    skip: !isRehydrated
-  })
+  const {error, data, isLçading, retry} = useQuery(
+    query,
+    {
+      // Mock authenticated ID that matches database
+      userId: 'me',
+    },
+    {
+      networkCacheConfig,
+      skip: !isRehydrated,
+    },
+  );
 
-  
   if (!isRehydrated) {
     console.log('loading');
     return <div />;
@@ -92,6 +96,24 @@ const AppTodo = props => {
   );
 };
 
-const App = <RelayEnvironmentProvider environment={environment}><AppTodo /></RelayEnvironmentProvider>;
+const InitApp = () => {
+  const [env, setEnv] = React.useState(createEnvironment());
+  return (
+    <>
+      <RelayEnvironmentProvider environment={env}>
+        <AppTodo />
+      </RelayEnvironmentProvider>
+      <button
+        onClick={() => {
+          setEnv(createEnvironment());
+        }}
+        className="refetch">
+        New Login
+      </button>
+    </>
+  );
+};
+
+const App = <InitApp />;
 
 export default App;
