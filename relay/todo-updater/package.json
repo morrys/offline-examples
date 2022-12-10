@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "classnames": "2.2.6",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "express-graphql": "^0.7.1",
     "graphql": "^15.4.0",
     "graphql-relay": "^0.6.0",
