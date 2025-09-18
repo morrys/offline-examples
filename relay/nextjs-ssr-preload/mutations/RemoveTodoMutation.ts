@@ -12,6 +12,7 @@
  */
 
 import {commitMutation, graphql} from 'relay-hooks';
+import {RemoveTodoMutation} from '../__generated__/relay/RemoveTodoMutation.graphql';
 
 const mutation = graphql`
   mutation RemoveTodoMutation($input: RemoveTodoInput!) {
@@ -30,7 +31,7 @@ function commit(environment: any, todo: any, user: any): any {
     id: todo.id,
     userId: user.userId,
   };
-  return commitMutation(environment, {
+  return commitMutation<RemoveTodoMutation>(environment, {
     mutation,
     variables: {
       input,

@@ -19,7 +19,7 @@ import {graphql} from 'relay-hooks';
 import styled from 'styled-components';
 import {useFragment, useRelayEnvironment} from 'relay-hooks';
 import {
-  TodoList_user,
+  TodoList_user$data as TodoList_user,
   TodoList_user$key,
 } from '../__generated__/relay/TodoList_user.graphql';
 import {isNotNull} from './TodoApp';

@@ -23,7 +23,7 @@ import {
   IEnvironment,
   RecordSourceSelectorProxy,
 } from 'relay-runtime';
-import {TodoListFooter_user} from '../__generated__/relay/TodoListFooter_user.graphql';
+import {TodoListFooter_user$data as TodoListFooter_user} from '../__generated__/relay/TodoListFooter_user.graphql';
 import {isNotNull} from '../components/TodoApp';
 
 type Todos = NonNullable<TodoListFooter_user['todos']>;
@@ -54,9 +54,8 @@ function sharedUpdater(
 
   // Purposefully type forEach as void, to toss the result of deleteNode
   if (conn) {
-    deletedIDs.forEach(
-      (deletedID: string): void =>
-        ConnectionHandler.deleteNode(conn, deletedID),
+    deletedIDs.forEach((deletedID: string): void =>
+      ConnectionHandler.deleteNode(conn, deletedID),
     );
   }
 }

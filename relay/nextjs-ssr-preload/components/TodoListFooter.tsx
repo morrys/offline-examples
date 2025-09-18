@@ -18,7 +18,7 @@ import {graphql, useFragment, useRelayEnvironment} from 'relay-hooks';
 import styled, {css} from 'styled-components';
 import {
   TodoListFooter_user$key,
-  TodoListFooter_user,
+  TodoListFooter_user$data as TodoListFooter_user,
 } from '../__generated__/relay/TodoListFooter_user.graphql';
 import {isNotNull} from './TodoApp';
 type Todos = NonNullable<TodoListFooter_user['todos']>;
